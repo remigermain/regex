@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/06/27 15:52:11 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/06/27 15:52:27 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/06/27 16:03:48 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -27,8 +27,10 @@ void	print_match(t_regex	*reg, char	*s1)
 				tmp->end - tmp->start, s1 + tmp->start);
 		i = tmp->end;
 		tmp = tmp->next;
-	}	
-	ft_printf("%s\n", s1 + i);
+	}
+	if (i < ft_strlen(s1))
+		ft_printf("%s", s1 + i);
+	ft_printf("\n");
 }
 
 int		count_match(t_regex	*reg)

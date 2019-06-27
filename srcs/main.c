@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/06/27 15:48:43 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/06/27 15:52:36 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/06/27 16:12:15 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -29,7 +29,7 @@ t_bool	match_regex(char *s1, char *regex)
 	reg = NULL;
 	add_match(&reg, 1, 4);
 	add_match(&reg, 6, 7);
-	add_match(&reg, 11, 14);
+	add_match(&reg, 11, 54);
 	print_match(reg, s1);
 	return (TRUE);
 }

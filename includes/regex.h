@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/06/27 15:47:12 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/06/27 15:49:53 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/06/27 16:12:20 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -45,11 +45,18 @@ typedef	struct	s_reg_class
 	int			flags;
 }				t_reg_class;
 
-typedef	struct	s_regex
+typedef	struct	s_match
 {
 	int		start;
 	int		end;
 	struct	s_regex	*next;
+}				t_match;
+
+typedef struct	s_regex
+{
+	t_match		*match;
+	char		*regex;
+	char		*s1;
 }				t_regex;
 
 void	print_match(t_regex	*reg, char	*s1);
