@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/06/27 15:47:12 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/06/27 16:12:20 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/06/27 20:43:54 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,6 +30,22 @@ enum	e_regex_op
 	END_STRING = '$',
 };
 
+enum	e_regex_co
+{
+	RR_NOT,
+	RR_OR,
+	RR_RANGE,
+	RR_STAR,
+	RR_COMMA,
+	RR_QUAN_O,
+	RR_QUAN_C,
+	RR_CLASS_O,
+	RR_CLASS_C,
+	RSTART_STRING,
+	REND_STRING,
+};
+
+
 typedef	struct	s_reg_word
 {
 	char			*name;
@@ -49,7 +65,7 @@ typedef	struct	s_match
 {
 	int		start;
 	int		end;
-	struct	s_regex	*next;
+	struct	s_match	*next;
 }				t_match;
 
 typedef struct	s_regex
@@ -57,13 +73,17 @@ typedef struct	s_regex
 	t_match		*match;
 	char		*regex;
 	char		*s1;
+	int			end;
 }				t_regex;
 
-void	print_match(t_regex	*reg, char	*s1);
-int		count_match(t_regex	*reg);
-t_regex	*add_list(int start, int end);
-void	add_match(t_regex **reg, int start, int end);
+void	print_match(t_match	*reg, char	*s1);
+int		count_match(t_match	*reg);
+t_match	*add_list(int start, int end);
+void	add_match(t_match **match, int start, int end);
 t_bool	regex_start_string(char *s1, char *regex);
 t_bool	match_regex(char *s1, char *regex);
 t_bool	match(char *s1, char *regex);
+t_bool	is_noregex(char c);
+void	error_regex(void);
+int		find_class(t_regex *reg, char *s1, int start);
 #endif

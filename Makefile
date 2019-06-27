@@ -6,7 +6,7 @@
 #    By: rcepre <rcepre@student.le-101.fr>          +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2019/06/07 13:02:13 by loiberti     #+#   ##    ##    #+#        #
-#    Updated: 2019/06/27 15:51:27 by rgermain    ###    #+. /#+    ###.fr      #
+#    Updated: 2019/06/27 20:34:26 by rgermain    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -45,7 +45,7 @@ CHEADER = $(addprefix $(DHEADER),$(HEADER))
 # 								ALL  SCRS									   #
 # *****************************************************************************#
 
-SRC =	main.c	utils.c
+SRC =	main.c	utils.c error.c class.c
 
 COUNT = "1"
 SPACE = "                    "

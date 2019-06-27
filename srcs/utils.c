@@ -6,18 +6,32 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/06/27 15:52:11 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/06/27 16:03:48 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/06/27 20:12:52 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "regex.h"
 
-void	print_match(t_regex	*reg, char	*s1)
+t_bool	is_noregex(char	c)
 {
-	t_regex	*tmp;
 	int		i;
 
+	i = 0;
+	if (c == END_STRING || c == START_STRING || c == R_CLASS_O ||
+		c == R_CLASS_C || c == R_QUAN_O || c == R_QUAN_C || c == R_COMMA ||
+		c == R_STAR ||c == R_RANGE ||c == R_OR)
+		return (FALSE);
+	return (TRUE);
+}
+
+void	print_match(t_match	*reg, char	*s1)
+{
+	t_match	*tmp;
+	int		len;
+	int		i;
+
+	len = ft_strlen(s1);
 	tmp = reg;
 	i = 0;
 	while (tmp)
@@ -27,15 +41,22 @@ void	print_match(t_regex	*reg, char	*s1)
 				tmp->end - tmp->start, s1 + tmp->start);
 		i = tmp->end;
 		tmp = tmp->next;
+		if (tmp && tmp->end < i)
+		{
+			if (i < len)
+				ft_printf("%s", s1 + i);
+			i = 0;
+			ft_printf("\n");
+		}
 	}
-	if (i < ft_strlen(s1))
+	if (i < len)
 		ft_printf("%s", s1 + i);
 	ft_printf("\n");
 }
 
-int		count_match(t_regex	*reg)
+int		count_match(t_match	*reg)
 {
-	t_regex	*tmp;
+	t_match	*tmp;
 	int		i;
 
 	tmp = reg;
@@ -45,11 +66,11 @@ int		count_match(t_regex	*reg)
 	return (i);
 }
 
-t_regex	*add_list(int start, int end)
+t_match	*add_list(int start, int end)
 {
-	t_regex	*reg;
+	t_match	*reg;
 
-	if (!(reg = (t_regex*)ft_memalloc(sizeof(t_regex))))
+	if (!(reg = (t_match*)ft_memalloc(sizeof(t_match))))
 	{
 		ft_dprintf(2, "malloc_error\n");
 		exit(0);
@@ -59,9 +80,9 @@ t_regex	*add_list(int start, int end)
 	return (reg);
 }
 
-void	add_match(t_regex **reg, int start, int end)
+void	add_match(t_match **reg, int start, int end)
 {
-	t_regex	*tmp;
+	t_match	*tmp;
 
 	tmp = (*reg);
 	while (tmp && tmp->next)
