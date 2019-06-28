@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/06/27 15:52:11 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/06/28 19:06:11 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/06/28 20:37:34 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -28,6 +28,7 @@ t_bool	is_noregex(char	c)
 void	print_match(t_match	*reg, char	*s1)
 {
 	t_match	*tmp;
+	static	int	nb = 0;
 	char	*match;
 	int		len;
 	int		i;
@@ -35,6 +36,7 @@ void	print_match(t_match	*reg, char	*s1)
 	len = ft_strlen(s1);
 	tmp = reg;
 	i = 0;
+	ft_printf("match = %d\n", nb++);
 	if (!(match = (char*)ft_memalloc(ft_strlen(s1))))
 		error_regex();
 	while (tmp)

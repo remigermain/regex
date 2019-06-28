@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/06/27 20:32:03 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/06/28 19:39:35 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/06/28 20:35:03 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -57,6 +57,7 @@ t_bool	ft_strchr_norange(t_regex *reg, t_reg_class *class, char *s1)
 		else if (diff & 0x1)
 			add_match(&(reg->match), j, j + 1);
 	}
+	match(s1, reg->regex + reg->end);
 }
 
 void		parse_class(t_regex *reg, t_reg_class *cl)

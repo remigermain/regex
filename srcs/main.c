@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/06/27 15:48:43 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/06/27 20:52:22 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/06/28 20:35:56 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -60,7 +60,6 @@ int			find_noregex(t_regex *reg, char *s1, int start)
 	end = start;
 	while (reg->regex[end] && is_noregex(reg->regex[end]))
 		end++;
-	ft_printf("end = %d\n", end);
 	if (start == end)
 		return (end);
 	if (!(tmp = ft_strsub(reg->regex, start, end)))
@@ -83,7 +82,8 @@ t_bool	match(char *s1, char *regex)
 		find_noregex(&reg, s1, i);
 	if (regex[i] == R_CLASS_O)
 		find_class(&reg, s1, i + 1);
-	print_match(reg.match , s1);
+	if (reg.match)
+		print_match(reg.match , s1);
 //	find_char(&reg, 'c', s1);
 	return (FALSE);
 }
