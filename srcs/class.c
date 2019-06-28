@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/06/27 20:32:03 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/06/28 18:55:39 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/06/28 19:39:35 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,18 +22,12 @@ t_bool	ft_strchr_range(t_regex *reg, t_reg_class *class, char *s1)
 	{
 		if ((class->flags >> RR_NOT) & 0x1)
 		{
-			if (s1[i] >= class->range1 && s1[i] <= class->range2)
-				;
-			else
-				add_match(&(reg->match), 0, i);
+			if (!(s1[i] >= class->range1 && s1[i] <= class->range2))
+				add_match(&(reg->match), i, i + 1);
 		}
-		else if (s1[i] < class->range1 || s1[i] > class->range2)
-			;
-		else
-			add_match(&(reg->match), 0, i);
+		else if (!(s1[i] < class->range1 || s1[i] > class->range2))
+			add_match(&(reg->match), i, i + 1);
 	}
-//	add_match(&(reg->match), 0, i);
-//	match(s1 + i, reg->regex + reg->end);
 	return (TRUE);
 }
 
@@ -41,33 +35,28 @@ t_bool	ft_strchr_norange(t_regex *reg, t_reg_class *class, char *s1)
 {
 	int	i;
 	int	j;
+	int	diff;
 
-	i = -1;
-	j = 0;
-	while (reg->regex[++i])
+	j = -1;
+	while (s1[++j] && s1[j] != class->stop)
 	{
-		j = -1;
-		while (s1[++j] && s1[j] != class->stop)
+		diff = 0;
+		i = (((class->flags >> RR_NOT) & 0x1) ? 1 : 0);
+		while (reg->regex[++i] && reg->regex[i] != ']')
 		{
 			if (s1[j] == reg->regex[i])
-			{
-				if ((class->flags >> RR_NOT) & 0x1)
-					return (FALSE);
-				else
-				{
-					add_match(&(reg->match), j, j + 1);
-				//	match(s1 + j, reg->regex + reg->end);
-				}
-			}
+				diff |= 1 << 0;
+			else if (s1[j] != reg->regex[i])
+				diff |= 1 << 1;
 		}
+		if ((class->flags >> RR_NOT) & 0x1)
+		{
+			if (diff == 2)
+				add_match(&(reg->match), j, j + 1);
+		}
+		else if (diff & 0x1)
+			add_match(&(reg->match), j, j + 1);
 	}
-	if ((class->flags >> RR_NOT) & 0x1)
-	{
-		add_match(&(reg->match), j, j + 1);
-		match(s1 + j, reg->regex + reg->end);
-		return (TRUE);
-	}
-	return (FALSE);
 }
 
 void		parse_class(t_regex *reg, t_reg_class *cl)
