@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/06/27 15:52:11 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/06/27 20:12:52 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/06/28 19:06:11 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -28,29 +28,32 @@ t_bool	is_noregex(char	c)
 void	print_match(t_match	*reg, char	*s1)
 {
 	t_match	*tmp;
+	char	*match;
 	int		len;
 	int		i;
 
 	len = ft_strlen(s1);
 	tmp = reg;
 	i = 0;
+	if (!(match = (char*)ft_memalloc(ft_strlen(s1))))
+		error_regex();
 	while (tmp)
 	{
-		ft_printf("%.*s", tmp->start - i, s1 + i);
-		ft_printf(B_BLUE T_BLACK"%.*s" B_WHITE T_WHITE,\
-				tmp->end - tmp->start, s1 + tmp->start);
-		i = tmp->end;
+		i = tmp->start;
+		while (i < tmp->end)
+			match[i++] = 1;
 		tmp = tmp->next;
-		if (tmp && tmp->end < i)
-		{
-			if (i < len)
-				ft_printf("%s", s1 + i);
-			i = 0;
-			ft_printf("\n");
-		}
 	}
-	if (i < len)
-		ft_printf("%s", s1 + i);
+	i = 0;
+	while (s1[i])
+	{
+		if (match[i])
+			ft_printf(B_BLUE T_BLACK);
+		ft_printf("%c", s1[i]);
+		if (match[i])
+			ft_printf(T_WHITE);
+		i++;
+	}
 	ft_printf("\n");
 }
 

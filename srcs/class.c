@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/06/27 20:32:03 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/06/27 20:59:18 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/06/28 18:55:39 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,13 +23,17 @@ t_bool	ft_strchr_range(t_regex *reg, t_reg_class *class, char *s1)
 		if ((class->flags >> RR_NOT) & 0x1)
 		{
 			if (s1[i] >= class->range1 && s1[i] <= class->range2)
-				break ;
+				;
+			else
+				add_match(&(reg->match), 0, i);
 		}
 		else if (s1[i] < class->range1 || s1[i] > class->range2)
-			break ;
+			;
+		else
+			add_match(&(reg->match), 0, i);
 	}
-	add_match(&(reg->match), 0, i);
-	match(s1 + i, reg->regex + reg->end);
+//	add_match(&(reg->match), 0, i);
+//	match(s1 + i, reg->regex + reg->end);
 	return (TRUE);
 }
 
@@ -52,7 +56,7 @@ t_bool	ft_strchr_norange(t_regex *reg, t_reg_class *class, char *s1)
 				else
 				{
 					add_match(&(reg->match), j, j + 1);
-					match(s1 + j, reg->regex + reg->end);
+				//	match(s1 + j, reg->regex + reg->end);
 				}
 			}
 		}
