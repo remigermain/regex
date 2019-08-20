@@ -26,7 +26,7 @@ HEADER = regex.h
 
 LIBFT = libft/libft.a
 
-CC = clang
+CC = gcc
 
 OBJ = $(SRC:.c=.o)
 
@@ -45,7 +45,10 @@ CHEADER = $(addprefix $(DHEADER),$(HEADER))
 # 								ALL  SCRS									   #
 # *****************************************************************************#
 
-SRC =	main.c	utils.c error.c class.c
+SRC =	main.c 	utils.c error.c  \
+		regex_class.c \
+		regex_quantifier.c regex_get_quantifier.c regex_quantifier_func.c \
+		regex_enclosed.c
 
 COUNT = "1"
 SPACE = "                    "

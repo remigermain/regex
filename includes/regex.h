@@ -15,75 +15,66 @@
 # define REGEX_H
 # include "libft.h"
 
-enum	e_regex_op
+enum e_regex_quan
 {
-	R_NOT = '^',
-	R_OR = '|',
-	R_RANGE = '-',
-	R_STAR = '*',
-	R_COMMA= ',',
-	R_QUAN_O = '{',
-	R_QUAN_C = '}',
-	R_CLASS_O = '[',
-	R_CLASS_C = ']',
-	START_STRING = '^',
-	END_STRING = '$',
+	QUAN_MIN = 0b1,
+	QUAN_MAX = 0b10,
+	QUAN_EX = 0b100,
 };
 
-enum	e_regex_co
+typedef struct s_regex_quan
 {
-	RR_NOT,
-	RR_OR,
-	RR_RANGE,
-	RR_STAR,
-	RR_COMMA,
-	RR_QUAN_O,
-	RR_QUAN_C,
-	RR_CLASS_O,
-	RR_CLASS_C,
-	RSTART_STRING,
-	REND_STRING,
-};
+	int number_1;
+	int	number_2;
+	int isset;
+}				t_regex_quan;
+
+/*
+**-------------------------------------------------------
+**          regex_class.c
+**-------------------------------------------------------
+*/
+t_bool	match(const char *s1, const char *regex);
+t_bool	regex_cmp(const char *s1, const char *reg);
 
 
-typedef	struct	s_reg_word
-{
-	char			*name;
-	struct	s_class	*next;
-}				t_reg_word;
+/*
+**-------------------------------------------------------
+**          regex_class.c
+**-------------------------------------------------------
+*/
+t_bool  regex_class(const char *s1, const char *reg);
 
-typedef	struct	s_reg_class
-{
-	t_reg_word	*word;
-	int			range1;
-	int			range2;
-	int			stop;
-	int			flags;
-}				t_reg_class;
+/*
+**-------------------------------------------------------
+**          regex_enclosed.c
+**-------------------------------------------------------
+*/
+t_bool  regex_enclosed(const char *s1, const char *reg);
 
-typedef	struct	s_match
-{
-	int		start;
-	int		end;
-	struct	s_match	*next;
-}				t_match;
+/*
+**-------------------------------------------------------
+**          regex_quantifier_func.c
+**-------------------------------------------------------
+*/
+t_bool	regex_plus(char c, const char *s1, const char *reg);
+t_bool	regex_inter(char c, const char *s1, const char *reg);
+t_bool	regex_star(char c, const char *s1, const char *reg);
 
-typedef struct	s_regex
-{
-	t_match		*match;
-	char		*regex;
-	char		*s1;
-	int			end;
-}				t_regex;
+/*
+**-------------------------------------------------------
+**          regex_quantifier.c
+**-------------------------------------------------------
+*/
+t_bool          regex_quantifier(char c, const char *s1, const char *reg);
 
-void	print_match(t_match	*reg, char	*s1);
-int		count_match(t_match	*reg);
-t_match	*add_list(int start, int end);
-void	add_match(t_match **match, int start, int end);
-t_bool	regex_start_string(char *s1, char *regex);
-t_bool	match_regex(char *s1, char *regex);
-t_bool	match(char *s1, char *regex);
-t_bool	is_noregex(char c);
-void	error_regex(void);
-int		find_class(t_regex *reg, char *s1, int start);
+/*
+**-------------------------------------------------------
+**          regex_get_quantifier.c
+**-------------------------------------------------------
+*/
+int     get_quantifier(t_regex_quan *st, char *reg);
+t_bool  verif_quantifier(t_regex_quan *st, int i);
+
+
 #endif
