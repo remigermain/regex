@@ -33,14 +33,21 @@ typedef struct s_regex_class
 	int range_max;
 	int	isset;
 	int	match;
-}				t_regex_class;
+}				t_reg_class;
 
 typedef struct s_regex_quan
 {
 	int number_1;
 	int	number_2;
 	int isset;
-}				t_regex_quan;
+}				t_reg_quan;
+
+typedef struct s_regex_work
+{
+	char	*tmp;
+	int		span;
+	int		occur;
+}				t_reg_work;
 
 /*
 **-------------------------------------------------------
@@ -87,8 +94,9 @@ t_bool  regex_quantifier(char c, const char *s1, const char *reg);
 **          regex_get_quantifier.c
 **-------------------------------------------------------
 */
-int         get_quantifier(t_regex_quan *st, const char *reg);
-t_bool  verif_quantifier(t_regex_quan *st, int i);
+int         get_quantifier(t_reg_quan *st, const char *reg);
+t_bool  	verif_quantifier(t_reg_quan *st, int i);
 
 
+void    print_quan(t_reg_quan *st);
 #endif

@@ -15,11 +15,10 @@
 
 t_bool          regex_quantifier(char c, const char *s1, const char *reg)
 {
-    t_regex_quan    st;
+    t_reg_quan    st;
     int             i;
 
     i = 0;
-    ft_bzero(&st, sizeof(t_regex_quan));
     reg += get_quantifier(&st, (char*)reg);
     while (*s1 && (*s1 == c || c == '.') && (++i))
         s1++;

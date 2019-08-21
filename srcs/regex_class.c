@@ -13,13 +13,13 @@
 
 #include "regex.h"
 
-int     parse_class_not(t_regex_quan *quan, const char *reg, const char *s1, int j)
+int     parse_class_not(t_reg_quan *quan, const char *reg, const char *s1, int j)
 {
-    t_regex_class   class;
+    t_reg_class   class;
     char            *tmp;
 
     tmp = (char*)reg;
-    ft_bzero(&class, sizeof(t_regex_class));
+    ft_bzero(&class, sizeof(t_reg_class));
     while (!verif_quantifier(quan, ++class.match))
     {
         class.range_min = *tmp++;
@@ -38,13 +38,13 @@ int     parse_class_not(t_regex_quan *quan, const char *reg, const char *s1, int
     return (regex_cmp(s1, reg + j));
 }
 
-int     parse_class(t_regex_quan *quan, const char *reg, const char *s1, int j)
+int     parse_class(t_reg_quan *quan, const char *reg, const char *s1, int j)
 {
-    t_regex_class   class;
+    t_reg_class   class;
     char            *tmp;
 
     tmp = (char*)reg;
-    ft_bzero(&class, sizeof(t_regex_class));
+    ft_bzero(&class, sizeof(t_reg_class));
     while (*tmp && *tmp != ']')
     {
         class.range_min = *tmp++;
@@ -66,12 +66,12 @@ int     parse_class(t_regex_quan *quan, const char *reg, const char *s1, int j)
 
 t_bool  regex_class(const char *s1, const char *reg)
 {
-    t_regex_quan    quan;
+    t_reg_quan    quan;
     int i;
     int j;
 
     j = 0;
-    ft_bzero(&quan, sizeof(t_regex_quan));
+    ft_bzero(&quan, sizeof(t_reg_quan));
     i = ft_spanchar((char*)reg, "]") + 1;
     if (*(reg + i) == '{')
         j = get_quantifier(&quan, reg + i + 1) + 1;
