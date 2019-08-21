@@ -32,6 +32,7 @@ typedef struct s_regex_class
 	int range_min;
 	int range_max;
 	int	isset;
+	int	match;
 }				t_regex_class;
 
 typedef struct s_regex_quan
@@ -48,6 +49,7 @@ typedef struct s_regex_quan
 */
 t_bool	match(const char *s1, const char *regex);
 t_bool	regex_cmp(const char *s1, const char *reg);
+t_bool  regex_class_type(const char *s1, const char *reg);
 
 
 /*
