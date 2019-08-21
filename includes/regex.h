@@ -14,6 +14,7 @@
 #ifndef	REGEX_H
 # define REGEX_H
 # include "libft.h"
+# define REGEX_BUFF 40
 
 enum e_regex_quan
 {
@@ -49,14 +50,28 @@ typedef struct s_regex_work
 	int		occur;
 }				t_reg_work;
 
+typedef struct s_reg_get
+{
+	char	get[REGEX_BUFF];
+	size_t	start;
+}				t_reg_get;
+
+typedef struct s_regex
+{
+	const char	*reg;
+	const char	*s1;
+	size_t		reg_sub;
+	t_reg_get	tab[REGEX_BUFF];
+}				t_regex;
+
 /*
 **-------------------------------------------------------
 **          regex_class.c
 **-------------------------------------------------------
 */
-t_bool	match(const char *s1, const char *regex);
-t_bool	regex_cmp(const char *s1, const char *reg);
-t_bool  regex_class_type(const char *s1, const char *reg);
+t_bool	regex_cmp(t_regex *reg, const char *s1, const char *regex);
+t_bool	regex_parse(t_regex *st, const char *s1, const char *reg);
+t_bool  regex_class_type(t_regex *st, const char *s1, const char *reg);
 
 
 /*
@@ -64,30 +79,30 @@ t_bool  regex_class_type(const char *s1, const char *reg);
 **          regex_class.c
 **-------------------------------------------------------
 */
-t_bool  regex_class(const char *s1, const char *reg);
+t_bool  regex_class(t_regex *st, const char *s1, const char *reg);
 
 /*
 **-------------------------------------------------------
 **          regex_enclosed.c
 **-------------------------------------------------------
 */
-t_bool  regex_enclosed(const char *s1, const char *reg);
+t_bool  regex_enclosed(t_regex *st, const char *s1, const char *reg);
 
 /*
 **-------------------------------------------------------
 **          regex_quantifier_func.c
 **-------------------------------------------------------
 */
-t_bool	regex_plus(char c, const char *s1, const char *reg);
-t_bool	regex_inter(char c, const char *s1, const char *reg);
-t_bool	regex_star(char c, const char *s1, const char *reg);
+t_bool	regex_plus(t_regex *st, char c, const char *s1, const char *reg);
+t_bool	regex_inter(t_regex *st, char c, const char *s1, const char *reg);
+t_bool	regex_star(t_regex *st, char c, const char *s1, const char *reg);
 
 /*
 **-------------------------------------------------------
 **          regex_quantifier.c
 **-------------------------------------------------------
 */
-t_bool  regex_quantifier(char c, const char *s1, const char *reg);
+t_bool  regex_quantifier(t_regex *st, char c, const char *s1, const char *reg);
 
 /*
 **-------------------------------------------------------
@@ -97,6 +112,12 @@ t_bool  regex_quantifier(char c, const char *s1, const char *reg);
 int         get_quantifier(t_reg_quan *st, const char *reg);
 t_bool  	verif_quantifier(t_reg_quan *st, int i);
 
-
-void    print_quan(t_reg_quan *st);
+/*
+**-------------------------------------------------------
+**          utils.c
+**-------------------------------------------------------
+*/
+t_bool      delimiter(t_regex *st, char *reg, char delemiter);
+void    	print_quan(t_reg_quan *st);
+int			ft_spanchar_reg(char *flag, char *str);
 #endif

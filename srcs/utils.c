@@ -13,6 +13,24 @@
 
 #include "regex.h"
 
+t_bool      delimiter(t_regex *st, char *reg, char delemiter)
+{
+    if ((st->reg >= reg || *(reg - 1) != '\\') && *reg == delemiter)
+        return (TRUE);
+    return (FALSE);
+}
+
+int			ft_spanchar_reg(char *flag, char *str)
+{
+	int i;
+
+	i = 0;
+	while (flag[i] && (!ft_strchr(str, flag[i]) || (i > 0 && flag[i - 1] == '\\'))
+                    && !ft_isspace(flag[i]))
+		i++;
+	return (i);
+}
+
 void    print_quan(t_reg_quan *st)
 {
     ft_printf("[ quantifier debug ]\n\n");

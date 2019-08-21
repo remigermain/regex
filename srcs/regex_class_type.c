@@ -13,7 +13,7 @@
 
 #include "regex.h"
 
-t_bool  regex_class_type(const char *s1, const char *reg)
+t_bool  regex_class_type(t_regex *st, const char *s1, const char *reg)
 {
     if (!ft_strncmp(reg, ":alnum:", 8))
         return (ft_isalnum(*s1));

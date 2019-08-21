@@ -13,16 +13,16 @@
 
 #include "regex.h"
 
-t_bool          regex_quantifier(char c, const char *s1, const char *reg)
+t_bool          regex_quantifier(t_regex *st, char c, const char *s1, const char *reg)
 {
-    t_reg_quan    st;
+    t_reg_quan    quan;
     int             i;
 
     i = 0;
-    reg += get_quantifier(&st, (char*)reg);
-    while (*s1 && (*s1 == c || c == '.') && (++i))
+    reg += get_quantifier(&quan, (char*)reg);
+    while (*s1 && (*s1 == c || delimiter(st, (char*)reg, '.')) && (++i))
         s1++;
-    if (verif_quantifier(&st, i))
-        return (regex_cmp(s1, reg));
+    if (verif_quantifier(&quan, i))
+        return (regex_parse(st, s1, reg));
     return (FALSE);
 }

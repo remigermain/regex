@@ -46,6 +46,7 @@ CHEADER = $(addprefix $(DHEADER),$(HEADER))
 # *****************************************************************************#
 
 SRC =	main.c 	utils.c error.c  \
+		regex_cmp.c \
 		regex_class.c regex_class_type.c \
 		regex_quantifier.c regex_get_quantifier.c regex_quantifier_func.c \
 		regex_enclosed.c
