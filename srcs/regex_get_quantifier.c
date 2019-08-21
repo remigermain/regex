@@ -27,7 +27,7 @@ static int  get_quantifier_number(int *number, int *isset , int set, char *reg)
     return (i);
 }
 
-int         get_quantifier(t_regex_quan *st, char *reg)
+int         get_quantifier(t_regex_quan *st, const char *reg)
 {
     int i;
 

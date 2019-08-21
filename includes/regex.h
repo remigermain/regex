@@ -22,6 +22,18 @@ enum e_regex_quan
 	QUAN_EX = 0b100,
 };
 
+enum e_regex_class
+{
+	CLASS_NOT = 0b1,
+};
+
+typedef struct s_regex_class
+{
+	int range_min;
+	int range_max;
+	int	isset;
+}				t_regex_class;
+
 typedef struct s_regex_quan
 {
 	int number_1;
@@ -66,14 +78,14 @@ t_bool	regex_star(char c, const char *s1, const char *reg);
 **          regex_quantifier.c
 **-------------------------------------------------------
 */
-t_bool          regex_quantifier(char c, const char *s1, const char *reg);
+t_bool  regex_quantifier(char c, const char *s1, const char *reg);
 
 /*
 **-------------------------------------------------------
 **          regex_get_quantifier.c
 **-------------------------------------------------------
 */
-int     get_quantifier(t_regex_quan *st, char *reg);
+int         get_quantifier(t_regex_quan *st, const char *reg);
 t_bool  verif_quantifier(t_regex_quan *st, int i);
 
 
