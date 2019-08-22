@@ -93,6 +93,8 @@ t_bool  regex_enclosed(t_regex *st, const char *s1, const char *reg);
 **          regex_quantifier_func.c
 **-------------------------------------------------------
 */
+t_bool          is_quantifier(t_regex *st, const char *reg);
+t_bool	char_quantifier(t_regex *st, char c, const char *s1, const char *reg);
 t_bool	regex_plus(t_regex *st, char c, const char *s1, const char *reg);
 t_bool	regex_inter(t_regex *st, char c, const char *s1, const char *reg);
 t_bool	regex_star(t_regex *st, char c, const char *s1, const char *reg);
@@ -117,7 +119,7 @@ t_bool  	verif_quantifier(t_reg_quan *st, int i);
 **          utils.c
 **-------------------------------------------------------
 */
-t_bool      delimiter(t_regex *st, char *reg, char delemiter);
+t_bool      is_delimiter(t_regex *st, char *reg, char delemiter);
 void    	print_quan(t_reg_quan *st);
 int			ft_spanchar_reg(char *flag, char *str);
 #endif

@@ -13,7 +13,7 @@
 
 #include "regex.h"
 
-t_bool      delimiter(t_regex *st, char *reg, char delemiter)
+t_bool      is_delimiter(t_regex *st, char *reg, char delemiter)
 {
     if ((st->reg >= reg || *(reg - 1) != '\\') && *reg == delemiter)
         return (TRUE);
@@ -35,7 +35,7 @@ void    print_quan(t_reg_quan *st)
 {
     ft_printf("[ quantifier debug ]\n\n");
     ft_printf("numer_1 = %d\n", st->number_1);
-    ft_printf("numer_2 = %d\n", st->number_1);
+    ft_printf("numer_2 = %d\n", st->number_2);
     ft_printf("%b\n", st->isset);
     if (st->isset & QUAN_EX)
         ft_printf("only number %d \n", st->number_1);
@@ -43,5 +43,16 @@ void    print_quan(t_reg_quan *st)
         ft_printf("min number %d \n", st->number_1);
     if (st->isset & QUAN_MAX)
         ft_printf("max number %d \n", st->number_2);
+
+    ft_printf("{");
+    if (st->isset & QUAN_EX)
+        ft_printf("%d", st->number_1);
+    if (st->isset & QUAN_MIN)
+        ft_printf("%d", st->number_1);
+    if (st->isset & QUAN_MIN || st->isset & QUAN_MAX)
+        ft_printf(",");
+    if (st->isset & QUAN_MAX)
+        ft_printf("%d", st->number_2);
+    ft_printf("}\n");
     ft_printf("\n[ quantifier END debug ]\n");
 }

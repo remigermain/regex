@@ -27,16 +27,35 @@ static int  get_quantifier_number(int *number, int *isset , int set, char *reg)
     return (i);
 }
 
+int         mini_quantifier(t_reg_quan *st, const char *reg)
+{
+    if (ft_strchr("*+", *reg))
+    {
+        st->isset |= QUAN_MIN;
+        st->number_1 = (*reg == '*' ? 0 : 1);
+    }
+    else
+    {
+        st->isset |= QUAN_MAX;
+        st->number_2 = 1;
+    }
+    return (1);
+}
+
 int         get_quantifier(t_reg_quan *st, const char *reg)
 {
     int i;
 
     i = 0;
     ft_bzero(st, sizeof(*st));
+    if (ft_strchr("*?+", *reg))
+        return (mini_quantifier(st, reg));
+    else if (*reg == '{')
+        reg++;
     i += get_quantifier_number(&st->number_1, &st->isset, QUAN_MIN, (char*)reg + i);
     i += ft_spantype((char*)reg + i, ft_isspace);
     if (*(reg + i) != ',')
-        st->isset |= QUAN_EX;
+        st->isset = QUAN_EX;
     else
         i++;
     i += get_quantifier_number(&st->number_2, &st->isset, QUAN_MAX, (char*)reg + i);

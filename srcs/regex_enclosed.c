@@ -21,13 +21,13 @@ t_bool  regex_enclosed(t_regex *st, const char *s1, const char *reg)
     work.occur = 0;
     work.tmp = (char*)reg;
     work.span = ft_spanchar_reg(work.tmp, ")") + 1;
-    if (delimiter(st, (char*)(reg + work.span), '{'))
+    if (is_delimiter(st, (char*)(reg + work.span), '{'))
         work.span += get_quantifier(&quan, reg + work.span + 1) + 1;
-    while (*(work.tmp) && delimiter(st, (char*)work.tmp, ')'))
+    while (*(work.tmp) && is_delimiter(st, (char*)work.tmp, ')'))
     {
-        if (delimiter(st, (char*)work.tmp, '|'))
+        if (is_delimiter(st, (char*)work.tmp, '|'))
             work.tmp++;
-        if (delimiter(st, (char*)work.tmp, '\\'))
+        if (is_delimiter(st, (char*)work.tmp, '\\'))
             work.tmp++;
         ft_printf("%c\n", *work.tmp);
         if ((*s1 == *(work.tmp)) &&
