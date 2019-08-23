@@ -13,24 +13,49 @@
 
 #include "regex.h"
 
-t_bool	char_quantifier(t_regex *st, char c, const char *s1, const char *reg)
+t_bool  is_metachar(t_regex *st, char *reg)
 {
-	t_reg_quan quan;
-
-	reg += get_quantifier(&quan, reg);
-	print_quan(&quan);
-}
-
-t_bool          regex_quantifier(t_regex *st, char c, const char *s1, const char *reg)
-{
-    t_reg_quan    quan;
-    int             i;
+    int i;
 
     i = 0;
-    reg += get_quantifier(&quan, (char*)reg);
-    while (*s1 && (*s1 == c || is_delimiter(st, (char*)reg, '.')) && (++i))
-        s1++;
-    if (verif_quantifier(&quan, i))
-        return (regex_parse(st, s1, reg));
+    while (reg - i - 1 >= st->reg && *(reg - i - 1) == '\\')
+        i++;
+    if (i % 2)
+        return (FALSE);
+    return (TRUE);
+}
+
+t_bool  is_enclose(t_regex *st, char *reg)
+{
+    if (ft_strchr(ENCLOSE, *reg) &&
+            is_metachar(st, reg))
+        return (TRUE);
+    return (FALSE);    
+}
+
+t_bool  is_quantifier(t_regex *st, char *reg)
+{
+    if (ft_strchr(QUANTIFIER, *reg) &&
+            is_metachar(st, reg))
+        return (TRUE);
     return (FALSE);
+}
+
+int     convert_metachar(t_regex *st, char *reg)
+{
+    int c;
+
+    c = *reg;
+    if (!is_metachar(st, reg))
+    {
+        if (*reg == 'n')
+            c = '\n';
+        else if (*reg == 't')
+            c = '\t';
+        else if (*reg == 'v')
+            c = '\v';
+        else if (*reg == '0')
+            c = ft_atoi_base(reg, 8);
+    }
+    return (c);
 }

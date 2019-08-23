@@ -15,18 +15,20 @@
 
 t_bool	regex_parse(t_regex *st, const char *s1, const char *reg)
 {
-	if (is_delimiter(st, (char*)reg, '\\'))
+	if (*reg == '\\' && is_metachar(st, reg))
 		reg++;
-	ft_printf("%c\n", *reg);
 	if (*reg == '\0')
 		return (TRUE);
 	if (is_delimiter(st, (char*)reg, '['))
 		return (regex_class(st, s1, ++reg));
 	if (is_delimiter(st, (char*)reg, '('))
 		return (regex_enclosed(st, s1, ++reg));
+	
+	if (is_quantifier(st, reg + 1))
+		return (char_quantifier(st, *reg, s1, reg + 1));		
 
-	if (ft_strchr("*+?{", *(reg + 1)) && is_delimiter(st, (char*)reg + 1, *(reg + 1)))
-		return (char_quantifier(st, *reg, s1, reg + 1));
+	//if (ft_strchr("*+?{", *(reg + 1)) && is_delimiter(st, (char*)reg + 1, *(reg + 1)))
+	//	return (char_quantifier(st, *reg, s1, reg + 1));
 
 
 	if (is_delimiter(st, (char*)reg, '$') && *(reg + 1) == '\0')

@@ -15,6 +15,9 @@
 # define REGEX_H
 # include "libft.h"
 # define REGEX_BUFF 40
+# define DELEMITOR "|[]^."
+# define QUANTIFIER "{*+?"
+# define ENCLOSE "[("
 
 enum e_regex_quan
 {
@@ -93,7 +96,6 @@ t_bool  regex_enclosed(t_regex *st, const char *s1, const char *reg);
 **          regex_quantifier_func.c
 **-------------------------------------------------------
 */
-t_bool          is_quantifier(t_regex *st, const char *reg);
 t_bool	char_quantifier(t_regex *st, char c, const char *s1, const char *reg);
 t_bool	regex_plus(t_regex *st, char c, const char *s1, const char *reg);
 t_bool	regex_inter(t_regex *st, char c, const char *s1, const char *reg);
@@ -113,6 +115,21 @@ t_bool  regex_quantifier(t_regex *st, char c, const char *s1, const char *reg);
 */
 int         get_quantifier(t_reg_quan *st, const char *reg);
 t_bool  	verif_quantifier(t_reg_quan *st, int i);
+
+
+/*
+**-------------------------------------------------------
+**          is_regex.c
+**-------------------------------------------------------
+*/
+t_bool  is_metachar(t_regex *st, char *reg);
+t_bool  is_start(t_regex *st, char *reg);
+t_bool  is_end(t_regex *st, char *reg);
+t_bool  is_or(t_regex *st, char *reg);
+t_bool  is_quantifier(t_regex *st, char *reg);
+t_bool  is_enclose(t_regex *st, char *reg);
+int     convert_metachar(t_regex *st, char *reg);
+
 
 /*
 **-------------------------------------------------------
