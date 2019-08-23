@@ -19,21 +19,20 @@ t_bool	regex_parse(t_regex *st, const char *s1, const char *reg)
 		reg++;
 	if (*reg == '\0')
 		return (TRUE);
-	if (is_delimiter(st, (char*)reg, '['))
+
+	if (is_delimiter(st, reg + 1, '['))
 		return (regex_class(st, s1, ++reg));
-	if (is_delimiter(st, (char*)reg, '('))
+
+	if (is_delimiter(st, reg + 1, '('))
 		return (regex_enclosed(st, s1, ++reg));
 	
 	if (is_quantifier(st, reg + 1))
 		return (char_quantifier(st, *reg, s1, reg + 1));		
 
-	//if (ft_strchr("*+?{", *(reg + 1)) && is_delimiter(st, (char*)reg + 1, *(reg + 1)))
-	//	return (char_quantifier(st, *reg, s1, reg + 1));
-
-
-	if (is_delimiter(st, (char*)reg, '$') && *(reg + 1) == '\0')
+	if (is_delimiter(st, reg, '$') && *(reg + 1) == '\0')
 		return (*s1 ? FALSE : TRUE);
-	if (*s1 && (is_delimiter(st, (char*)reg, '.') || *reg == *s1))
+
+	if (*s1 && (is_delimiter(st, reg, '.') || *reg == *s1))
 		return (regex_parse(st, ++s1, ++reg));
 	return (FALSE);
 }
@@ -43,6 +42,7 @@ t_bool	regex_cmp(t_regex *st, const char *s1, const char *regex)
 	ft_bzero(st, sizeof(*st));
 	st->reg = regex;
 	st->s1 = s1;
+	ft_printf("%d\n", convert_metachar(st, regex + 1));
 	if (is_delimiter(st, (char*)regex, '^'))
 		return (regex_parse(st, s1, ++regex));
 	while (*s1)

@@ -13,13 +13,6 @@
 
 #include "regex.h"
 
-t_bool      is_delimiter(t_regex *st, char *reg, char delemiter)
-{
-    if ((st->reg >= reg || *(reg - 1) != '\\') && *reg == delemiter)
-        return (TRUE);
-    return (FALSE);
-}
-
 int			ft_spanchar_reg(char *flag, char *str)
 {
 	int i;
