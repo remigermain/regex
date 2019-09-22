@@ -1,25 +1,24 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   utils.c                                          .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/06/27 15:52:11 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/06/28 20:37:34 by rgermain    ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/06/27 15:52:11 by rgermain          #+#    #+#             */
+/*   Updated: 2019/09/22 16:40:20 by rgermain         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
+
 
 #include "regex.h"
 
-int			ft_spanchar_reg(char *flag, char *str)
+int ft_spanchar_reg(t_regex *st, char *reg, char *str)
 {
 	int i;
 
 	i = 0;
-	while (flag[i] && (!ft_strchr(str, flag[i]) || (i > 0 && flag[i - 1] == '\\'))
-                    && !ft_isspace(flag[i]))
+	while (reg[i] && (!is_metachar(st, reg + 1) || reg[i] != ']' || !ft_isspace(reg[i])))
 		i++;
 	return (i);
 }

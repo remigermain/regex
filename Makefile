@@ -1,15 +1,15 @@
 # **************************************************************************** #
-#                                                           LE - /             #
-#                                                               /              #
-#    Makefile                                         .::    .:/ .      .::    #
-#                                                  +:+:+   +:    +:  +:+:+     #
-#    By: rcepre <rcepre@student.le-101.fr>          +:+   +:    +:    +:+      #
-#                                                  #+#   #+    #+    #+#       #
-#    Created: 2019/06/07 13:02:13 by loiberti     #+#   ##    ##    #+#        #
-#    Updated: 2019/06/27 20:34:26 by rgermain    ###    #+. /#+    ###.fr      #
-#                                                          /                   #
-#                                                         /                    #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2019/06/07 13:02:13 by loiberti          #+#    #+#              #
+#    Updated: 2019/09/22 17:12:20 by rgermain         ###   ########.fr        #
+#                                                                              #
 # **************************************************************************** #
+
 # **************************************************************************** #
 
 NAME = regex
@@ -18,7 +18,7 @@ TYPE = "of the executable"
 LIBFT_M :
 	@make -C libft/ all
 
-CFLAGS = 
+CFLAGS = -g3
 
 INCLUDE = -Iincludes -Ilibft/includes
 
@@ -46,7 +46,7 @@ CHEADER = $(addprefix $(DHEADER),$(HEADER))
 # *****************************************************************************#
 
 SRC =	main.c 	utils.c error.c  \
-		regex_cmp.c is_regex.c \
+		regex_cmp.c is_regex.c is_regex2.c \
 		regex_class.c regex_class_type.c \
 		regex_quantifier.c regex_get_quantifier.c regex_quantifier_func.c \
 		regex_enclosed.c

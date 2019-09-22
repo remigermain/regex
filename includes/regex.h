@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   regex.h                                          .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/06/27 15:47:12 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/06/27 20:43:54 by rgermain    ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   regex.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/06/27 15:47:12 by rgermain          #+#    #+#             */
+/*   Updated: 2019/09/22 17:07:37 by rgermain         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef	REGEX_H
 # define REGEX_H
@@ -129,14 +129,15 @@ t_bool  is_or(t_regex *st, char *reg);
 t_bool  is_quantifier(t_regex *st, char *reg);
 t_bool  is_enclose(t_regex *st, char *reg);
 int     convert_metachar(t_regex *st, char *reg);
+int		convert_metachar_len(t_regex *st, char *reg);
 
-
-/*
+	/*
 **-------------------------------------------------------
 **          utils.c
 **-------------------------------------------------------
 */
-t_bool      is_delimiter(t_regex *st, char *reg, char delemiter);
+	t_bool
+	is_delimiter(t_regex *st, char *reg, char delemiter);
 void    	print_quan(t_reg_quan *st);
-int			ft_spanchar_reg(char *flag, char *str);
+int 		ft_spanchar_reg(t_regex *st, char *reg, char *str);
 #endif

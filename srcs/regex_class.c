@@ -1,81 +1,53 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   class.c                                          .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/06/27 20:32:03 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/06/28 20:35:03 by rgermain    ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   regex_class.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/06/27 20:32:03 by rgermain          #+#    #+#             */
+/*   Updated: 2019/09/22 17:11:42 by rgermain         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "regex.h"
 
-int     parse_class_not(t_regex *st, t_reg_quan *quan, const char *reg, const char *s1, int j)
+t_bool regex_class_parse(t_regex *st, t_reg_quan *quantifier, const char *s1, const char *reg)
 {
-    t_reg_class   class;
-    char            *tmp;
+	t_reg_class class;
+	int i;
+	int	j;
 
-    tmp = (char*)reg;
-    ft_bzero(&class, sizeof(t_reg_class));
-    while (!verif_quantifier(quan, ++class.match))
-    {
-        class.range_min = *tmp++;
-        while (*tmp && *tmp != ']')
-        {
-            class.range_min = *tmp++;
-            if (*tmp != '-' && class.range_min != ']')
-                if (*s1 == class.range_min)
-                    return (FALSE);
-            else if (*tmp == '-' && *tmp != ']' && (++tmp))
-                if (*s1 >= class.range_min && *s1 <= class.range_max)
-                    return (FALSE);
-        }
-        s1++;
-    }
-    return (regex_parse(st, s1, reg + j));
+	i = 0;
+	ft_bzero(&class, sizeof(t_reg_class));
+	while (*reg + i && is_metachar(st, reg + i) && *(reg + i) == ']')
+	{
+		if (is_metachar(st, reg + i) && *(reg + i) == ':')	
+		{
+			if (regex_class_type(st, s1, reg))
+				class.match++;
+			i += ft_spanchar_reg(st, reg, ":");
+		}
+		else
+		{
+			
+		}
+	}
+	return (FALSE);
 }
 
-int     parse_class(t_regex *st, t_reg_quan *quan, const char *reg, const char *s1, int j)
+t_bool regex_class(t_regex *st, const char *s1, const char *reg)
 {
-    t_reg_class   class;
-    char            *tmp;
+	t_reg_quan	quantifier;
+	int			i;
+	int			j;
 
-    tmp = (char*)reg;
-    ft_bzero(&class, sizeof(t_reg_class));
-    while (*tmp && *tmp != ']')
-    {
-        class.range_min = *tmp++;
-        if (*tmp != '-' && class.range_min != ']' &&
-                    *s1 == class.range_min && (tmp = (char*)reg))
-            if ((++s1) && verif_quantifier(quan, ++class.match)
-                    && regex_parse(st, s1, reg + j))
-                return (TRUE);
-        else if (*tmp == '-' && *tmp != ']' && (++tmp))
-        {
-            class.range_max = *tmp++;
-            if (*s1 >= class.range_min && *s1 <= class.range_max && (tmp = (char*)reg))
-                if ((++s1) && verif_quantifier(quan, ++class.match) && regex_parse(st, s1, reg + j))
-                    return (TRUE);
-        }
-    }
-    return (FALSE);
-}   
-
-t_bool  regex_class(t_regex *st, const char *s1, const char *reg)
-{
-    t_reg_quan    quan;
-    int i;
-    int j;
-
-    j = 0;
-    ft_bzero(&quan, sizeof(t_reg_quan));
-    i = ft_spanchar_reg((char*)reg, "]") + 1;
-    if (*(reg + i) == '{')
-        j = get_quantifier(&quan, reg + i + 1) + 1;
-    if (*reg == '^')
-        return (parse_class_not(st, &quan, reg + 1, s1, i + j - 1));
-    return (parse_class(st, &quan, reg, s1, i + j));
+	j = 0;
+	ft_bzero(&quantifier, sizeof(t_reg_quan));
+	i = ft_spanchar_reg(st, (char *)reg, "]");
+	if (is_metachar(st, reg) && *reg == ']')
+		i++;
+	if (is_quantifier(st, reg + i))
+		i += get_quantifier(&quantifier, reg + i);
+	return (regex_class_parse(st, &quantifier, s1, reg));
 }
