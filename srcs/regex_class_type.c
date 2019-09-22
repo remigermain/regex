@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:47:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/22 17:51:26 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/22 19:14:56 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ t_bool  regex_class_type(t_regex *st, const char *s1, const char *reg)
     else if (!ft_strncmp(reg, ":graph:", 7))
         return (ft_isgraph(*s1));
     else if (!ft_strncmp(reg, ":lower:", 7))
+	{
+		ft_printf("ft_islower  *s1 = |%c|\n", *s1);
         return (ft_islowercase(*s1));
+	}
     else if (!ft_strncmp(reg, ":print:", 7))
         return (ft_isprint(*s1));
     else if (!ft_strncmp(reg, ":space:", 7))
