@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/22 16:23:02 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/22 19:01:20 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,15 @@ static int  get_quantifier_number(int *number, int *isset , int set, char *reg)
     }
     return (i);
 }
+
+/*
+
+	+  =  1 ou plus
+	* =   0 ou plus
+	? =  1 ou rien
+
+*/
+
 
 static int         mini_quantifier(t_reg_quan *st, const char *reg)
 {
@@ -62,13 +71,15 @@ int         get_quantifier(t_reg_quan *st, const char *reg)
     return (i + 1);
 }
 
-t_bool      verif_quantifier(t_reg_quan *st, int i)
+t_bool      verif_quantifier(t_reg_quan *quan, int i)
 {
-    if (st->isset & QUAN_EX && st->number_1 != i)
-        return (FALSE);
-    else if (st->isset & QUAN_MIN && st->number_1 > i)
-        return (FALSE);
-    else if (st->isset & QUAN_MAX && st->number_2 < i)
-        return (FALSE);
+	if (quan->isset & QUAN_EX && quan->number_1 != i)
+		return (FALSE);
+	else if (quan->isset & QUAN_MIN && quan->number_1 > i)
+		return (FALSE);
+	else if (quan->isset & QUAN_MAX && quan->number_2 < i)
+		return (FALSE);
+	else if (quan->isset == 0)
+		return (i == 1 ? TRUE : FALSE);
     return (TRUE);
 }

@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:47:12 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/22 17:07:37 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/22 18:33:33 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,22 @@ enum e_regex_class
 	CLASS_NOT = 0b1,
 };
 
-typedef struct s_regex_class
-{
-	int range_min;
-	int range_max;
-	int	isset;
-	int	match;
-}				t_reg_class;
-
 typedef struct s_regex_quan
 {
 	int number_1;
 	int	number_2;
 	int isset;
 }				t_reg_quan;
+
+typedef struct s_regex_class
+{
+	t_reg_quan	quantifier;
+	int 		range_min;
+	int 		range_max;
+	int			isset;
+	int			match;
+	int			i;
+}				t_reg_class;
 
 typedef struct s_regex_work
 {
@@ -130,6 +132,7 @@ t_bool  is_quantifier(t_regex *st, char *reg);
 t_bool  is_enclose(t_regex *st, char *reg);
 int     convert_metachar(t_regex *st, char *reg);
 int		convert_metachar_len(t_regex *st, char *reg);
+int 	regex_span_class_type(t_regex *st, char *reg);
 
 	/*
 **-------------------------------------------------------

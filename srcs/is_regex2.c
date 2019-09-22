@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/22 17:24:33 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/22 18:18:06 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int convert_metachar(t_regex *st, char *reg)
 	int c;
 
 	c = *reg;
+	ft_printf("c =  %c\n", c);
 	if (*reg && !is_metachar(st, reg))
 	{
 		if (*reg == 'n')

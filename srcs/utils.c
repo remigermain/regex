@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:52:11 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/22 16:40:20 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/22 18:35:25 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,28 @@ int ft_spanchar_reg(t_regex *st, char *reg, char *str)
 	int i;
 
 	i = 0;
-	while (reg[i] && (!is_metachar(st, reg + 1) || reg[i] != ']' || !ft_isspace(reg[i])))
+	while (reg[i] && (!is_metachar(st, reg + i) || !ft_strchr(str, reg[i]) || ft_isspace(reg[i])))
 		i++;
 	return (i);
 }
 
-void    print_quan(t_reg_quan *st)
+int regex_span_class_type(t_regex *st, char *reg)
+{
+	int func;
+	int i;
+
+	func = 0;
+	i = 0;
+	while (reg[i] && func != 2)
+	{
+		if (reg[i] == ':')
+			func++;
+		i++;
+	}
+	return (i);
+}
+
+void print_quan(t_reg_quan *st)
 {
     ft_printf("[ quantifier debug ]\n\n");
     ft_printf("numer_1 = %d\n", st->number_1);
