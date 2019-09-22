@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 20:32:03 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/22 19:24:28 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/22 19:43:48 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,42 +35,48 @@ t_bool	regex_class_match(t_regex *st, t_reg_class *class, const char *s1, const 
 	return (FALSE);
 }
 
+t_bool	regex_class_line(int isset, t_bool ret, t_bool line_class)
+{
+	if (!isset && ret)
+		line_class = TRUE;
+	else if (isset && ret)
+		line_class = FALSE;
+	return (line_class);
+}
+
 t_bool	regex_class_parse(t_regex *st, t_reg_class *class, const char *s1, const char *reg)
 {
+	t_bool	line_class;
 	t_bool	ret;
 	int i;
 	int	j;
 
-	i = class->isset;
-	while (*s1 && *reg + i && is_metachar(st, reg + i) && *(reg + i) != ']')
+	while (*s1)
 	{
-		if (is_metachar(st, reg + i) && *(reg + i) == ':')
+		line_class = FALSE;
+		i = class->isset;
+		while (*s1 && *reg + i && is_metachar(st, reg + i) && *(reg + i) != ']')
 		{
-			ret = regex_class_type(st, s1, reg + i);
-			if (((ret && !class->isset) || (!ret && class->isset & CLASS_NOT)) && (++s1))
+			if (is_metachar(st, reg + i) && *(reg + i) == ':')
 			{
-				if (regex_class_match(st, class, s1, reg))
-					return (TRUE);
-				i = class->isset;
+				ret = regex_class_type(st, s1, reg + i);
+				line_class = regex_class_line(class->isset, ret, line_class);
+				i += regex_span_class_type(st, reg + i);
 			}
 			else
-				i += regex_span_class_type(st, reg + i);
-		}
-		else
-		{
-			ft_printf("lalalalala    %c %c\n", class->range_min, class->range_max);
-			i += regex_class_parsing(st, class, s1, reg + i);
-			ret = (*s1 >= class->range_min && *s1 <= class->range_max ? TRUE : FALSE);
-			if (((ret && !class->isset) || (!ret && class->isset & CLASS_NOT)) && (++s1))
 			{
-				if (regex_class_match(st, class, s1, reg))
-					return (TRUE);
-				i = class->isset;
+				i += regex_class_parsing(st, class, s1, reg + i);
+				ret = (*s1 >= class->range_min && *s1 <= class->range_max ? TRUE : FALSE);
+				line_class = regex_class_line(class->isset, ret, line_class);
 			}
 		}
+		if (line_class == TRUE && (++s1) && regex_class_match(st, class, s1, reg))
+			return (TRUE);
+		else if (line_class == FALSE)
+			return (FALSE);
 	}
-	if (verif_quantifier(&(class->quantifier), class->match))
-		return (regex_parse(st, s1, reg + class->i));
+	//if (verif_quantifier(&(class->quantifier), class->match))
+	//	return (regex_parse(st, s1, reg + class->i));
 	return (FALSE);
 }
 
