@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/24 20:12:17 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/24 20:23:19 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_bool	regex_parse(t_regex *st, char *s1, char *reg)
 		return (regex_enclosed(st, s1, ++reg));
 	
 	if (is_quantifier(st, reg + 1))								// quantifier
-		return (char_quantifier(st, *reg, s1, reg + 1));		
+		return (regex_quantifier(st, s1, reg));
 
 	if (is_delimiter(st, reg, '$') && *(reg + 1) == '\0') 		// end string
 		return (*s1 ? FALSE : TRUE);

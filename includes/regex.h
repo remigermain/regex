@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:47:12 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/24 20:14:22 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/24 20:23:14 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ t_bool  regex_enclosed(t_regex *st, char *s1, char *reg);
 **          regex_quantifier_func.c
 **-------------------------------------------------------
 */
-t_bool	char_quantifier(t_regex *st, char c, char *s1, char *reg);
+t_bool	char_quantifier(t_regex *st, char *s1, char *reg);
 t_bool	regex_plus(t_regex *st, char c, char *s1, char *reg);
 t_bool	regex_inter(t_regex *st, char c, char *s1, char *reg);
 t_bool	regex_star(t_regex *st, char c, char *s1, char *reg);
@@ -110,7 +110,7 @@ t_bool	regex_star(t_regex *st, char c, char *s1, char *reg);
 **          regex_quantifier.c
 **-------------------------------------------------------
 */
-t_bool  regex_quantifier(t_regex *st, char c, char *s1, char *reg);
+t_bool  regex_quantifier(t_regex *st, char *s1, char *reg);
 
 /*
 **-------------------------------------------------------

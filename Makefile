@@ -6,7 +6,7 @@
 #    By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/07 13:02:13 by loiberti          #+#    #+#              #
-#    Updated: 2019/09/22 17:12:20 by rgermain         ###   ########.fr        #
+#    Updated: 2019/09/24 20:37:30 by rgermain         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ CHEADER = $(addprefix $(DHEADER),$(HEADER))
 SRC =	main.c 	utils.c error.c  \
 		regex_cmp.c is_regex.c is_regex2.c \
 		regex_class.c regex_class_type.c \
-		regex_quantifier.c regex_get_quantifier.c regex_quantifier_func.c \
+		regex_quantifier.c \
 		regex_enclosed.c
 
 COUNT = "1"
