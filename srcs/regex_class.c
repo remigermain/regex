@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 20:32:03 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/22 19:43:48 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/24 18:38:19 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,20 +51,24 @@ t_bool	regex_class_parse(t_regex *st, t_reg_class *class, const char *s1, const 
 	int i;
 	int	j;
 
-	while (*s1)
+	while (*s1 != '\0')
 	{
 		line_class = FALSE;
 		i = class->isset;
-		while (*s1 && *reg + i && is_metachar(st, reg + i) && *(reg + i) != ']')
+		while (*s1 && *(reg + i) && (!is_metachar(st, reg + i) || *(reg + i) != ']'))
 		{
-			if (is_metachar(st, reg + i) && *(reg + i) == ':')
+			if (is_metachar(st, reg + i) && *(reg + i) == '\\')
+				i++;
+			else if (is_metachar(st, reg + i) && *(reg + i) == ':')
 			{
+				ft_printf("[ REG ] %s\n", reg + i);
 				ret = regex_class_type(st, s1, reg + i);
 				line_class = regex_class_line(class->isset, ret, line_class);
 				i += regex_span_class_type(st, reg + i);
 			}
 			else
 			{
+				ft_printf("[ REG CHAR ] %c\n", *(reg + i));
 				i += regex_class_parsing(st, class, s1, reg + i);
 				ret = (*s1 >= class->range_min && *s1 <= class->range_max ? TRUE : FALSE);
 				line_class = regex_class_line(class->isset, ret, line_class);

@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/22 19:01:20 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/24 18:42:05 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int         get_quantifier(t_reg_quan *st, const char *reg)
         st->isset = QUAN_EX;
     else
 	{
-    	i += get_quantifier_number(&st->number_2, &st->isset, QUAN_MAX, (char*)reg + i + 1);
+    	i += get_quantifier_number(&st->number_2, &st->isset, QUAN_MAX, (char*)reg + i + 1) + 1;
     	i += ft_spantype((char*)reg + i, ft_isspace);
 	}
     return (i + 1);
