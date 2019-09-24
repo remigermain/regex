@@ -6,14 +6,14 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/22 18:48:42 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/24 20:12:17 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "regex.h"
 
-t_bool	regex_parse(t_regex *st, const char *s1, const char *reg)
+t_bool	regex_parse(t_regex *st, char *s1, char *reg)
 {
 	if (*reg == '\\' && is_metachar(st, reg))
 		reg++;
@@ -39,7 +39,7 @@ t_bool	regex_parse(t_regex *st, const char *s1, const char *reg)
 	return (FALSE);
 }
 
-t_bool	regex_cmp(t_regex *st, const char *s1, const char *regex)
+t_bool	regex_cmp(t_regex *st, char *s1, char *regex)
 {
 	ft_bzero(st, sizeof(*st));
 	st->reg = regex;

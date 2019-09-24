@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/22 17:26:42 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/24 19:03:21 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ t_bool      is_enclose(t_regex *st, char *reg)
 
 t_bool      is_quantifier(t_regex *st, char *reg)
 {
-	ft_printf("auqnti = %c\n", *reg);
     if (*reg && ft_strchr(QUANTIFIER, *reg) && is_metachar(st, reg))
         return (TRUE);
     return (FALSE);

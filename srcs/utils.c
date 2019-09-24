@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:52:11 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/22 18:35:25 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/24 19:03:14 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,10 @@ int regex_span_class_type(t_regex *st, char *reg)
 	int i;
 
 	func = 0;
-	i = 0;
-	while (reg[i] && func != 2)
-	{
+	i = -1;
+	while (reg[++i] && func != 2)
 		if (reg[i] == ':')
 			func++;
-		i++;
-	}
 	return (i);
 }
 

@@ -6,14 +6,14 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:47:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/24 18:34:51 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/24 20:10:46 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "regex.h"
 
-t_bool  regex_class_type(t_regex *st, const char *s1, const char *reg)
+t_bool  regex_class_type(t_regex *st, char *s1, char *reg)
 {
     if (!ft_strncmp(reg, ":alnum:", 7))
         return (ft_isalnum(*s1));
