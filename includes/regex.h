@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:47:12 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/24 21:15:32 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/24 21:48:56 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,14 +136,19 @@ int     convert_metachar(t_regex *st, char *reg);
 int		convert_metachar_len(t_regex *st, char *reg);
 int 	regex_span_class_type(t_regex *st, char *reg);
 
-
+/*
+**-------------------------------------------------------
+**          regex_explode.c
+**-------------------------------------------------------
+*/
+char	**regex_explode(const char *reg);
 
 /*
 **-------------------------------------------------------
 **          regex_free.c
 **-------------------------------------------------------
 */
-void		ft_regex_free(t_regex *st);
+	void ft_regex_free(t_regex *st);
 
 /*
 **-------------------------------------------------------

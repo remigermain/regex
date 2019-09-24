@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/24 21:15:40 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/24 21:49:17 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,7 @@ int main(int argc, char **argv)
 	ft_printf("match = %s\n", (ft_regex_cmp(&reg, argv[1], argv[2]) ?  "\033[38;5;326mTRUE" : "\033[1;31mFALSE"));
 
 	ft_regex_free(&reg);
+
+	regex_explode(argv[1]);
 	return (0);
 }
