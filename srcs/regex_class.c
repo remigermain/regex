@@ -6,13 +6,13 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 20:32:03 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/24 20:12:45 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/24 21:08:22 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "regex.h"
 
-int regex_class_parsing(t_regex *st, t_reg_class *class, char *s1, char *reg)
+static int		regex_class_parsing(t_regex *st, t_reg_class *class, char *s1, char *reg)
 {
 	int len;
 
@@ -28,14 +28,14 @@ int regex_class_parsing(t_regex *st, t_reg_class *class, char *s1, char *reg)
 	return (len);
 }
 
-t_bool	regex_class_match(t_regex *st, t_reg_class *class, char *s1, char *reg)
+static t_bool	regex_class_match(t_regex *st, t_reg_class *class, char *s1, char *reg)
 {
 	if (verif_quantifier(&(class->quantifier), ++class->match) && regex_parse(st, s1, reg + class->i))
 		return (TRUE);
 	return (FALSE);
 }
 
-void	regex_class_line(t_reg_class *class)
+void			regex_class_line(t_reg_class *class)
 {
 	if (!class->is_not && class->ret)
 		class->line_class = TRUE;
@@ -43,7 +43,7 @@ void	regex_class_line(t_reg_class *class)
 		class->line_class = FALSE;
 }
 
-t_bool	regex_class_parse(t_regex *st, t_reg_class *class, char *s1, char *reg)
+t_bool			regex_class_parse(t_regex *st, t_reg_class *class, char *s1, char *reg)
 {
 	int i;
 	int	j;
@@ -57,14 +57,12 @@ t_bool	regex_class_parse(t_regex *st, t_reg_class *class, char *s1, char *reg)
 				i++;
 			else if (is_metachar(st, reg + i) && *(reg + i) == ':')
 			{
-				class->ret = regex_class_type(st, s1, reg + i);
+				class->ret =  regex_class_is_type(st, s1, reg + i);
 				i += regex_span_class_type(st, reg + i);
 			}
 			else
 			{
-				ft_printf(" REG    %c\n", *(reg + i));
 				i += regex_class_parsing(st, class, s1, reg + i);
-				ft_printf("char =    %c %c\n", class->range_min, class->range_max);
 				class->ret = (*s1 >= class->range_min && *s1 <= class->range_max ? TRUE : FALSE);
 			}
 			regex_class_line(class);
@@ -77,7 +75,7 @@ t_bool	regex_class_parse(t_regex *st, t_reg_class *class, char *s1, char *reg)
 	return (FALSE);
 }
 
-t_bool regex_class(t_regex *st, char *s1, char *reg)
+t_bool			regex_class(t_regex *st, char *s1, char *reg)
 {
 	t_reg_class	class;
 

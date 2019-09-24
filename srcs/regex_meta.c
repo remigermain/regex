@@ -1,16 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_regex2.c                                        :+:      :+:    :+:   */
+/*   regex_meta.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/24 20:02:16 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/24 21:09:36 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "regex.h"
+
+t_bool is_metachar(t_regex *st, char *reg)
+{
+	int i;
+
+	i = 0;
+	while (reg - i - 1 >= st->reg && *(reg - i - 1) == '\\')
+		i++;
+	if (i % 2)
+		return (FALSE);
+	return (TRUE);
+}
 
 int convert_metachar_len(t_regex *st, char *reg)
 {

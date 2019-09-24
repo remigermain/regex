@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   regex_cmp.c                                        :+:      :+:    :+:   */
+/*   ft_regex_cmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -39,7 +39,7 @@ t_bool	regex_parse(t_regex *st, char *s1, char *reg)
 	return (FALSE);
 }
 
-t_bool	regex_cmp(t_regex *st, char *s1, char *regex)
+t_bool	ft_regex_cmp(t_regex *st, char *s1, char *regex)
 {
 	ft_bzero(st, sizeof(*st));
 	st->reg = regex;

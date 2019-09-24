@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:47:12 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/24 20:23:14 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/24 21:15:32 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ typedef struct s_regex
 **          regex_class.c
 **-------------------------------------------------------
 */
-t_bool	regex_cmp(t_regex *reg, char *s1, char *regex);
+t_bool	ft_regex_cmp(t_regex *reg, char *s1, char *regex);
 t_bool	regex_parse(t_regex *st, char *s1, char *reg);
-t_bool  regex_class_type(t_regex *st, char *s1, char *reg);
+t_bool   regex_class_is_type(t_regex *st, char *s1, char *reg);
 
 
 /*
@@ -136,7 +136,16 @@ int     convert_metachar(t_regex *st, char *reg);
 int		convert_metachar_len(t_regex *st, char *reg);
 int 	regex_span_class_type(t_regex *st, char *reg);
 
-	/*
+
+
+/*
+**-------------------------------------------------------
+**          regex_free.c
+**-------------------------------------------------------
+*/
+void		ft_regex_free(t_regex *st);
+
+/*
 **-------------------------------------------------------
 **          utils.c
 **-------------------------------------------------------
