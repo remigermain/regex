@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/25 17:57:12 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/27 18:12:41 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ static int		regex_len_line(const char *reg)
 	mem = reg;
 	while (*reg)
 	{
-		ft_printf("[ %s ]\n", reg);
-		usleep(10000);
 		if (explode_metachar(reg, mem))
 		{
 			if (*reg == '(')
@@ -63,7 +61,6 @@ static int		regex_len_line(const char *reg)
 		else
 			reg++;
 	}
-	ft_printf("FINN [ %s   %lld   ]\n", reg, reg - mem);
 	return (reg - mem);
 }
 
@@ -103,28 +100,20 @@ char	**regex_explode(const char *reg)
 
 	i = -1;
 	len = regex_explode_len(reg);
-	ft_printf("len = %d\n", len);
-	//return (NULL);
 	if (!(tab = (char**)ft_memalloc(sizeof(char*) * (len + 1))))
 		return (NULL);
 	while (*reg)
 	{
 		line_len = regex_len_line(reg);
-		ft_printf("[ len = %d ]\n", line_len);
 		if (!(tab[++i] = (char *)ft_memalloc(sizeof(char) * (line_len + 1))))
 		{
 			ft_tabdel(&tab);
 			return (NULL);
 		}
 		ft_memcpy(tab[i], reg, sizeof(char) * line_len);
-		//ft_printf("len = %d\n", line_len);
 		reg += line_len;
 		if (*reg == '|')
 			reg++;
 	}
-	//ft_print_memory(tab[0], ft_strlen(tab[0]), MEM_ASCII | MEM_SP);
-	ft_printf("\n\n[ TAB ]\n");
-	ft_printtab(tab);
-	ft_printf("len first = %d\n", ft_strlen(tab[0]));
 	return (tab);
 }

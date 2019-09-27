@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/24 21:10:27 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/27 18:59:26 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,33 +33,48 @@ t_bool	is_delimiter(t_regex *st, char *reg, char delimiter)
 	return (FALSE);
 }
 
-t_bool	regex_class_is_type(t_regex *st, char *s1, char *reg)
+void	regex_is_type_made(char alpha[128], t_bool (*func)(int))
 {
-	if (!ft_strncmp(reg, ":alnum:", 7))
-		return (ft_isalnum(*s1));
-	else if (!ft_strncmp(reg, ":alpha:", 7))
-		return (ft_isalpha(*s1));
-	else if (!ft_strncmp(reg, ":ascii:", 7))
-		return (ft_isascii(*s1));
-	else if (!ft_strncmp(reg, ":blank:", 7))
-		return (ft_isblank(*s1));
-	else if (!ft_strncmp(reg, ":cntrl:", 7))
-		return (ft_iscntrl(*s1));
-	else if (!ft_strncmp(reg, ":digit:", 7))
-		return (ft_isdigit(*s1));
-	else if (!ft_strncmp(reg, ":graph:", 7))
-		return (ft_isgraph(*s1));
-	else if (!ft_strncmp(reg, ":lower:", 7))
-		return (ft_islowercase(*s1));
-	else if (!ft_strncmp(reg, ":print:", 7))
-		return (ft_isprint(*s1));
-	else if (!ft_strncmp(reg, ":space:", 7))
-		return (ft_isspace(*s1));
-	else if (!ft_strncmp(reg, ":upper:", 7))
-		return (ft_isuppercase(*s1));
-	else if (!ft_strncmp(reg, ":xdigit:", 8))
-		return (ft_isxdigit(*s1));
-	return (FALSE);
+	int i;
+
+	i = -1;
+	while (++i <= 127)
+	{
+		if (func(i))
+			alpha[i] = 1;
+	}
+}
+
+int	regex_class_is_type(char alpha[128], char *reg)
+{
+	int i;
+
+	i = 0;
+	if (!ft_strncmp(reg, ":alnum:", 7) && (i = 7))
+		regex_is_type_made(alpha, ft_isalnum);
+	else if (!ft_strncmp(reg, ":alpha:", 7) && (i = 7))
+		regex_is_type_made(alpha, ft_isalpha);
+	else if (!ft_strncmp(reg, ":ascii:", 7) && (i = 7))
+		regex_is_type_made(alpha, ft_isascii);
+	else if (!ft_strncmp(reg, ":blank:", 7) && (i = 7))
+		regex_is_type_made(alpha, ft_isblank);
+	else if (!ft_strncmp(reg, ":cntrl:", 7) && (i = 7))
+		regex_is_type_made(alpha, ft_iscntrl);
+	else if (!ft_strncmp(reg, ":digit:", 7) && (i = 7))
+		regex_is_type_made(alpha, ft_isdigit);
+	else if (!ft_strncmp(reg, ":graph:", 7) && (i = 7))
+		regex_is_type_made(alpha, ft_isgraph);
+	else if (!ft_strncmp(reg, ":lower:", 7) && (i = 7))
+		regex_is_type_made(alpha, ft_islowercase);
+	else if (!ft_strncmp(reg, ":print:", 7) && (i = 7))
+		regex_is_type_made(alpha, ft_isprint);
+	else if (!ft_strncmp(reg, ":space:", 7) && (i = 7))
+		regex_is_type_made(alpha, ft_isspace);
+	else if (!ft_strncmp(reg, ":upper:", 7) && (i = 7))
+		regex_is_type_made(alpha, ft_isuppercase);
+	else if (!ft_strncmp(reg, ":xdigit:", 8) && (i = 8))
+		regex_is_type_made(alpha, ft_isxdigit);
+	return (i);
 	//    else if (!ft_strncmp(reg, ":punct:", 9))
-	//        return (ft_ispunct(*s1));
+	//        regex_is_type_made(alpha, ft_ispunct);
 }

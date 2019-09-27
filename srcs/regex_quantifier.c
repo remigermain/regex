@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   regex_get_quantifier.c                             :+:      :+:    :+:   */
+/*   regex_quantifier.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/24 20:36:53 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/27 20:18:36 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,11 @@ static int	mini_quantifier(t_reg_quan *st, char *reg)
 		st->isset |= QUAN_MAX;
 		st->number_2 = 1;
 	}
+	if (*(reg + 2) == '?')
+	{
+		st->isset |= QUAN_LAZY;
+		return (2);
+	}
 	return (1);
 }
 
@@ -72,15 +77,22 @@ int			get_quantifier(t_reg_quan *st, char *reg)
 		i += get_quantifier_number(&st->number_2, &st->isset, QUAN_MAX, reg + i + 1) + 1;
 		i += ft_spantype(reg + i, ft_isspace);
 	}
-	return (i + 1);
+	if (*(reg + i) != '}')
+		regex_error_line(NULL, reg + i, '}');
+	if (*(reg + i + 1) == '?')
+	{
+		i++;
+		st->isset |= QUAN_LAZY;
+	}
+	return (i);
 }
 
 t_bool		regex_quantifier(t_regex *st, char *s1, char *reg)
 {
-	t_reg_quan quantifier;
-	t_bool is_meta;
-	int match;
-	int c;
+	t_reg_quan	quantifier;
+	t_bool		is_meta;
+	int			match;
+	int			c;
 
 	match = 0;
 	c = *reg;
@@ -90,11 +102,9 @@ t_bool		regex_quantifier(t_regex *st, char *s1, char *reg)
 	{
 		if ((c == *s1 || (is_meta && c == '.')) && (++s1))
 		{
-			if (verif_quantifier(&quantifier, ++match))
-			{
-				if (regex_parse(st, s1, reg))
-					return (TRUE);
-			}
+			if (verif_quantifier(&quantifier, ++match) && 
+				regex_parse(st, s1, reg))
+				return (TRUE);
 		}
 		else
 			break;

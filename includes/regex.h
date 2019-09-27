@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:47:12 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/24 21:48:56 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/27 20:17:37 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@
 # define DELEMITOR "|[]^."
 # define QUANTIFIER "{*+?"
 # define ENCLOSE "[("
-
+# define ERROR_REGEX -1
 enum e_regex_quan
 {
 	QUAN_MIN = 0b1,
 	QUAN_MAX = 0b10,
 	QUAN_EX = 0b100,
+	QUAN_LAZY = 0b1000,
 };
 
 enum e_regex_class
@@ -41,6 +42,7 @@ typedef struct s_regex_quan
 typedef struct s_regex_class
 {
 	t_reg_quan	quantifier;
+	char		alpha[128];
 	t_bool		line_class;
 	t_bool		ret;
 	int 		range_min;
@@ -67,8 +69,11 @@ typedef struct s_regex
 {
 	const char	*reg;
 	const char	*s1;
+	char		**tab;
+	size_t		i;
 	size_t		reg_sub;
-	t_reg_get	tab[REGEX_BUFF];
+	size_t		match;
+	//t_reg_get	tab[REGEX_BUFF];
 }				t_regex;
 
 /*
@@ -76,10 +81,9 @@ typedef struct s_regex
 **          regex_class.c
 **-------------------------------------------------------
 */
-t_bool	ft_regex_cmp(t_regex *reg, char *s1, char *regex);
+int		ft_regex_cmp(t_regex *reg, char *s1, char *regex);
 t_bool	regex_parse(t_regex *st, char *s1, char *reg);
-t_bool   regex_class_is_type(t_regex *st, char *s1, char *reg);
-
+int	regex_class_is_type(char alpha[128], char *reg);
 
 /*
 **-------------------------------------------------------
@@ -159,4 +163,6 @@ char	**regex_explode(const char *reg);
 	is_delimiter(t_regex *st, char *reg, char delemiter);
 void    	print_quan(t_reg_quan *st);
 int 		ft_spanchar_reg(t_regex *st, char *reg, char *str);
+t_bool 		regex_return(t_regex *st, t_bool ret);
+void    regex_error_line(t_regex *st, char *reg, char c);
 #endif
