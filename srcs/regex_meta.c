@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/24 21:09:36 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/27 21:15:03 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,7 @@ int convert_metachar_len(t_regex *st, char *reg)
 				len += 1 + ft_intlen_base(ft_atoi_base(reg + 2, 16), 16);
 			else if (ft_tolower(*(reg + 1)) == 'b')
 				len += 1 + ft_intlen_base(ft_atoi_base(reg + 2, 2), 2);
-		//	else
-		//		len += ft_intlen_base(ft_atoi_base(reg, 8), 8);
 		}
-		//else if (ft_isdigit(*reg))
-		//	len = ft_intlen(ft_atoi_base(reg, 10));
 	}
 	return (len);
 }
@@ -69,11 +65,7 @@ int convert_metachar(t_regex *st, char *reg)
 				c = ft_atoi_base(reg + 2, 16);
 			else if (ft_tolower(*(reg + 1)) == 'b')
 				c = ft_atoi_base(reg + 2, 2);
-		//	else
-		//		c = ft_atoi_base(reg + 1, 8);
 		}
-		//else if (ft_isdigit(*reg))
-		//	c = ft_atoi_base(reg, 10);
 	}
 	return (c);
 }

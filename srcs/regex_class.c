@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 20:32:03 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/27 20:29:18 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/27 21:16:02 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,10 @@ char		*regex_class_parse(t_regex *st, t_reg_class *class, char *s1, char *reg)
 		i = convert_metachar(st, reg);
 		if (is_metachar(st, reg) && i == '[' && (i = -1))
 			reg += regex_class_is_type(class->alpha, reg + 1) + 2;
+		else if (is_metachar(st, reg) && ft_strchr(REGEX_TYPE, i))
+		{
+			reg += regex_class_is_metatype(class->alpha, reg + 1) + 1;
+		}
 		else
 		{
 			reg += convert_metachar_len(st, reg);

@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:47:12 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/27 20:39:44 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/27 20:55:56 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # define QUANTIFIER "{*+?"
 # define ENCLOSE "[("
 # define ERROR_REGEX -1
+# define REGEX_TYPE "wWbBdDsSAZ"
 enum e_regex_quan
 {
 	QUAN_MIN = 0b1,

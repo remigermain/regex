@@ -17,7 +17,7 @@ t_bool	regex_parse(t_regex *st, char *s1, char *reg)
 {
 	if (*reg == '\\' && is_metachar(st, reg))
 		reg++;
-	ft_printf("[ REGEX_PARSE ]\n|%s| |%s|   %d %d\n\n", s1, reg, *s1, *reg);
+	//ft_printf("[ REGEX_PARSE ]\n|%s| |%s|   %d %d\n\n", s1, reg, *s1, *reg);
 	if (*reg == '\0')
 		return (regex_return(st, TRUE));
 	if (is_delimiter(st, reg, '['))
