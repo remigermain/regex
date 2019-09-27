@@ -6,11 +6,37 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 20:32:03 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/27 20:11:11 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/27 20:29:18 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "regex.h"
+
+t_bool			regex_class_lazy(t_regex *st, t_reg_class *class, char *s1, char *reg)
+{
+	int i;
+
+	i = 0;
+	while ((class->quantifier.isset & QUAN_LAZY) && i <= class->match)
+	{
+		if (verif_quantifier(&(class->quantifier), i))
+		{
+			if (regex_parse(st, s1 + i, reg + class->i))
+				return (TRUE);
+		}
+		i++;
+	}
+	while (!(class->quantifier.isset & QUAN_LAZY) && class->match >= 0)
+	{
+		if (verif_quantifier(&(class->quantifier), class->match))
+		{
+			if (regex_parse(st, s1 + class->match, reg + class->i))
+				return (TRUE);
+		}
+		class->match--;
+	}
+	return (FALSE);
+}
 
 t_bool			regex_class_do(t_regex *st, t_reg_class *class, char *s1, char *reg)
 {
@@ -26,16 +52,7 @@ t_bool			regex_class_do(t_regex *st, t_reg_class *class, char *s1, char *reg)
 			break ;
 		class->match++;
 	}
-	while (class->match >= 0)
-	{
-		if (verif_quantifier(&(class->quantifier), class->match))
-		{
-			if (regex_parse(st, s1 + class->match, reg + class->i))
-				return (TRUE);
-		}
-		class->match--;
-	}
-	return (FALSE);
+	return (regex_class_lazy(st, class, s1, reg));
 }
 
 char		*regex_class_parse(t_regex *st, t_reg_class *class, char *s1, char *reg)

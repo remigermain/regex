@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:47:12 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/27 20:17:37 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/27 20:39:44 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ enum e_regex_class
 
 typedef struct s_regex_quan
 {
+	int	match;
 	int number_1;
 	int	number_2;
 	int isset;
