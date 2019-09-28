@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:47:12 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/28 10:32:04 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/28 15:26:10 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_regex
 {
 	const char	*reg;
 	const char	*s1;
+	char		*enclose_s1;
 	char		**tab;
 	size_t		i;
 	size_t		reg_sub;

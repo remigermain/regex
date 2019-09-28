@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:52:11 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/28 09:34:20 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/28 13:54:45 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,7 @@ int		regex_span_enclose(char *reg, char *meta)
 			else
 			{
 				if (ft_strchr(meta, *reg))
-				{
-					reg++;
 					break ;
-				}
 				reg++;
 			}
 		}
