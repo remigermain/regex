@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/27 20:36:00 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/28 09:38:29 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int			get_quantifier(t_reg_quan *st, char *reg)
 
 	i = 1;
 	ft_bzero(st, sizeof(*st));
+	if (*reg == '\0')
+		return (0);
 	if (ft_strchr("*?+", *reg))
 		return (mini_quantifier(st, reg));
 	i += get_quantifier_number(&st->number_1, &st->isset, QUAN_MIN,  reg + i);

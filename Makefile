@@ -6,7 +6,7 @@
 #    By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/07 13:02:13 by loiberti          #+#    #+#              #
-#    Updated: 2019/09/27 20:53:30 by rgermain         ###   ########.fr        #
+#    Updated: 2019/09/28 10:34:29 by rgermain         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ HEADER = regex.h
 
 LIBFT = libft/libft.a
 
-CC = gcc
+CC = clang
 
 OBJ = $(SRC:.c=.o)
 

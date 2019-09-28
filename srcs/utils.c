@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:52:11 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/27 20:21:03 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/28 09:34:20 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,64 @@ int regex_span_class_type(t_regex *st, char *reg)
 		if (reg[i] == ':')
 			func++;
 	return (i);
+}
+
+static t_bool	explode_metachar(const char *reg, const char *mem)
+{
+	int i;
+
+	i = 0;
+	while (reg - i - 1 >= mem && *(reg - i - 1) == '\\')
+		i++;
+	if (i % 2)
+		return (FALSE);
+	return (TRUE);
+}
+
+int span_explode_metachar(const char *reg, char *meta)
+{
+	const char *mem;
+
+	mem = reg;
+	while (*reg)
+	{
+		if (explode_metachar(reg, mem) && ft_strchr(meta, *reg))
+		{
+			reg++;
+			break ;
+		}
+		reg++;
+	}
+	return (reg - mem);
+}
+
+int		regex_span_enclose(char *reg, char *meta)
+{
+	char *mem;
+	int len;
+
+	len = 0;
+	mem = reg;
+	while (*reg)
+	{
+		if (explode_metachar(reg, mem))
+		{
+			if (*reg == '(')
+				reg += regex_span_enclose(reg + 1, ")") + 1;
+			else
+			{
+				if (ft_strchr(meta, *reg))
+				{
+					reg++;
+					break ;
+				}
+				reg++;
+			}
+		}
+		else
+			reg++;
+	}
+	return (reg - mem);
 }
 
 void print_quan(t_reg_quan *st)

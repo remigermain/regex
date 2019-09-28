@@ -6,34 +6,49 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/27 21:27:16 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/28 11:32:28 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "regex.h"
 
-t_bool		regex_enclose_do(t_regex *st, char **tab, char *s1, char *reg)
+t_bool		regex_enclose_do(t_regex *st, char *s1, char *reg, int len)
 {
-    t_regex base;
-	int     i;
+    size_t  match;
+    int     i;
 
-	i = -1;
-	while (tab && tab[++i])
-	{
-		if (ft_regex_cmp(st, s1, tab[i]))
-            return (TRUE);
-    }
-    return (regex_parse(st, s1, reg));
+	match = 0;
+    i = 0;
+	//while (*(s1 + match) && *(reg + i) && !is_delimiter(st, reg + i, ')'))
+   // {
+       t_bool   ret = regex_parse(st, s1 + match, reg + i);
+    ft_printf("[ CALLL   %s   %d  %d]\n", reg + i, match, i);
+    ft_printf("RETURN %s\n", ret ? "TRUE" : "FALSE");
+   //     if (ft_regex_cmp(st, s1 + match, reg + i))
+   //     {
+   //         match++;
+   //     }
+   //     else
+   //     {
+   //         i += regex_span_enclose(reg + i, "|)");
+   //     }
+   //     ft_printf("[ END CALLL  ]\n");
+   // }
+   // ft_printf("match = %d\n", match);
+    if (ret)
+        return (regex_parse(st, s1, reg + len));
+    return (ret);
 }
 
 
 t_bool  regex_enclosed(t_regex *st, char *s1, char *reg)
 {
     t_reg_quan  quantifier;
-    char        **tab;
+    int         len;
 
-    tab = NULL;
-    ft_printf("[ ENCLSOSE ] reg = %s\n", reg);
     ft_bzero(&quantifier, sizeof(t_reg_quan));
-    return (regex_enclose_do(st, tab, s1, reg));
+	len = regex_span_enclose(reg, ")");
+	if (is_quantifier(st, reg + len))    
+        len += get_quantifier(&quantifier, reg + len);
+    return (regex_enclose_do(st, s1, reg, len));
 }
