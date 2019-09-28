@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/28 11:32:28 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/28 11:35:05 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,13 @@ t_bool		regex_enclose_do(t_regex *st, char *s1, char *reg, int len)
 
 	match = 0;
     i = 0;
-	//while (*(s1 + match) && *(reg + i) && !is_delimiter(st, reg + i, ')'))
-   // {
-       t_bool   ret = regex_parse(st, s1 + match, reg + i);
-    ft_printf("[ CALLL   %s   %d  %d]\n", reg + i, match, i);
-    ft_printf("RETURN %s\n", ret ? "TRUE" : "FALSE");
-   //     if (ft_regex_cmp(st, s1 + match, reg + i))
-   //     {
-   //         match++;
-   //     }
-   //     else
-   //     {
-   //         i += regex_span_enclose(reg + i, "|)");
-   //     }
-   //     ft_printf("[ END CALLL  ]\n");
-   // }
-   // ft_printf("match = %d\n", match);
+	while (*(s1 + match) && *(reg + i) && !is_delimiter(st, reg + i, ')'))
+    {
+        if (regex_parse(st, s1 + match, reg + i))
+            match++;
+        else
+            i += regex_span_enclose(reg + i, "|)");
+    }
     if (ret)
         return (regex_parse(st, s1, reg + len));
     return (ret);
