@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:47:12 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/28 15:26:10 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/29 17:19:42 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,4 +172,6 @@ t_bool 		regex_return(t_regex *st, t_bool ret);
 void    regex_error_line(t_regex *st, char *reg, char c);
 int		regex_span_enclose(char *reg, char *meta);
 int span_explode_metachar(const char *reg, char *meta);
+
+int     regex_span_quantifier(t_regex *st, char *reg);
 #endif

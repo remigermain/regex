@@ -6,7 +6,7 @@
 #    By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/07 13:02:13 by loiberti          #+#    #+#              #
-#    Updated: 2019/09/28 10:34:29 by rgermain         ###   ########.fr        #
+#    Updated: 2019/09/29 17:20:37 by rgermain         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,8 @@ SRC =	main.c 	utils.c error.c  \
 		regex_class.c regex_class_methode.c \
 		regex_quantifier.c regex_quantifier_get.c\
 		regex_enclosed.c \
-		regex_free.c regex_multi.c
+		regex_free.c regex_multi.c \
+		regex_span.c \
 
 COUNT = "1"
 SPACE = "                    "
