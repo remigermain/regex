@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/30 17:30:21 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/30 17:57:59 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,17 @@ t_bool		regex_quantifier_do(t_regex *st, t_reg_quan *quantifier, char *s1, char 
 	int i;
 
 	i = 0;
+	//print_quan(quantifier);
 	while ((quantifier->isset & QUAN_LAZY) && i <= quantifier->match)
 	{
 		if (verif_quantifier(quantifier, i))
 		{
 			if (regex_parse(st, s1 + i, reg))
+			{
+				ft_printf("truruururuururuur");
 				return (TRUE);
+			}
 		}
-		i++;
 	}
 	while (!(quantifier->isset & QUAN_LAZY) && quantifier->match >= 0)
 	{

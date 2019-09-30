@@ -18,6 +18,7 @@ t_bool	regex_parse(t_regex *st, char *s1, char *reg)
 		reg++;
 	if (*reg == '\0')
 		return (regex_return(st, TRUE));
+	//ft_printf("[ REG :    %s = %s ]\n", s1, reg);
 	if (is_delimiter(st, reg, '|'))
 	{
 		st->enclose_s1 = s1;

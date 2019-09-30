@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/30 17:08:11 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/30 17:54:07 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ int     regex_span_enclose(t_regex *st, char *reg)
     int i;
 
     i = 0;
-    while (*reg && !is_delimiter(st, reg, ')'))
+    while (*(reg + i) && !is_delimiter(st, reg + i, ')'))
     {
-        if (is_delimiter(st, reg, '('))
-            i += regex_span_enclose(st, reg + 1) + 1;
+        if (is_delimiter(st, reg + i, '('))
+            i += regex_span_enclose(st, reg + i + 1) + 1;
         else
             i++;
     }
-    if (*reg == ')')
+    if (*(reg + i) == ')')
         i++;
     return (i);
 }
@@ -63,7 +63,7 @@ int     regex_span_or(t_regex *st, char *reg)
         else
             i++;
     }
-    if (*reg == '|')
+    if (*(reg + i) == '|')
         i++;
     return (i);
 }
@@ -73,9 +73,9 @@ int     regex_span_class(t_regex *st, char *reg)
     int i;
 
     i = 0;
-    while (*reg && is_delimiter(st, reg + i, ']'))
+    while (*(reg + i) && !is_delimiter(st, reg + i, ']'))
         i++;
-    if (*reg == ']')
+    if (*(reg + i) == ']')
         i++;
     return (i);
 }

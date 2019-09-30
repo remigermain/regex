@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 20:32:03 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/30 17:32:05 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/30 17:54:03 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,10 @@ t_bool	regex_class_do(t_regex *st, t_reg_class *class, char *s1, char *reg)
 
 int		regex_class_parse(t_regex *st, t_reg_class *class, char *s1, char *reg)
 {
-	int	i;
-
+	char	*mem;
+	int		i;
+	
+	mem = reg;
 	while (*reg && (!is_metachar(st, reg) || *reg != ']'))
 	{
 		i = convert_metachar(st, reg);
@@ -52,7 +54,7 @@ int		regex_class_parse(t_regex *st, t_reg_class *class, char *s1, char *reg)
 			}
 		}
 	}
-	return (regex_span_class(st, reg));
+	return (regex_span_class(st, mem));
 }
 
 t_bool	regex_class(t_regex *st, char *s1, char *reg)
@@ -64,6 +66,6 @@ t_bool	regex_class(t_regex *st, char *s1, char *reg)
 		class.is_not |= CLASS_NOT;
 	reg += regex_class_parse(st, &class, s1, reg);
 	if (is_quantifier(st, reg))
-		class.i += regex_get_quantifier(&(class.quantifier), reg);
+		reg += regex_get_quantifier(&(class.quantifier), reg);
 	return (regex_class_do(st, &class, s1, reg));
 }
