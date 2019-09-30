@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/29 19:33:43 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/30 17:15:39 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_bool		regex_enclose_parse(t_regex *st, t_reg_quan *quantifier, char *s1, char 
                 return (TRUE);
             s1 = mem_s1;
         }
-        i += regex_span_enclose(reg + i, "|)");
+        i += regex_span_enclose(st, reg + i);
         if (*(reg + i) == '|')
             i++;
     }
@@ -77,9 +77,9 @@ t_bool  regex_enclosed(t_regex *st, char *s1, char *reg)
     int         len;
 
     ft_bzero(&quantifier, sizeof(t_reg_quan));
-	len = regex_span_enclose(reg, ")") + 1;
+	len = regex_span_enclose(st, reg) + 1;
 	if (is_quantifier(st, reg + len))    
-        len += get_quantifier(&quantifier, reg + len);
+        len += regex_get_quantifier(&quantifier, reg + len);
     return (regex_enclose_parse(st, &quantifier, s1, reg, len, 0));
     //return (regex_enclose_do(st, &quantifier, s1, reg + len));
 

@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "regex.h"
 
 t_bool	regex_parse(t_regex *st, char *s1, char *reg)
@@ -19,17 +18,14 @@ t_bool	regex_parse(t_regex *st, char *s1, char *reg)
 		reg++;
 	if (*reg == '\0')
 		return (regex_return(st, TRUE));
-	ft_printf("[ REGEX_PARSE ]\n|%s| |%s|   %d %d\n\n", s1, reg, *s1, *reg);
 	if (is_delimiter(st, reg, '|'))
 	{
 		st->enclose_s1 = s1;
 		return (TRUE);
-		//return (regex_parse(st ,s1, reg + regex_span_enclose(reg + 1, ")") + 1));
 	}
 	if (is_delimiter(st, reg, ')'))
 	{
 		st->enclose_s1 = s1;
-		ft_printf("[ HEREEEE           |%s| ]\n", reg + 1 + regex_span_quantifier(st, reg + 1));
 		return (regex_parse(st ,s1, (reg + regex_span_quantifier(st, reg + 1) + 1)));
 	}
 	if (is_delimiter(st, reg, '['))
@@ -49,16 +45,20 @@ int	ft_regex_cmp(t_regex *st, char *s1, char *regex)
 {
 	int i;
 
-	i = -1;
-	st->s1 = s1;
 	ft_bzero(st, sizeof(*st));
+	st->s1 = s1;
 	st->reg = regex;
-	if (is_delimiter(st, regex, '^'))
-		regex_parse(st, s1, regex + 1);
-	else
+	while (*regex)
 	{
-		while (*(s1 + ++i))
-			regex_parse(st, s1 + i, regex);
+		if (is_delimiter(st, regex, '^'))
+			regex_parse(st, s1, regex + 1);
+		else
+		{
+			i = -1;
+			while (*(s1 + ++i))
+				regex_parse(st, s1 + i, regex);
+		}
+		regex += regex_span_or(st, regex);
 	}
 	return (st->match);
 }

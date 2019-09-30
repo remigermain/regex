@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:47:12 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/29 17:19:42 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/30 17:29:04 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,14 +119,15 @@ t_bool	regex_star(t_regex *st, char c, char *s1, char *reg);
 **          regex_quantifier.c
 **-------------------------------------------------------
 */
+t_bool		regex_quantifier_do(t_regex *st, t_reg_quan *quantifier, char *s1, char *reg);
 t_bool  regex_quantifier(t_regex *st, char *s1, char *reg);
 
 /*
 **-------------------------------------------------------
-**          regex_get_quantifier.c
+**          regex_regex_get_quantifier.c
 **-------------------------------------------------------
 */
-int         get_quantifier(t_reg_quan *st, char *reg);
+int         regex_get_quantifier(t_reg_quan *st, char *reg);
 t_bool  	verif_quantifier(t_reg_quan *st, int i);
 
 
@@ -170,8 +171,19 @@ void    	print_quan(t_reg_quan *st);
 int 		ft_spanchar_reg(t_regex *st, char *reg, char *str);
 t_bool 		regex_return(t_regex *st, t_bool ret);
 void    regex_error_line(t_regex *st, char *reg, char c);
-int		regex_span_enclose(char *reg, char *meta);
+int		regex_span_enclose(t_regex *st, char *reg);
 int span_explode_metachar(const char *reg, char *meta);
 
+
+
+/*
+**-------------------------------------------------------
+**          regex_span.c
+**-------------------------------------------------------
+*/
 int     regex_span_quantifier(t_regex *st, char *reg);
+int     regex_span_or(t_regex *st, char *reg);
+int     regex_span_enclose(t_regex *st, char *reg);
+int     regex_span_class(t_regex *st, char *reg);
+
 #endif
