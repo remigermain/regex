@@ -23,11 +23,19 @@ t_bool	regex_parse(t_regex *st, char *s1, char *reg)
 	{
 		st->enclose_s1 = s1;
 		return (TRUE);
+		// ft_printf("AV  REG   %s\n", reg);
+		// reg += regex_span_enclose(st, reg);
+		// reg += regex_span_quantifier(st, reg);
+		// ft_printf("AP  REG   %s\n", reg);
+		// return (regex_parse(st ,s1, reg));
 	}
 	if (is_delimiter(st, reg, ')'))
 	{
 		st->enclose_s1 = s1;
-		return (regex_parse(st ,s1, (reg + regex_span_quantifier(st, reg + 1) + 1)));
+		//reg = (reg + regex_span_quantifier(st, reg + 1) + 1);
+	//	ft_printf("[ MATCH :  %s %s ]\n", s1, reg);
+		return (TRUE);
+		//return (regex_parse(st ,s1, reg));
 	}
 	if (is_delimiter(st, reg, '['))
 		return (regex_class(st, s1, ++reg));
@@ -37,6 +45,7 @@ t_bool	regex_parse(t_regex *st, char *s1, char *reg)
 		return (regex_quantifier(st, s1, reg));
 	if (is_delimiter(st, reg, '$') && *(reg + 1) == '\0')
 		return (regex_return(st, (*s1 ? FALSE : TRUE)));
+	// need fix for special type
 	if (*s1 && ((is_delimiter(st, reg, '.') && *s1 != '\n') || convert_metachar(st, reg) == *s1))
 		return (regex_parse(st, ++s1, (reg + convert_metachar_len(st, reg))));
 	return (regex_return(st, FALSE));
