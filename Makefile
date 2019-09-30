@@ -6,7 +6,7 @@
 #    By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/07 13:02:13 by loiberti          #+#    #+#              #
-#    Updated: 2019/09/30 17:10:02 by rgermain         ###   ########.fr        #
+#    Updated: 2019/09/30 17:36:17 by rgermain         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -105,6 +105,20 @@ re: print_name
 	@echo $(SPACE)"Deleting \033[38;5;265mobjects\033[0m"
 	@make all
 
+info: print_name
+	@printf $(SPACE)"total functions : ${ESC}[1;34m"
+	@ls -1 $(CSRC) | wc -l
+	@printf "${ESC}[0m\n";
+	@printf $(SPACE)"total lines : ${ESC}[1;34m"
+	@echo "$(shell cat $(CSRC) | wc -l) - (16 * $(shell ls -1 $(CSRC) | wc -l))" | bc
+	@printf "${ESC}[0m\n";
+	@printf $(SPACE)"total commit : ${ESC}[1;34m"	
+	@git rev-list --all --count
+	@printf "${ESC}[0m\n";
+	@printf $(SPACE)"last modifications : ${ESC}[1;34m"	
+	@git log| head -n5 | grep Date | cut -c 9-
+	@printf "${ESC}[0m\n";
+	
 norme : print_norme
 	@norminette $(CSRC) $(CHEADER) | sed "s,Norme,${ESC}[38;5;326m&${ESC}[0m," | sed "s/Error/  Error/g" | sed "s,Error,${ESC}[31m&${ESC}[0m,"
 
