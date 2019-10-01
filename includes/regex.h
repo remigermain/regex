@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:47:12 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/01 18:31:32 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/10/01 19:05:36 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,12 @@ t_bool  		regex_class(t_regex *st, char *s1, char *reg);
 */
 t_bool  		regex_enclosed(t_regex *st, char *s1, char *reg);
 
+/*
+**-------------------------------------------------------
+**          regex_arg.c
+**-------------------------------------------------------
+*/
+void        	regex_put_arg(t_regex *st, char *s1, char *s2);
 
 /*
 **-------------------------------------------------------
@@ -152,5 +158,6 @@ int				convert_metachar(t_regex *st, char *reg);
 */
 void			regex_error_line(t_regex *st, char *reg, char c);
 t_bool			regex_return(t_regex *st, t_bool ret);
+void			regex_error(t_regex *st);
 
 #endif

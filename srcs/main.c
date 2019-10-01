@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/29 17:22:27 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/10/01 19:17:52 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,15 @@ int main(int argc, char **argv)
 	//ft_printf("[ REGEX  ] %s\n", argv[2]);
 	int ret = ft_regex_cmp(&reg, argv[1], argv[2]);
 	ft_printf("match = %s  [ % d ] \n"T_WHITE, (ret ? "\033[38;5;326mTRUE" : "\033[1;31mFALSE"), ret);
+
+	t_reg_capt *list = reg.capt;
+	while (list != NULL)
+	{
+		ft_printf("[ >>%s<<  ][%d][%d][%d]\n", list->str, list->pos, list->start, list->end);
+		list = list->next;
+	}
+	ft_regex_free(&reg);
+
 //
 	//ft_regex_free(&reg);
 
