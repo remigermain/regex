@@ -6,7 +6,7 @@
 #    By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/07 13:02:13 by loiberti          #+#    #+#              #
-#    Updated: 2019/09/30 17:36:17 by rgermain         ###   ########.fr        #
+#    Updated: 2019/10/01 18:29:30 by rgermain         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ TYPE = "of the executable"
 LIBFT_M :
 	@make -C libft/ all
 
-CFLAGS = -g3
+CFLAGS = -g3 -Wall -Wextra
 
 INCLUDE = -Iincludes -Ilibft/includes
 
@@ -53,7 +53,6 @@ SRC =	main.c 	utils.c error.c  \
 		regex_enclosed.c \
 		regex_free.c \
 		regex_span.c \
-		regex_debug.c \
 
 COUNT = "1"
 SPACE = "                    "

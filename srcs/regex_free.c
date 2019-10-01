@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/27 18:07:59 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/10/01 18:17:32 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,4 @@
 void	ft_regex_free(t_regex *st)
 {
 	(void)st;
-	ft_tabdel(&(st->tab));
 }

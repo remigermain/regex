@@ -6,13 +6,13 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 20:32:03 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/30 17:54:03 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/10/01 18:32:37 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "regex.h"
 
-t_bool	regex_class_do(t_regex *st, t_reg_class *class, char *s1, char *reg)
+static t_bool	regex_class_do(t_regex *st, t_reg_class *class, char *s1, char *reg)
 {
 	t_bool	ret;
 	int		i;
@@ -20,16 +20,16 @@ t_bool	regex_class_do(t_regex *st, t_reg_class *class, char *s1, char *reg)
 	i = -1;
 	while (s1[++i])
 	{
-		ret = class->alpha[s1[i]] ? TRUE : FALSE;
-		if ((ret && class->is_not == CLASS_NOT) || 
-			(!ret && class->is_not != CLASS_NOT))
+		ret = class->alpha[(int)s1[i]] ? TRUE : FALSE;
+		if ((class->is_not == TRUE) || 
+			(!ret && class->is_not == FALSE))
 			break ;
 		class->quantifier.match++;
 	}
 	return (regex_quantifier_do(st, &(class->quantifier), s1, reg));
 }
 
-int		regex_class_parse(t_regex *st, t_reg_class *class, char *s1, char *reg)
+static int		regex_class_parse(t_regex *st, t_reg_class *class, char *reg)
 {
 	char	*mem;
 	int		i;
@@ -63,8 +63,8 @@ t_bool	regex_class(t_regex *st, char *s1, char *reg)
 
 	ft_bzero(&class, sizeof(t_reg_class));
 	if (is_metachar(st, reg) && *reg == '^')
-		class.is_not |= CLASS_NOT;
-	reg += regex_class_parse(st, &class, s1, reg);
+		class.is_not = TRUE;
+	reg += regex_class_parse(st, &class, reg);
 	if (is_quantifier(st, reg))
 		reg += regex_get_quantifier(&(class.quantifier), reg);
 	return (regex_class_do(st, &class, s1, reg));
