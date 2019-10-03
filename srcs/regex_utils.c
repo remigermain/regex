@@ -6,31 +6,22 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:52:11 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/01 19:18:51 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/10/03 18:54:03 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "regex.h"
 
-void    regex_error_line(t_regex *st, char *reg, char c)
-{
-    if (st)
-        error_line((char*)st->reg);
-    ft_dprintf(2, "in %s, end char is normaly is %c\n", reg, c);
-    exit(0);
-}
-
 void	regex_error(t_regex *st)
 {
-	(void)st;
-	ft_dprintf(2, "error malloc\n");
-	exit(0);
+	ft_regex_free(st);
+	st->error += ERROR_REGEX;
 }
 
 t_bool regex_return(t_regex *st, t_bool ret)
 {
-    if (ret)
-        st->match++;
+	if (ret == TRUE)
+    	st->match++;
     return (ret);
 }
 

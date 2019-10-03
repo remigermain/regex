@@ -6,11 +6,17 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/01 19:16:02 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/10/03 18:40:40 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "regex.h"
+
+void        regex_cal(t_regex *st)
+{
+    if (st->last_s1)
+        st->pos = ft_strlen(st->s1) - ft_strlen(st->last_s1);
+}
 
 void        regex_put_arg(t_regex *st, char *base, char *match)
 {
@@ -19,7 +25,8 @@ void        regex_put_arg(t_regex *st, char *base, char *match)
     t_reg_capt          *list;
     int                 len;
     
-    len = ft_strlen(base) - ft_strlen(match);
+    len = ft_strlen(base);
+    len -= ft_strlen(match);
     if (!(list = (t_reg_capt*)ft_memalloc(sizeof(t_reg_capt))))
         regex_error(st);
     if (!(list->str = ft_strsub(base, 0, len)))

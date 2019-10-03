@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:47:12 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/01 19:05:36 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/10/03 19:31:08 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,13 @@ enum e_regex_quan
 	QUAN_LAZY = 0b1000,
 };
 
+enum e_regex_replace
+{
+    REG_FIRST,
+    REG_END,
+    REG_ALL,
+};
+
 typedef struct s_regex_quantifier
 {
 	int	number_1;
@@ -36,6 +43,19 @@ typedef struct s_regex_quantifier
 	int	match;
 	int	isset;
 }				t_reg_quan;
+
+typedef struct s_regex_enclose_in
+{
+	char	*mem_s1;
+    int		i;
+}				t_regex_encl_in;
+
+typedef struct s_regex_enclose
+{
+	t_reg_quan	quan;
+	t_bool		is_not;
+	int			len;
+}				t_reg_encl;
 
 typedef struct s_regex_class
 {
@@ -56,10 +76,12 @@ typedef struct	s_regex_capt
 typedef struct s_regex
 {
 	t_reg_capt	*capt;
+	t_bool		error;
 	const char	*reg;
 	const char	*s1;
 	size_t		match;
-	char		*enclose_s1;
+	char		*last_s1;
+	int			pos;
 }				t_regex;
 
 /*
@@ -68,6 +90,7 @@ typedef struct s_regex
 **-------------------------------------------------------
 */
 int				ft_regex_cmp(t_regex *reg, char *s1, char *regex);
+char			*ft_regex_replace(char *s1, char *reg, char *src, enum e_regex_replace mod);
 t_bool			regex_parse(t_regex *st, char *s1, char *reg);
 
 /*
@@ -90,6 +113,7 @@ t_bool  		regex_enclosed(t_regex *st, char *s1, char *reg);
 **-------------------------------------------------------
 */
 void        	regex_put_arg(t_regex *st, char *s1, char *s2);
+void        	regex_cal(t_regex *st);
 
 /*
 **-------------------------------------------------------

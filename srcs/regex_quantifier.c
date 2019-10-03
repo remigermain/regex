@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/30 18:55:45 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/10/03 18:37:40 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 t_bool verif_quantifier(t_reg_quan *quan, int i)
 {
-	//print_quan(quan);
-	//ft_printf("[QUAN  ==  %d ]\n", i);
 	if (quan->isset & QUAN_EX && quan->number_1 != i)
 		return (FALSE);
 	else if (quan->isset & QUAN_MIN && quan->number_1 > i)
@@ -32,7 +30,6 @@ t_bool		regex_quantifier_do(t_regex *st, t_reg_quan *quantifier, char *s1, char 
 	int i;
 
 	i = 0;
-	//print_quan(quantifier);
 	while ((quantifier->isset & QUAN_LAZY) && i <= quantifier->match)
 	{
 		if (verif_quantifier(quantifier, i))

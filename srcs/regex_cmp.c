@@ -14,29 +14,15 @@
 
 t_bool	regex_parse(t_regex *st, char *s1, char *reg)
 {
+	st->last_s1 = s1;
 	if (*reg == '\\' && is_metachar(st, reg))
 		reg++;
 	if (*reg == '\0')
 		return (regex_return(st, TRUE));
-	//ft_printf("[ REG :    %s = %s ]\n", s1, reg);
 	if (is_delimiter(st, reg, '|'))
-	{
-		st->enclose_s1 = s1;
 		return (TRUE);
-		// ft_printf("AV  REG   %s\n", reg);
-		// reg += regex_span_enclose(st, reg);
-		// reg += regex_span_quantifier(st, reg);
-		// ft_printf("AP  REG   %s\n", reg);
-		// return (regex_parse(st ,s1, reg));
-	}
 	if (is_delimiter(st, reg, ')'))
-	{
-		st->enclose_s1 = s1;
-		//reg = (reg + regex_span_quantifier(st, reg + 1) + 1);
-	//	ft_printf("[ MATCH :  %s %s ]\n", s1, reg);
 		return (TRUE);
-		//return (regex_parse(st ,s1, reg));
-	}
 	if (is_delimiter(st, reg, '['))
 		return (regex_class(st, s1, ++reg));
 	if (is_delimiter(st, reg, '('))
@@ -51,24 +37,40 @@ t_bool	regex_parse(t_regex *st, char *s1, char *reg)
 	return (regex_return(st, FALSE));
 }
 
-int	ft_regex_cmp(t_regex *st, char *s1, char *regex)
+int	ft_regex_cmp(t_regex *st, char *s1, char *reg)
 {
 	int i;
 
 	ft_bzero(st, sizeof(*st));
 	st->s1 = s1;
-	st->reg = regex;
-	while (*regex)
+	st->reg = reg;
+	while (*reg)
 	{
-		if (is_delimiter(st, regex, '^'))
-			regex_parse(st, s1, regex + 1);
+		if (is_delimiter(st, reg, '^'))
+			regex_parse(st, s1, reg + 1);
 		else
 		{
 			i = -1;
 			while (*(s1 + ++i))
-				regex_parse(st, s1 + i, regex);
+				regex_parse(st, s1 + i, reg);
 		}
-		regex += regex_span_or(st, regex);
+		reg += regex_span_or(st, reg);
 	}
-	return (st->match);
+	regex_cal(st);
+	return (st->error || st->match);
+}
+
+char	*ft_regex_replace(char *s1, char *reg, char *src, enum e_regex_replace mod)
+{
+	t_regex st;
+	t_bool	ret;
+	char	*ptr;
+
+	ret = ft_regex_cmp(&st, s1, reg);
+	if (ret == 0)
+		return (s1);
+	if (ret < 0)
+		return (NULL);
+	
+	return (ptr);
 }
