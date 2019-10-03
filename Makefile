@@ -6,7 +6,7 @@
 #    By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/07 13:02:13 by loiberti          #+#    #+#              #
-#    Updated: 2019/10/01 19:19:09 by rgermain         ###   ########.fr        #
+#    Updated: 2019/10/03 20:10:08 by rgermain         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,13 +45,14 @@ CHEADER = $(addprefix $(DHEADER),$(HEADER))
 # 								ALL  SCRS									   #
 # *****************************************************************************#
 
-SRC =	main.c 	regex_utils.c \
+SRC =	main.c \
 		regex_cmp.c \
 		regex_meta.c regex_is_methode.c \
 		regex_class.c regex_class_methode.c \
 		regex_quantifier.c regex_quantifier_get.c\
-		regex_enclosed.c regex_arg.c \
+		regex_enclosed.c \
 		regex_span.c \
+		regex_replace.c \
 
 COUNT = "1"
 SPACE = "                    "

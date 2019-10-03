@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:47:12 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/03 19:31:08 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/10/03 20:11:12 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ enum e_regex_quan
 
 enum e_regex_replace
 {
-    REG_FIRST,
-    REG_END,
-    REG_ALL,
+    REG_ALL = 0b1,
+    REG_FIRST = 0b10,
+    REG_END = 0b100,
 };
 
 typedef struct s_regex_quantifier
@@ -82,6 +82,7 @@ typedef struct s_regex
 	size_t		match;
 	char		*last_s1;
 	int			pos;
+	int			nb_capt;
 }				t_regex;
 
 /*
@@ -112,7 +113,6 @@ t_bool  		regex_enclosed(t_regex *st, char *s1, char *reg);
 **          regex_arg.c
 **-------------------------------------------------------
 */
-void        	regex_put_arg(t_regex *st, char *s1, char *s2);
 void        	regex_cal(t_regex *st);
 
 /*

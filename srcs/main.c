@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/03 19:22:03 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/10/03 19:49:43 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,16 @@
 
 int main(int argc, char **argv)
 {
+	int ret = 0;
 	t_regex st;
-	if (argc != 3)
+	if (argc <= 3)
 	{
 		ft_printf("./prog < string > < regex string >\n");
 		exit(0);
 	}
-	int ret = ft_regex_cmp(&st, argv[1], argv[2]);
+	//ret = ft_regex_cmp(&st, argv[1], argv[2]);
+	char *ptr = ft_regex_replace(argv[1], argv[2], argv[3], ft_atoi(argv[4]));
+	ft_printf("new ptr = %s\n", ptr);
 	if (ret > 0)
 		ft_printf("\033[38;5;326mTRUE  %d\n"T_WHITE, ret);
 	else if (ret == 0)

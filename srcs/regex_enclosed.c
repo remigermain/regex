@@ -6,11 +6,57 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/03 18:44:11 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/10/03 20:09:55 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "regex.h"
+
+void	ft_regex_free(t_regex *st)
+{
+	t_reg_capt	*list;
+	t_reg_capt	*tmp;
+
+	list = st->capt;
+	while (list)
+	{
+		tmp = list;
+		list = list->next;
+		ft_memdel((void**)&(tmp->str));
+		ft_memdel((void**)&tmp);
+	}
+}
+
+static void        regex_put_arg(t_regex *st, char *base, char *match)
+{
+    static t_reg_capt   *mem = NULL;
+    static int          position = 0;
+    t_reg_capt          *list;
+    int                 len;
+    
+    len = ft_strlen(base);
+    len -= ft_strlen(match);
+    if (!(list = (t_reg_capt*)ft_memalloc(sizeof(t_reg_capt))) ||
+        (!(list->str = ft_strsub(base, 0, len))))
+    {
+	    st->error += ERROR_REGEX;
+        return ;
+    }
+    list->pos = position++;
+    list->start = ft_strlen(st->s1) - ft_strlen(base);
+    list->end = ft_strlen(st->s1) - ft_strlen(match);
+    if (st->capt == NULL)
+    {
+        st->capt = list;
+        mem = list;
+    }
+    else
+    {
+        mem->next = list;
+        mem = list;
+    }
+    st->nb_capt++;
+}
 
 t_bool		regex_enclose_parse(t_regex *st, t_reg_encl *encl, char *s1, char *reg)
 {
