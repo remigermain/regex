@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/03 20:09:55 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/10/03 20:15:38 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,8 @@ t_bool  regex_enclosed(t_regex *st, char *s1, char *reg)
     t_reg_encl  encl;
 
     ft_bzero(&encl, sizeof(t_reg_encl));
-    ft_printf("[REG  %s ]\n", reg);
     if (*reg == '?')
     {
-        ft_printf("HERRE\n");
         reg++;
         encl.is_not = TRUE;
     }

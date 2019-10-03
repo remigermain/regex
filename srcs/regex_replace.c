@@ -61,6 +61,7 @@ char    *regex_replace_do(t_regex *st, char *s1, char *rep, enum e_regex_replace
         list = list->next;
         len++;
     }
+    ft_strcat(ptr, s1 + i);
     return (ptr);
 }
 

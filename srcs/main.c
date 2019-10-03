@@ -6,25 +6,20 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/03 19:49:43 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/10/03 20:16:19 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "regex.h"
 
-int main(int argc, char **argv)
+void	t(char **argv)
 {
 	int ret = 0;
 	t_regex st;
-	if (argc <= 3)
-	{
-		ft_printf("./prog < string > < regex string >\n");
-		exit(0);
-	}
-	//ret = ft_regex_cmp(&st, argv[1], argv[2]);
-	char *ptr = ft_regex_replace(argv[1], argv[2], argv[3], ft_atoi(argv[4]));
-	ft_printf("new ptr = %s\n", ptr);
+	ft_printf("[ MATCH ]\n");
+
+	ret = ft_regex_cmp(&st, argv[1], argv[2]);
 	if (ret > 0)
 		ft_printf("\033[38;5;326mTRUE  %d\n"T_WHITE, ret);
 	else if (ret == 0)
@@ -46,5 +41,20 @@ int main(int argc, char **argv)
 		list = list->next;
 	}
 	ft_regex_free(&st);
+
+}
+
+void	r(char **argv)
+{
+	ft_printf("[ REPLACE ]\n");
+	char *ptr = ft_regex_replace(argv[1], argv[2], argv[3], 1 << ft_atoi(argv[4]));
+	ft_printf("[BF %s ]\n", argv[1]);
+	ft_printf("[AF %s ]\n", ptr);
+}
+
+int main(int argc, char **argv)
+{
+	//t(argv);
+	r(argv);
 	return (0);
 }
