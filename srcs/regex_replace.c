@@ -72,7 +72,7 @@ char	*ft_regex_replace(char *s1, char *reg, char *rep, enum e_regex_replace mod)
 
 	ret = ft_regex_cmp(&st, s1, reg);
 	if (ret == 0 || st.nb_capt == 0)
-		return (s1);
+		return (ft_strdup(s1));
 	if (ret < 0)
 		return (NULL);
 	return (regex_replace_do(&st, s1, rep, mod));
