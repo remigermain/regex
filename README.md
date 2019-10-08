@@ -53,7 +53,9 @@
 |  +      |Matches the preceding element one or more times. For example, ab+c matches "abc", "abbc", "abbbc", and so on, but not "ac". |
 |  \*     | Matches the preceding element zero or more times. For example, ab*c matches "abc", "abbc", "ac"|
 | {m,n}      |  Matches the preceding element at least m and not more than n times. For example, a{3,5} matches only "aaa", "aaaa", and "aaaaa". This is not found in a few older instances of regexes. BRE mode requires \{m,n\}. |
-
+| {,n} |  Matches the preceding element zero or n time|
+| {m,} |  Matches the preceding element at least m time or more |
+ {m;n} |  Matches the preceding element m time or n time |
 
 ### sepcial
 
