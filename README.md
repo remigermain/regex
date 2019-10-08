@@ -45,7 +45,7 @@
 |[:upper:]   |                 |           |    Uppercase letters                               |       
 |[:xdigit:]  |                 |           |    Uppercase letters                               |     
 
-### quantifier
+### Quantifier
 
 | metachar |  Description  |
 |----------|---------------|
@@ -57,7 +57,7 @@
 | {m,} |  Matches the preceding element at least m time or more |
  {m;n} |  Matches the preceding element m time or n time |
 
-### sepcial
+### Sepcial
 
 | metachar |  Description  |
 |----------|---------------|
@@ -72,7 +72,7 @@
 | \0x44 | hex ascii code|
 | \0777 | octal ascii code |
 
-### enclose
+### Enclose
 
 | metachar |  Description  |
 |----------|---------------|
