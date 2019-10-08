@@ -17,7 +17,7 @@ int	ft_regex_cmp(t_regex *st, char *s1, char *reg)
 
 
 ### ft_regex_replace
-> Compare s1 to reg's pattern and replace all capturing string ( with enclose )
+> Compare s1 to reg's pattern and replace all capturing string with rep's string
 
 ```
 char	*ft_regex_replace(char *s1, char *reg, char *rep, enum e_regex_replace mod)
@@ -28,6 +28,12 @@ char	*ft_regex_replace(char *s1, char *reg, char *rep, enum e_regex_replace mod)
 *  rep is for replace string
 *  enum is for mod 
 
+| mod | Description |
+|-----|-------------|
+| REG_FIRST| Replace first pattern matching|
+| REG_LAST| Replace last pattern matching|
+|REG_ALL| Replace all pattern matching|
+
 ### ft_regex_free
 > You need to be free the structure after matching
 
@@ -35,12 +41,6 @@ char	*ft_regex_replace(char *s1, char *reg, char *rep, enum e_regex_replace mod)
 void	ft_regex_free(t_regex *st)
 ```
 *  free t_regex struct
-
-| mod | Description |
-|-----|-------------|
-| REG_FIRST| Replace first pattern matching|
-| REG_LAST| Replace last pattern matching|
-|REG_ALL| Replace all pattern matching|
 
 ## REGEX
 
