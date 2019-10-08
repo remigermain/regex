@@ -1,10 +1,52 @@
 # Regular expression WIP
 
-## [1] is working
+
+## Prototype
+### ft_regex_cmp
+> Compare s1 to reg's pattern
+```
+int	ft_regex_cmp(t_regex *st, char *s1, char *reg)
+```
+
+*  return 0 if si not match
+*  return positive integer for number that match
+*  return -1 for error allocation memory
+*  t_regex the struct with all information
+*  s1 is your string
+*  reg is your regex pattern
+
+
+### ft_regex_replace
+> Compare s1 to reg's pattern and replace all capturing string ( with enclose )
+
+```
+char	*ft_regex_replace(char *s1, char *reg, char *rep, enum e_regex_replace mod)
+```
+*  return NULL ptr if error in allocation memory
+*  s1 is your string
+*  reg is your regex pattern
+*  rep is for replace string
+*  enum is for mod 
+
+### ft_regex_free
+> You need to be free the structure after matching
+
+```
+void	ft_regex_free(t_regex *st)
+```
+*  free t_regex struct
+
+| mod | Description |
+|-----|-------------|
+| REG_FIRST| Replace first pattern matching|
+| REG_LAST| Replace last pattern matching|
+|REG_ALL| Replace all pattern matching|
+
+## REGEX
 
 ### Class
 
-|   exemple     |      Descriotion                                    |
+|   exemple     |      Description                                    |
 |---------------|-----------------------------------------------------|
 | [] 	        |   The characters "[]"                               |       
 | [0] 	        |   The character "0"                                 |     
@@ -46,30 +88,20 @@
 |[:xdigit:]  |                 |           |    Uppercase letters                               |     
 
 ### Quantifier
+>  By default , quantifier as ``Greedy`` means match longest possible string . The ``lazy`` mode of quantifiers is an opposite to the ``greedy`` mode. It means: “repeat minimal number of times”.
+If you need ``lazy`` quantifier , add ``?`` at the end of quantifier
 
-| metachar |  Description  |
-|----------|---------------|
-|  ?       | Matches the preceding element zero or one time. For example, ab?c matches only "ac" or "abc".  |
-|  +      |Matches the preceding element one or more times. For example, ab+c matches "abc", "abbc", "abbbc", and so on, but not "ac". |
-|  \*     | Matches the preceding element zero or more times. For example, ab*c matches "abc", "abbc", "ac"|
-| {m,n}      |  Matches the preceding element at least m and not more than n times. For example, a{3,5} matches only "aaa", "aaaa", and "aaaaa". This is not found in a few older instances of regexes. BRE mode requires \{m,n\}. |
-| {,n} |  Matches the preceding element zero or n time|
-| {m,} |  Matches the preceding element at least m time or more |
-| {m;n} |  Matches the preceding element m time or n time |
-| {m} |  Matches the preceding element m time|
-| lazy |  Description  |
-|----------|---------------|
-||by default , quantifier as ``Greedy`` means match longest possible string . The ``lazy`` mode of quantifiers is an opposite to the ``greedy`` mode. It means: “repeat minimal number of times”.need to add ? at the end of quantifier|
-| ??    ||
-| +?    ||
-| \*?    ||
-| {m,n}?||
-| {,n}? ||
-| {m,}? ||
-| {m;n}? ||
+| quantifier | lazy |Description  |
+|----------|-|--------------|
+|  ?   |??    | Matches the preceding element zero or one time. For example, ab?c matches only "ac" or "abc".  |
+|  +   |+?    | Matches the preceding element one or more times. For example, ab+c matches "abc", "abbc", "abbbc", and so on, but not "ac". |
+|  \*   |\*?   | Matches the preceding element zero or more times. For example, ab*c matches "abc", "abbc", "ac"|
+| {m,n}  |{m,n}?  |  Matches the preceding element at least m and not more than n times. For example, a{3,5} matches only "aaa", "aaaa", and "aaaaa". This is not found in a few older instances of regexes. BRE mode requires \{m,n\}. |
+| {,n}   |{,n}?  |  Matches the preceding element zero or n time|
+| {m,}    |{m,}? |  Matches the preceding element at least m time or more |
+| {m;n}    |{m;n}?|  Matches the preceding element m time or n time |
+| {m}      |-|  Matches the preceding element m time|
 
-
- 
 
 ### Sepcial
 
