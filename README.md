@@ -72,3 +72,8 @@
 | \0x44 | hex ascii code|
 | \0777 | octal ascii code |
 
+### enclose
+
+| metachar |  Description  |
+|----------|---------------|
+| ( )     | Defines a marked subexpression. The string matched within the parentheses can be recalled later (see the next entry, \n). A marked subexpression is also called a block or capturing group. BRE mode requires \( \). |
