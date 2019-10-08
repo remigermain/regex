@@ -55,7 +55,17 @@
 | {m,n}      |  Matches the preceding element at least m and not more than n times. For example, a{3,5} matches only "aaa", "aaaa", and "aaaaa". This is not found in a few older instances of regexes. BRE mode requires \{m,n\}. |
 | {,n} |  Matches the preceding element zero or n time|
 | {m,} |  Matches the preceding element at least m time or more |
- {m;n} |  Matches the preceding element m time or n time |
+| {m;n} |  Matches the preceding element m time or n time |
+| lazy |  Description  |
+|----------|---------------|
+|by default , quantifier as ``Greedy`` means match longest possible string . The ``lazy`` mode of quantifiers is an opposite to the ``greedy`` mode. It means: “repeat minimal number of times”.
+| ??    ||
+| ??    ||
+
+| ??    ||
+
+
+ 
 
 ### Sepcial
 
