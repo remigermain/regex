@@ -56,13 +56,17 @@
 | {,n} |  Matches the preceding element zero or n time|
 | {m,} |  Matches the preceding element at least m time or more |
 | {m;n} |  Matches the preceding element m time or n time |
+| {m} |  Matches the preceding element m time|
 | lazy |  Description  |
 |----------|---------------|
-|by default , quantifier as ``Greedy`` means match longest possible string . The ``lazy`` mode of quantifiers is an opposite to the ``greedy`` mode. It means: “repeat minimal number of times”.
+||by default , quantifier as ``Greedy`` means match longest possible string . The ``lazy`` mode of quantifiers is an opposite to the ``greedy`` mode. It means: “repeat minimal number of times”.need to add ? at the end of quantifier|
 | ??    ||
-| ??    ||
-
-| ??    ||
+| +?    ||
+| \*?    ||
+| {m,n}?||
+| {,n}? ||
+| {m,}? ||
+| {m;n}? ||
 
 
  
