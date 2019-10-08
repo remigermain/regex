@@ -62,6 +62,7 @@
 | metachar |  Description  |
 |----------|---------------|
 | ^  | Matches the starting position within the string. In line-based tools, it matches the starting position of any line. |
+| \|   |  The choice (also known as alternation or set union) operator matches either the expression before or the expression after the operator. For example, abc\|def matches "abc" or "def". |
 | . | Matches any single character (many applications exclude newlines, and exactly which characters are considered newlines is flavor-, character-encoding-, and platform-specific, but it is safe to assume that the line feed character is included). Within POSIX bracket expressions, the dot character matches a literal dot. For example, a.c matches "abc", etc., but [a.c] matches only "a", ".", or "c". |
 | $ | Matches the ending position of the string or the position just before a string-ending newline. In line-based tools, it matches the ending position of any line. |
 | \n | newline|
@@ -70,3 +71,4 @@
 | \e | escape |
 | \0x44 | hex ascii code|
 | \0777 | octal ascii code |
+
