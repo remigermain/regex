@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/03 20:16:19 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/10/09 18:48:48 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	t(char **argv)
 	int ret = 0;
 	t_regex st;
 	ft_printf("[ MATCH ]\n");
+	ft_printf("[ S1  >>%s<< ]\n", argv[1]);
+	ft_printf("[ REG  >>%s<< ]\n", argv[2]);
 
 	ret = ft_regex_cmp(&st, argv[1], argv[2]);
 	if (ret > 0)
@@ -54,7 +56,7 @@ void	r(char **argv)
 
 int main(int argc, char **argv)
 {
-	//t(argv);
-	r(argv);
+	t(argv);
+	//r(argv);
 	return (0);
 }

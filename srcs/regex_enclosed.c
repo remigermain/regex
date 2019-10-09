@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/03 20:15:38 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/10/09 18:29:32 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	ft_regex_free(t_regex *st)
 static void        regex_put_arg(t_regex *st, char *base, char *match)
 {
     static t_reg_capt   *mem = NULL;
-    static int          position = 0;
     t_reg_capt          *list;
     int                 len;
     
@@ -39,10 +38,10 @@ static void        regex_put_arg(t_regex *st, char *base, char *match)
     if (!(list = (t_reg_capt*)ft_memalloc(sizeof(t_reg_capt))) ||
         (!(list->str = ft_strsub(base, 0, len))))
     {
-	    st->error += ERROR_REGEX;
+	    st->error = ERROR_REGEX;
         return ;
     }
-    list->pos = position++;
+    list->pos = st->nb_capt++;
     list->start = ft_strlen(st->s1) - ft_strlen(base);
     list->end = ft_strlen(st->s1) - ft_strlen(match);
     if (st->capt == NULL)
@@ -55,17 +54,18 @@ static void        regex_put_arg(t_regex *st, char *base, char *match)
         mem->next = list;
         mem = list;
     }
-    st->nb_capt++;
 }
 
 t_bool		regex_enclose_parse(t_regex *st, t_reg_encl *encl, char *s1, char *reg)
 {
+    char    *mem_last;
     char    *mem;
     int     i;
 
     i = 0;
     mem = s1;
-	while (*s1 && *(reg + i) && !is_delimiter(st, reg + i, ')'))
+    mem_last = st->last_s1;
+	while (*s1 && *(reg + i) && !is_delimiter(st, reg + i, ")"))
     {
         if (regex_parse(st, s1, reg + i))
         {
@@ -82,6 +82,7 @@ t_bool		regex_enclose_parse(t_regex *st, t_reg_encl *encl, char *s1, char *reg)
         i += regex_span_or(st, reg + i);
     }
     s1 = mem;
+    st->last_s1 = mem_last;
     if (verif_quantifier(&(encl->quan), encl->quan.match) &&
         regex_parse(st, s1, reg + encl->len))
         return (TRUE);
@@ -100,7 +101,7 @@ t_bool  regex_enclosed(t_regex *st, char *s1, char *reg)
         encl.is_not = TRUE;
     }
 	encl.len = regex_span_enclose(st, reg);
-	if (is_quantifier(st, reg + encl.len))    
+	if (is_delimiter(st, reg + encl.len, QUANTIFIER))    
         encl.len += regex_get_quantifier(&(encl.quan), reg + encl.len);
     return (regex_enclose_parse(st, &encl, s1, reg));
 }

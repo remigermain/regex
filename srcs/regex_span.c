@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/30 18:46:35 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/10/09 18:28:04 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int     regex_span_quantifier(t_regex *st, char *reg)
     int i;
 
     i = 0;
-    if (is_quantifier(st, reg))
+    if (is_delimiter(st, reg, QUANTIFIER))
     {
         if (ft_strchr("*?+", *reg))
             i++;
@@ -39,9 +39,9 @@ int     regex_span_enclose(t_regex *st, char *reg)
     int i;
 
     i = 0;
-    while (*(reg + i) && !is_delimiter(st, reg + i, ')'))
+    while (*(reg + i) && !is_delimiter(st, reg + i, ")"))
     {
-        if (is_delimiter(st, reg + i, '('))
+        if (is_delimiter(st, reg + i, "("))
             i += regex_span_enclose(st, reg + i + 1) + 1;
         else
             i++;
@@ -56,10 +56,10 @@ int     regex_span_or(t_regex *st, char *reg)
     int i;
 
     i = 0;
-    while (*(reg + i) && !is_delimiter(st, reg + i, '|') &&
-                         !is_delimiter(st, reg + i, ')'))
+    while (*(reg + i) && !is_delimiter(st, reg + i, "|") &&
+                         !is_delimiter(st, reg + i, ")"))
     {
-        if (is_delimiter(st, reg + i, '('))
+        if (is_delimiter(st, reg + i, "("))
             i += regex_span_enclose(st, reg + i + 1) + 1;
         else
             i++;
@@ -74,7 +74,7 @@ int     regex_span_class(t_regex *st, char *reg)
     int i;
 
     i = 0;
-    while (*(reg + i) && !is_delimiter(st, reg + i, ']'))
+    while (*(reg + i) && !is_delimiter(st, reg + i, "]"))
         i++;
     if (*(reg + i) == ']')
         i++;

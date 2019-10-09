@@ -15,7 +15,7 @@
 static t_bool   regex_replace_check(t_reg_capt *list, int len, enum e_regex_replace mod)
 {
     if ((len == 0 && (mod & REG_FIRST))  ||
-    (list->next == NULL && (mod & REG_END)) ||
+    (list->next == NULL && (mod & REG_LAST)) ||
     (mod & REG_ALL) || (mod == 0))
         return (TRUE);
     return (FALSE);

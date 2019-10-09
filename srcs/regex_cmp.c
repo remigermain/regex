@@ -12,6 +12,24 @@
 
 #include "regex.h"
 
+t_bool	regex_same_char(t_regex *st, char *s1, char *reg)
+{
+	char	alpha[128];
+
+	if (*s1)
+	{
+		ft_printf("reg = %s\n", reg);
+		ft_bzero(alpha, sizeof(char) * 128);
+		if (!is_metachar(st, reg))
+			regex_is_metatype(alpha, reg);
+		else
+			alpha[(int)(*reg)] = 1;
+	 	if ((is_delimiter(st, reg, ".") || alpha[(int)(*s1)] == 1) && *s1 != '\n')
+			return (regex_parse(st, ++s1, (reg + convert_metachar_len(st, reg))));
+	}
+	return (FALSE);
+}
+
 t_bool	regex_parse(t_regex *st, char *s1, char *reg)
 {
 	st->last_s1 = s1;
@@ -19,25 +37,23 @@ t_bool	regex_parse(t_regex *st, char *s1, char *reg)
 		reg++;
 	if (*reg == '\0' && (++st->match))
 		return (TRUE);
-	if (is_delimiter(st, reg, '|'))
+	if (is_delimiter(st, reg, "|"))
 		return (TRUE);
-	if (is_delimiter(st, reg, ')'))
+	if (is_delimiter(st, reg, ")"))
 		return (TRUE);
-	if (is_delimiter(st, reg, '['))
+	if (is_delimiter(st, reg, "["))
 		return (regex_class(st, s1, ++reg));
-	if (is_delimiter(st, reg, '('))
+	if (is_delimiter(st, reg, "("))
 		return (regex_enclosed(st, s1, ++reg));
-	if (is_quantifier(st, reg + 1))
+	if (is_delimiter(st, reg + 1, QUANTIFIER))
 		return (regex_quantifier(st, s1, reg));
-	if (is_delimiter(st, reg, '$') && *(reg + 1) == '\0')
+	if (is_delimiter(st, reg, "$") && *(reg + 1) == '\0')
 	{
 		if (*s1 == '\0' && (++st->match))
 			return (TRUE);
 		return (FALSE);
 	}
-	if (*s1 && ((is_delimiter(st, reg, '.') && *s1 != '\n') || convert_metachar(st, reg) == *s1))
-		return (regex_parse(st, ++s1, (reg + convert_metachar_len(st, reg))));
-	return (FALSE);
+	return (regex_same_char(st, s1, reg));
 }
 
 int	ft_regex_cmp(t_regex *st, char *s1, char *reg)
@@ -49,7 +65,7 @@ int	ft_regex_cmp(t_regex *st, char *s1, char *reg)
 	st->reg = reg;
 	while (*reg)
 	{
-		if (is_delimiter(st, reg, '^'))
+		if (is_delimiter(st, reg, "^"))
 			regex_parse(st, s1, reg + 1);
 		else
 		{

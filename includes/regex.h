@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:47:12 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/03 20:11:12 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/10/09 18:31:47 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,15 @@ enum e_regex_quan
 	QUAN_MIN = 0b1,
 	QUAN_MAX = 0b10,
 	QUAN_EX = 0b100,
-	QUAN_LAZY = 0b1000,
+	QUAN_OR = 0b1000,
+	QUAN_LAZY = 0b10000,
 };
 
 enum e_regex_replace
 {
     REG_ALL = 0b1,
     REG_FIRST = 0b10,
-    REG_END = 0b100,
+    REG_LAST = 0b100,
 };
 
 typedef struct s_regex_quantifier
@@ -133,15 +134,6 @@ int         	regex_get_quantifier(t_reg_quan *st, char *reg);
 
 /*
 **-------------------------------------------------------
-**          regex_is_methode.c
-**-------------------------------------------------------
-*/
-t_bool			is_enclose(t_regex *st, char *reg);
-t_bool			is_quantifier(t_regex *st, char *reg);
-t_bool			is_delimiter(t_regex *st, char *reg, char delimiter);
-
-/*
-**-------------------------------------------------------
 **          regex_free.c
 **-------------------------------------------------------
 */
@@ -163,8 +155,8 @@ int     		regex_span_class(t_regex *st, char *reg);
 **-------------------------------------------------------
 */
 void			regex_is_type_made(char alpha[128], t_bool (*func)(int), int mod);
-int				regex_class_is_metatype(char alpha[128], char *reg);
-int				regex_class_is_type(char alpha[128], char *reg);
+int				regex_is_metatype(char alpha[128], char *reg);
+int				regex_is_type(char alpha[128], char *reg);
 
 /*
 **-------------------------------------------------------
@@ -172,6 +164,7 @@ int				regex_class_is_type(char alpha[128], char *reg);
 **-------------------------------------------------------
 */
 t_bool			is_metachar(t_regex *st, char *reg);
+t_bool			is_delimiter(t_regex *st, char *reg, char *delimiter);
 int				convert_metachar_len(t_regex *st, char *reg);
 int				convert_metachar(t_regex *st, char *reg);
 

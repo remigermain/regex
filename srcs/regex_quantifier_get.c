@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/03 18:41:54 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/10/09 18:17:15 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,28 @@ static int	mini_quantifier(t_reg_quan *quantifier, char *reg)
 
 int			regex_get_quantifier(t_reg_quan *quantifier, char *reg)
 {
+	t_bool mod;
 	int i;
 
 	i = 0;
+	mod = FALSE;
 	ft_bzero(quantifier, sizeof(*quantifier));
 	if (ft_strchr("*?+", *reg))
 		i += mini_quantifier(quantifier, reg);
 	else if (*reg)
 	{
 		i += get_quantifier_number(&quantifier->number_1, &quantifier->isset, QUAN_MIN,  reg + i + 1) + 1;
-		if (*(reg + i) != ',')
+		if (*(reg + i) == '}')
 			quantifier->isset = QUAN_EX;
 		else
+		{
+			mod = ((*reg + i) == ';' ? TRUE : FALSE);
 			i += get_quantifier_number(&quantifier->number_2, &quantifier->isset, QUAN_MAX, reg + i + 1) + 1;
+		}
 		i++;
 	}
+	if (mod == TRUE)
+		quantifier->isset = QUAN_OR;
 	if (*(reg + i) == '?')
 	{
 		quantifier->isset |= QUAN_LAZY;

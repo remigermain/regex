@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 20:32:03 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/01 18:32:37 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/10/09 18:31:47 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ static int		regex_class_parse(t_regex *st, t_reg_class *class, char *reg)
 	{
 		i = convert_metachar(st, reg);
 		if (is_metachar(st, reg) && i == '[' && (i = -1))
-			reg += regex_class_is_type(class->alpha, reg + 1) + 2;
+			reg += regex_is_type(class->alpha, reg + 1) + 2;
 		else if (is_metachar(st, reg) && ft_strchr(REGEX_TYPE, i))
-			reg += regex_class_is_metatype(class->alpha, reg + 1) + 1;
+			reg += regex_is_metatype(class->alpha, reg + 1) + 1;
 		else
 		{
 			reg += convert_metachar_len(st, reg);
@@ -65,7 +65,7 @@ t_bool	regex_class(t_regex *st, char *s1, char *reg)
 	if (is_metachar(st, reg) && *reg == '^')
 		class.is_not = TRUE;
 	reg += regex_class_parse(st, &class, reg);
-	if (is_quantifier(st, reg))
+	if (is_delimiter(st, reg, QUANTIFIER))
 		reg += regex_get_quantifier(&(class.quantifier), reg);
 	return (regex_class_do(st, &class, s1, reg));
 }
