@@ -48,7 +48,7 @@ void	ft_regex_free(t_regex *st)
 
 |   exemple     |      Description                                    |
 |---------------|-----------------------------------------------------|
-| [] 	        |   The characters "[]"                               |       
+| [] 	        |   nothings                              |       
 | [0] 	        |   The character "0"                                 |     
 | [0-9] 	    |   Any number                                        |   
 | [[:isdigit:]] |   Any number                                        |  
@@ -61,8 +61,8 @@ void	ft_regex_free(t_regex *st)
 | [^-0-9] 	    |   Any character except a number or a "-"            |                          
 | []0-9] 	    |   Any number or a "]"                               |       
 | [0-9]] 	    |   Any number followed by a "]"                      |                
-| [0-9-z] 	    |   Any number, or any character between "9" and "z". |                                     
-| [0-9\-a\]]    |   Any number, or a "-", a "a", or a "]"             |            
+| [0-9-z] 	    |   Any number, or any a "-", or "z". |                                     
+| [0-9\\-a\\]]    |   Any number, or a "-", a "a", or a "]"             |            
 
 #### Character class 
 
