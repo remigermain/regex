@@ -1,18 +1,19 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   regex_meta.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/10 17:10:05 by rgermain         ###   ########.fr       */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   regex_meta.c                                     .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: rgermain <rgermain@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2019/06/27 15:48:43 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2019/10/10 18:12:30 by rgermain    ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
 
 #include "regex.h"
 
-t_bool is_metachar(t_regex *st, const char *reg)
+t_bool	is_metachar(t_regex *st, const char *reg)
 {
 	int i;
 
@@ -31,7 +32,7 @@ t_bool	is_delimiter(t_regex *st, const char *reg, char *delimiter)
 	return (FALSE);
 }
 
-int convert_metachar_len(t_regex *st, const char *reg)
+int		convert_metachar_len(t_regex *st, const char *reg)
 {
 	int len;
 
@@ -51,7 +52,7 @@ int convert_metachar_len(t_regex *st, const char *reg)
 	return (len);
 }
 
-int convert_metachar(t_regex *st, const char *reg)
+int		convert_metachar(t_regex *st, const char *reg)
 {
 	int c;
 

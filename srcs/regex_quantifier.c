@@ -1,18 +1,19 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   regex_quantifier.c                                 :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/10 17:10:59 by rgermain         ###   ########.fr       */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   regex_quantifier.c                               .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: rgermain <rgermain@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2019/06/27 15:48:43 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2019/10/10 18:10:50 by rgermain    ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
 
 #include "regex.h"
 
-t_bool verif_quantifier(t_reg_quan *quan, int i)
+t_bool		verif_quantifier(t_reg_quan *quan, int i)
 {
 	if (quan->isset & QUAN_EX && quan->number_1 != i)
 		return (FALSE);
@@ -20,15 +21,16 @@ t_bool verif_quantifier(t_reg_quan *quan, int i)
 		return (FALSE);
 	else if (quan->isset & QUAN_MAX && quan->number_2 < i)
 		return (FALSE);
-	else if (quan->isset & QUAN_OR && quan->number_1 != i 
-								&& quan->number_2 != i)
+	else if (quan->isset & QUAN_OR && quan->number_1 != i
+			&& quan->number_2 != i)
 		return (FALSE);
 	else if (quan->isset == 0)
 		return (i == 1 ? TRUE : FALSE);
 	return (TRUE);
 }
 
-t_bool		regex_quantifier_do(t_regex *st, t_reg_quan *quantifier, const char *s1, const char *reg)
+t_bool		regex_quantifier_do(t_regex *st, t_reg_quan *quantifier,
+											const char *s1, const char *reg)
 {
 	int i;
 

@@ -1,59 +1,75 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   regex_meta_type.c                                  :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/10 17:13:19 by rgermain         ###   ########.fr       */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   regex_meta_type.c                                .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: rgermain <rgermain@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2019/06/27 15:48:43 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2019/10/10 18:11:02 by rgermain    ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
 
 #include "regex.h"
-# define REG_SET 1
-# define REG_UNSET 0
+#define REG_SET 1
+#define REG_UNSET 0
 
-void	regex_is_type_made(char alpha[128], t_bool (*func)(int), int mod)
+void		regex_is_type_made(char alpha[128], t_bool (*func)(int), int mod)
 {
-    t_bool  ret;
-	int     i;
+	t_bool	ret;
+	int		i;
 
 	i = -1;
 	while (++i <= 127)
 	{
-        ret = func(i);
+		ret = func(i);
 		if ((ret && mod) || (!ret && !mod))
 			alpha[i] = 1;
 	}
 }
 
-int	regex_is_metatype(char alpha[128], const char *reg)
+int			regex_is_metatype(char alpha[128], const char *reg)
 {
-    if (*reg == 'w')
+	if (*reg == 'w')
 		regex_is_type_made(alpha, ft_isword, REG_SET);
-    else if (*reg == 'W')
+	else if (*reg == 'W')
 		regex_is_type_made(alpha, ft_isword, REG_UNSET);
-    if (*reg == 'd')
+	if (*reg == 'd')
 		regex_is_type_made(alpha, ft_isdigit, REG_SET);
-    else if (*reg == 'D')
+	else if (*reg == 'D')
 		regex_is_type_made(alpha, ft_isdigit, REG_UNSET);
-    else if (*reg == 's')
+	else if (*reg == 's')
 		regex_is_type_made(alpha, ft_isspace, REG_SET);
-    else if (*reg == 'S')
+	else if (*reg == 'S')
 		regex_is_type_made(alpha, ft_isspace, REG_UNSET);
 	else if (*reg == 'n')
 		alpha[(int)('\n')] = 1;
 	else if (*reg == 'r')
-		alpha[(int)('\r')] = 1; 
+		alpha[(int)('\r')] = 1;
 	else if (*reg == 'e')
 		alpha[(int)('\e')] = 1;
 	else
 		alpha[(int)(*reg)] = 1;
-    return (1);
+	return (1);
 }
 
-int	regex_is_type(char alpha[128], const char *reg)
+static int	regex_is_type2(char alpha[128], const char *reg, int i)
+{
+	if (!ft_strncmp(reg, ":print:", 7) && (i = 7))
+		regex_is_type_made(alpha, ft_isprint, REG_SET);
+	else if (!ft_strncmp(reg, ":space:", 7) && (i = 7))
+		regex_is_type_made(alpha, ft_isspace, REG_SET);
+	else if (!ft_strncmp(reg, ":upper:", 7) && (i = 7))
+		regex_is_type_made(alpha, ft_isuppercase, REG_SET);
+	else if (!ft_strncmp(reg, ":xdigit:", 8) && (i = 8))
+		regex_is_type_made(alpha, ft_isxdigit, REG_SET);
+	else if (!ft_strncmp(reg, ":isword:", 8) && (i = 8))
+		regex_is_type_made(alpha, ft_isword, REG_SET);
+	return (i);
+}
+
+int			regex_is_type(char alpha[128], const char *reg)
 {
 	int i;
 
@@ -74,15 +90,7 @@ int	regex_is_type(char alpha[128], const char *reg)
 		regex_is_type_made(alpha, ft_isgraph, REG_SET);
 	else if (!ft_strncmp(reg, ":lower:", 7) && (i = 7))
 		regex_is_type_made(alpha, ft_islowercase, REG_SET);
-	else if (!ft_strncmp(reg, ":print:", 7) && (i = 7))
-		regex_is_type_made(alpha, ft_isprint, REG_SET);
-	else if (!ft_strncmp(reg, ":space:", 7) && (i = 7))
-		regex_is_type_made(alpha, ft_isspace, REG_SET);
-	else if (!ft_strncmp(reg, ":upper:", 7) && (i = 7))
-		regex_is_type_made(alpha, ft_isuppercase, REG_SET);
-	else if (!ft_strncmp(reg, ":xdigit:", 8) && (i = 8))
-		regex_is_type_made(alpha, ft_isxdigit, REG_SET);
-	else if (!ft_strncmp(reg, ":isword:", 8) && (i = 8))
-		regex_is_type_made(alpha, ft_isword, REG_SET);
+	else
+		return (regex_is_type2(alpha, reg, i));
 	return (i);
 }

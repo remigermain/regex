@@ -1,36 +1,39 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_regex_cmp.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/24 20:23:19 by rgermain         ###   ########.fr       */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   regex_exec.c                                     .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: rgermain <rgermain@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2019/10/10 18:11:21 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2019/10/10 18:11:23 by rgermain    ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
 
 #include "regex.h"
 
-t_bool	regex_same_char(t_regex *st, const char *s1, const char *reg)
+static t_bool	regex_same_char(t_regex *st, const char *s1, const char *reg)
 {
 	char	alpha[128];
 
 	if (*s1)
 	{
-		ft_printf("reg = %s\n", reg);
 		ft_bzero(alpha, sizeof(char) * 128);
 		if (!is_metachar(st, reg))
 			regex_is_metatype(alpha, reg);
 		else
 			alpha[(int)(*reg)] = 1;
-	 	if ((is_delimiter(st, reg, ".") || alpha[(int)(*s1)] == 1) && *s1 != '\n')
-			return (regex_parse(st, ++s1, (reg + convert_metachar_len(st, reg))));
+		if ((is_delimiter(st, reg, ".") || alpha[(int)(*s1)] == 1))
+		{
+			reg += convert_metachar_len(st, reg);
+			return (regex_parse(st, ++s1, reg));
+		}
 	}
 	return (FALSE);
 }
 
-t_bool	regex_parse(t_regex *st, const char *s1, const char *reg)
+t_bool			regex_parse(t_regex *st, const char *s1, const char *reg)
 {
 	st->last_s1 = s1;
 	if (*reg == '\\' && is_metachar(st, reg))
@@ -56,7 +59,7 @@ t_bool	regex_parse(t_regex *st, const char *s1, const char *reg)
 	return (regex_same_char(st, s1, reg));
 }
 
-int	ft_regex_cmp(t_regex *st, const char *s1, const char *reg)
+int				ft_regex_exec(t_regex *st, const char *s1, const char *reg)
 {
 	int i;
 

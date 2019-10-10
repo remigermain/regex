@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/09 18:48:48 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/10/10 17:20:31 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	t(char **argv)
 	ft_printf("[ S1  >>%s<< ]\n", argv[1]);
 	ft_printf("[ REG  >>%s<< ]\n", argv[2]);
 
-	ret = ft_regex_cmp(&st, argv[1], argv[2]);
+	ret = ft_regex_exec(&st, argv[1], argv[2]);
 	if (ret > 0)
 		ft_printf("\033[38;5;326mTRUE  %d\n"T_WHITE, ret);
 	else if (ret == 0)

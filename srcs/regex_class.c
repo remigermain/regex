@@ -1,18 +1,20 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   regex_class.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/27 20:32:03 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/10 17:16:21 by rgermain         ###   ########.fr       */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   regex_class.c                                    .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: rgermain <rgermain@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2019/06/27 20:32:03 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2019/10/10 18:12:23 by rgermain    ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
 
 #include "regex.h"
 
-static t_bool	regex_class_do(t_regex *st, t_reg_class *class, const char *s1, const char *reg)
+static t_bool	regex_class_do(t_regex *st, t_reg_class *class,
+											const char *s1, const char *reg)
 {
 	t_bool	ret;
 	int		i;
@@ -21,7 +23,7 @@ static t_bool	regex_class_do(t_regex *st, t_reg_class *class, const char *s1, co
 	while (s1[++i])
 	{
 		ret = class->alpha[(int)s1[i]] ? TRUE : FALSE;
-		if ((class->is_not == TRUE) || 
+		if ((class->is_not == TRUE) ||
 			(!ret && class->is_not == FALSE))
 			break ;
 		class->quantifier.match++;
@@ -29,11 +31,12 @@ static t_bool	regex_class_do(t_regex *st, t_reg_class *class, const char *s1, co
 	return (regex_quantifier_do(st, &(class->quantifier), s1, reg));
 }
 
-static int		regex_class_parse(t_regex *st, t_reg_class *class, const char *reg)
+static int		regex_class_parse(t_regex *st, t_reg_class *class,
+															const char *reg)
 {
 	const char	*mem;
 	int			i;
-	
+
 	mem = reg;
 	while (*reg && (!is_metachar(st, reg) || *reg != ']'))
 	{
@@ -57,7 +60,7 @@ static int		regex_class_parse(t_regex *st, t_reg_class *class, const char *reg)
 	return (regex_span_class(st, mem));
 }
 
-t_bool	regex_class(t_regex *st, const char *s1, const char *reg)
+t_bool			regex_class(t_regex *st, const char *s1, const char *reg)
 {
 	t_reg_class	class;
 

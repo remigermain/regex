@@ -1,23 +1,24 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   regex_quantifier_get.c                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/10 17:10:05 by rgermain         ###   ########.fr       */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   regex_quantifier_get.c                           .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: rgermain <rgermain@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2019/06/27 15:48:43 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2019/10/10 18:11:39 by rgermain    ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
 
 #include "regex.h"
 
-static int  get_quantifier_number(int *number, int *isset , int set, const char *reg)
+static int	get_quantifier_number(int *nb, int *is, int set, const char *reg)
 {
 	if (*reg)
 	{
-		*number = ft_atoi(reg);
-		*isset |= set;
+		*nb = ft_atoi(reg);
+		*is |= set;
 		return (ft_spantype(reg, ft_isdigit));
 	}
 	return (0);
@@ -38,10 +39,26 @@ static int	mini_quantifier(t_reg_quan *quantifier, const char *reg)
 	return (1);
 }
 
+static int	regex_get_quantifier(t_reg_quan *quantifier, const char *reg,
+														int i, t_bool *mod)
+{
+	i += get_quantifier_number(&quantifier->number_1, &quantifier->isset,
+													QUAN_MIN, reg + i + 1) + 1;
+	if (*(reg + i) == '}')
+		quantifier->isset = QUAN_EX;
+	else
+	{
+		mod = (*(reg + i) == ';' ? TRUE : FALSE);
+		i += get_quantifier_number(&quantifier->number_2, &quantifier->isset,
+													QUAN_MAX, reg + i + 1) + 1;
+	}
+	i++;
+}
+
 int			regex_get_quantifier(t_reg_quan *quantifier, const char *reg)
 {
-	t_bool mod;
-	int i;
+	t_bool	mod;
+	int		i;
 
 	i = 0;
 	mod = FALSE;
@@ -49,17 +66,7 @@ int			regex_get_quantifier(t_reg_quan *quantifier, const char *reg)
 	if (ft_strchr("*?+", *reg))
 		i += mini_quantifier(quantifier, reg);
 	else if (*reg)
-	{
-		i += get_quantifier_number(&quantifier->number_1, &quantifier->isset, QUAN_MIN,  reg + i + 1) + 1;
-		if (*(reg + i) == '}')
-			quantifier->isset = QUAN_EX;
-		else
-		{
-			mod = (*(reg + i) == ';' ? TRUE : FALSE);
-			i += get_quantifier_number(&quantifier->number_2, &quantifier->isset, QUAN_MAX, reg + i + 1) + 1;
-		}
-		i++;
-	}
+		i = regex_get_quantifier(quantifier, reg, i, &mod);
 	if (mod == TRUE)
 		quantifier->isset = QUAN_OR;
 	if (*(reg + i) == '?')

@@ -1,6 +1,17 @@
 {
     "files.associations": {
         "limits": "c",
-        "ios": "c"
+        "ios": "c",
+        "__bit_reference": "c",
+        "__hash_table": "c",
+        "__split_buffer": "c",
+        "array": "c",
+        "string_view": "c",
+        "initializer_list": "c",
+        "string": "c",
+        "unordered_map": "c",
+        "vector": "c",
+        "hashtable": "c",
+        "regex.h": "c"
     }
 }
