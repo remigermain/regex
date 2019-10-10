@@ -6,13 +6,13 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/09 18:28:04 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/10/10 17:10:05 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "regex.h"
 
-int     regex_span_quantifier(t_regex *st, char *reg)
+int     regex_span_quantifier(t_regex *st, const char *reg)
 {
     int i;
 
@@ -34,7 +34,7 @@ int     regex_span_quantifier(t_regex *st, char *reg)
     return (i);
 }
 
-int     regex_span_enclose(t_regex *st, char *reg)
+int     regex_span_enclose(t_regex *st, const char *reg)
 {
     int i;
 
@@ -51,7 +51,7 @@ int     regex_span_enclose(t_regex *st, char *reg)
     return (i);
 }
 
-int     regex_span_or(t_regex *st, char *reg)
+int     regex_span_or(t_regex *st, const char *reg)
 {
     int i;
 
@@ -69,7 +69,7 @@ int     regex_span_or(t_regex *st, char *reg)
     return (i);
 }
 
-int     regex_span_class(t_regex *st, char *reg)
+int     regex_span_class(t_regex *st, const char *reg)
 {
     int i;
 

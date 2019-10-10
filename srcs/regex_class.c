@@ -6,13 +6,13 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 20:32:03 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/09 18:31:47 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/10/10 17:16:21 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "regex.h"
 
-static t_bool	regex_class_do(t_regex *st, t_reg_class *class, char *s1, char *reg)
+static t_bool	regex_class_do(t_regex *st, t_reg_class *class, const char *s1, const char *reg)
 {
 	t_bool	ret;
 	int		i;
@@ -29,10 +29,10 @@ static t_bool	regex_class_do(t_regex *st, t_reg_class *class, char *s1, char *re
 	return (regex_quantifier_do(st, &(class->quantifier), s1, reg));
 }
 
-static int		regex_class_parse(t_regex *st, t_reg_class *class, char *reg)
+static int		regex_class_parse(t_regex *st, t_reg_class *class, const char *reg)
 {
-	char	*mem;
-	int		i;
+	const char	*mem;
+	int			i;
 	
 	mem = reg;
 	while (*reg && (!is_metachar(st, reg) || *reg != ']'))
@@ -57,7 +57,7 @@ static int		regex_class_parse(t_regex *st, t_reg_class *class, char *reg)
 	return (regex_span_class(st, mem));
 }
 
-t_bool	regex_class(t_regex *st, char *s1, char *reg)
+t_bool	regex_class(t_regex *st, const char *s1, const char *reg)
 {
 	t_reg_class	class;
 

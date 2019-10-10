@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/09 18:29:32 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/10/10 17:14:11 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_regex_free(t_regex *st)
 	}
 }
 
-static void        regex_put_arg(t_regex *st, char *base, char *match)
+static void        regex_put_arg(t_regex *st, const char *base, const char *match)
 {
     static t_reg_capt   *mem = NULL;
     t_reg_capt          *list;
@@ -56,10 +56,10 @@ static void        regex_put_arg(t_regex *st, char *base, char *match)
     }
 }
 
-t_bool		regex_enclose_parse(t_regex *st, t_reg_encl *encl, char *s1, char *reg)
+t_bool		regex_enclose_parse(t_regex *st, t_reg_encl *encl, const char *s1, const char *reg)
 {
-    char    *mem_last;
-    char    *mem;
+    const char    *mem_last;
+    const char    *mem;
     int     i;
 
     i = 0;
@@ -90,7 +90,7 @@ t_bool		regex_enclose_parse(t_regex *st, t_reg_encl *encl, char *s1, char *reg)
 }
 
 
-t_bool  regex_enclosed(t_regex *st, char *s1, char *reg)
+t_bool  regex_enclosed(t_regex *st, const char *s1, const char *reg)
 {
     t_reg_encl  encl;
 

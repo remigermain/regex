@@ -12,7 +12,7 @@
 
 #include "regex.h"
 
-t_bool	regex_same_char(t_regex *st, char *s1, char *reg)
+t_bool	regex_same_char(t_regex *st, const char *s1, const char *reg)
 {
 	char	alpha[128];
 
@@ -30,7 +30,7 @@ t_bool	regex_same_char(t_regex *st, char *s1, char *reg)
 	return (FALSE);
 }
 
-t_bool	regex_parse(t_regex *st, char *s1, char *reg)
+t_bool	regex_parse(t_regex *st, const char *s1, const char *reg)
 {
 	st->last_s1 = s1;
 	if (*reg == '\\' && is_metachar(st, reg))
@@ -56,7 +56,7 @@ t_bool	regex_parse(t_regex *st, char *s1, char *reg)
 	return (regex_same_char(st, s1, reg));
 }
 
-int	ft_regex_cmp(t_regex *st, char *s1, char *reg)
+int	ft_regex_cmp(t_regex *st, const char *s1, const char *reg)
 {
 	int i;
 

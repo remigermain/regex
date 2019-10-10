@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/10 16:59:49 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/10/10 17:13:19 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	regex_is_type_made(char alpha[128], t_bool (*func)(int), int mod)
 	}
 }
 
-int	regex_is_metatype(char alpha[128], char *reg)
+int	regex_is_metatype(char alpha[128], const char *reg)
 {
     if (*reg == 'w')
 		regex_is_type_made(alpha, ft_isword, REG_SET);
@@ -53,7 +53,7 @@ int	regex_is_metatype(char alpha[128], char *reg)
     return (1);
 }
 
-int	regex_is_type(char alpha[128], char *reg)
+int	regex_is_type(char alpha[128], const char *reg)
 {
 	int i;
 

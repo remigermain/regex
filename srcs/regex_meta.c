@@ -6,13 +6,13 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/09 18:24:39 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/10/10 17:10:05 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "regex.h"
 
-t_bool is_metachar(t_regex *st, char *reg)
+t_bool is_metachar(t_regex *st, const char *reg)
 {
 	int i;
 
@@ -24,14 +24,14 @@ t_bool is_metachar(t_regex *st, char *reg)
 	return (TRUE);
 }
 
-t_bool	is_delimiter(t_regex *st, char *reg, char *delimiter)
+t_bool	is_delimiter(t_regex *st, const char *reg, char *delimiter)
 {
 	if (*reg && ft_strchr(delimiter, *reg) && is_metachar(st, reg))
 		return (TRUE);
 	return (FALSE);
 }
 
-int convert_metachar_len(t_regex *st, char *reg)
+int convert_metachar_len(t_regex *st, const char *reg)
 {
 	int len;
 
@@ -51,7 +51,7 @@ int convert_metachar_len(t_regex *st, char *reg)
 	return (len);
 }
 
-int convert_metachar(t_regex *st, char *reg)
+int convert_metachar(t_regex *st, const char *reg)
 {
 	int c;
 

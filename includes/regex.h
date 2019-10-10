@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:47:12 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/09 18:31:47 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/10/10 17:13:35 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ typedef struct s_regex
 	const char	*reg;
 	const char	*s1;
 	size_t		match;
-	char		*last_s1;
+	const char	*last_s1;
 	int			pos;
 	int			nb_capt;
 }				t_regex;
@@ -91,23 +91,23 @@ typedef struct s_regex
 **          regex_class.c
 **-------------------------------------------------------
 */
-int				ft_regex_cmp(t_regex *reg, char *s1, char *regex);
-char			*ft_regex_replace(char *s1, char *reg, char *src, enum e_regex_replace mod);
-t_bool			regex_parse(t_regex *st, char *s1, char *reg);
+int				ft_regex_cmp(t_regex *reg, const char *s1, const char *regex);
+char			*ft_regex_replace(const char *s1, const char *reg, char *src, enum e_regex_replace mod);
+t_bool			regex_parse(t_regex *st, const char *s1, const char *reg);
 
 /*
 **-------------------------------------------------------
 **          regex_class.c
 **-------------------------------------------------------
 */
-t_bool  		regex_class(t_regex *st, char *s1, char *reg);
+t_bool  		regex_class(t_regex *st, const char *s1, const char *reg);
 
 /*
 **-------------------------------------------------------
 **          regex_enclosed.c
 **-------------------------------------------------------
 */
-t_bool  		regex_enclosed(t_regex *st, char *s1, char *reg);
+t_bool  		regex_enclosed(t_regex *st, const char *s1, const char *reg);
 
 /*
 **-------------------------------------------------------
@@ -122,15 +122,15 @@ void        	regex_cal(t_regex *st);
 **-------------------------------------------------------
 */
 t_bool			verif_quantifier(t_reg_quan *st, int i);
-t_bool			regex_quantifier_do(t_regex *st, t_reg_quan *quantifier, char *s1, char *reg);
-t_bool			regex_quantifier(t_regex *st, char *s1, char *reg);
+t_bool			regex_quantifier_do(t_regex *st, t_reg_quan *quantifier, const char *s1, const char *reg);
+t_bool			regex_quantifier(t_regex *st, const char *s1, const char *reg);
 
 /*
 **-------------------------------------------------------
 **          regex_regex_get_quantifier.c
 **-------------------------------------------------------
 */
-int         	regex_get_quantifier(t_reg_quan *st, char *reg);
+int         	regex_get_quantifier(t_reg_quan *st, const char *reg);
 
 /*
 **-------------------------------------------------------
@@ -144,10 +144,10 @@ void			ft_regex_free(t_regex *st);
 **          regex_span.c
 **-------------------------------------------------------
 */
-int     		regex_span_quantifier(t_regex *st, char *reg);
-int     		regex_span_or(t_regex *st, char *reg);
-int     		regex_span_enclose(t_regex *st, char *reg);
-int     		regex_span_class(t_regex *st, char *reg);
+int     		regex_span_quantifier(t_regex *st, const char *reg);
+int     		regex_span_or(t_regex *st, const char *reg);
+int     		regex_span_enclose(t_regex *st, const char *reg);
+int     		regex_span_class(t_regex *st, const char *reg);
 
 /*
 **-------------------------------------------------------
@@ -155,25 +155,25 @@ int     		regex_span_class(t_regex *st, char *reg);
 **-------------------------------------------------------
 */
 void			regex_is_type_made(char alpha[128], t_bool (*func)(int), int mod);
-int				regex_is_metatype(char alpha[128], char *reg);
-int				regex_is_type(char alpha[128], char *reg);
+int				regex_is_metatype(char alpha[128], const char *reg);
+int				regex_is_type(char alpha[128], const char *reg);
 
 /*
 **-------------------------------------------------------
 **          regex_meta.c
 **-------------------------------------------------------
 */
-t_bool			is_metachar(t_regex *st, char *reg);
-t_bool			is_delimiter(t_regex *st, char *reg, char *delimiter);
-int				convert_metachar_len(t_regex *st, char *reg);
-int				convert_metachar(t_regex *st, char *reg);
+t_bool			is_metachar(t_regex *st, const char *reg);
+t_bool			is_delimiter(t_regex *st, const char *reg, char *delimiter);
+int				convert_metachar_len(t_regex *st, const char *reg);
+int				convert_metachar(t_regex *st, const char *reg);
 
 /*
 **-------------------------------------------------------
 **          utils.c
 **-------------------------------------------------------
 */
-void			regex_error_line(t_regex *st, char *reg, char c);
+void			regex_error_line(t_regex *st, const char *reg, char c);
 t_bool			regex_return(t_regex *st, t_bool ret);
 void			regex_error(t_regex *st);
 

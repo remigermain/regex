@@ -21,7 +21,7 @@ static t_bool   regex_replace_check(t_reg_capt *list, int len, enum e_regex_repl
     return (FALSE);
 }
 
-int     regex_replace_len(t_regex *st, char *s1, char *src, enum e_regex_replace mod)
+int     regex_replace_len(t_regex *st, const char *s1, char *src, enum e_regex_replace mod)
 {
 	t_reg_capt *list;
     int         len;
@@ -39,7 +39,7 @@ int     regex_replace_len(t_regex *st, char *s1, char *src, enum e_regex_replace
     return ((ft_strlen(s1) - rem) + (ft_strlen(src) * len));
 }
 
-char    *regex_replace_do(t_regex *st, char *s1, char *rep, enum e_regex_replace mod)
+char    *regex_replace_do(t_regex *st, const char *s1, char *rep, enum e_regex_replace mod)
 {
 	t_reg_capt  *list;
     char        *ptr;
@@ -66,7 +66,7 @@ char    *regex_replace_do(t_regex *st, char *s1, char *rep, enum e_regex_replace
     return (ptr);
 }
 
-char	*ft_regex_replace(char *s1, char *reg, char *rep, enum e_regex_replace mod)
+char	*ft_regex_replace(const char *s1, const char *reg, char *rep, enum e_regex_replace mod)
 {
 	t_regex st;
 

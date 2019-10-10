@@ -5,7 +5,7 @@
 ### ft_regex_cmp
 > Compare s1 to reg's pattern
 ```
-int	ft_regex_cmp(t_regex *st, char *s1, char *reg)
+int	ft_regex_cmp(t_regex *st, const char *s1, const char *reg)
 ```
 
 *  return 0 if si not match
@@ -20,7 +20,7 @@ int	ft_regex_cmp(t_regex *st, char *s1, char *reg)
 > Compare s1 to reg's pattern and replace all capturing string with rep's string
 
 ```
-char	*ft_regex_replace(char *s1, char *reg, char *rep, enum e_regex_replace mod)
+char	*ft_regex_replace(const char *s1, const char *reg, char *rep, enum e_regex_replace mod)
 ```
 *  return NULL ptr if error in allocation memory
 *  s1 is your string

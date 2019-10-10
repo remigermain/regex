@@ -6,13 +6,13 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/10 17:07:36 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/10/10 17:10:05 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "regex.h"
 
-static int  get_quantifier_number(int *number, int *isset , int set, char *reg)
+static int  get_quantifier_number(int *number, int *isset , int set, const char *reg)
 {
 	if (*reg)
 	{
@@ -23,7 +23,7 @@ static int  get_quantifier_number(int *number, int *isset , int set, char *reg)
 	return (0);
 }
 
-static int	mini_quantifier(t_reg_quan *quantifier, char *reg)
+static int	mini_quantifier(t_reg_quan *quantifier, const char *reg)
 {
 	if (ft_strchr("*+", *reg))
 	{
@@ -38,7 +38,7 @@ static int	mini_quantifier(t_reg_quan *quantifier, char *reg)
 	return (1);
 }
 
-int			regex_get_quantifier(t_reg_quan *quantifier, char *reg)
+int			regex_get_quantifier(t_reg_quan *quantifier, const char *reg)
 {
 	t_bool mod;
 	int i;

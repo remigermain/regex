@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/10 16:58:39 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/10/10 17:10:59 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_bool verif_quantifier(t_reg_quan *quan, int i)
 	return (TRUE);
 }
 
-t_bool		regex_quantifier_do(t_regex *st, t_reg_quan *quantifier, char *s1, char *reg)
+t_bool		regex_quantifier_do(t_regex *st, t_reg_quan *quantifier, const char *s1, const char *reg)
 {
 	int i;
 
@@ -54,7 +54,7 @@ t_bool		regex_quantifier_do(t_regex *st, t_reg_quan *quantifier, char *s1, char 
 	return (FALSE);
 }
 
-t_bool		regex_quantifier(t_regex *st, char *s1, char *reg)
+t_bool		regex_quantifier(t_regex *st, const char *s1, const char *reg)
 {
 	t_reg_quan	quantifier;
 	char		alpha[128];
