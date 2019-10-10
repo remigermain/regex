@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/09 19:03:07 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/10/10 16:58:39 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_bool		regex_quantifier_do(t_regex *st, t_reg_quan *quantifier, char *s1, char 
 			if (regex_parse(st, s1 + i, reg))
 				return (TRUE);
 		}
+		i++;
 	}
 	while (!(quantifier->isset & QUAN_LAZY) && quantifier->match >= 0)
 	{

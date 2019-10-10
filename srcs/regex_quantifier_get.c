@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/09 18:17:15 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/10/10 17:07:36 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int			regex_get_quantifier(t_reg_quan *quantifier, char *reg)
 			quantifier->isset = QUAN_EX;
 		else
 		{
-			mod = ((*reg + i) == ';' ? TRUE : FALSE);
+			mod = (*(reg + i) == ';' ? TRUE : FALSE);
 			i += get_quantifier_number(&quantifier->number_2, &quantifier->isset, QUAN_MAX, reg + i + 1) + 1;
 		}
 		i++;

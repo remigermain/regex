@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   regex_class_methode.c                              :+:      :+:    :+:   */
+/*   regex_meta_type.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/09 18:53:51 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/10/10 16:59:49 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,7 @@ int	regex_is_type(char alpha[128], char *reg)
 		regex_is_type_made(alpha, ft_isuppercase, REG_SET);
 	else if (!ft_strncmp(reg, ":xdigit:", 8) && (i = 8))
 		regex_is_type_made(alpha, ft_isxdigit, REG_SET);
+	else if (!ft_strncmp(reg, ":isword:", 8) && (i = 8))
+		regex_is_type_made(alpha, ft_isword, REG_SET);
 	return (i);
 }
