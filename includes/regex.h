@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:47:12 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/11 17:57:50 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/10/11 19:07:03 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct	s_regex_enclose
 	t_bool		is_not;
 	const char	*mem_last;
 	const char	*mem;
+	char		*name;
 	int			len;
 	int			i;
 }				t_reg_encl;
@@ -59,9 +60,19 @@ typedef struct	s_regex_class
 	char		alpha[128];
 }				t_reg_class;
 
+typedef struct	s_regex_pr
+{
+	short	str;
+	short	name;
+	short	pos;
+	short	start;
+	short	end;
+}				t_regex_pr;
+
 typedef struct	s_regex_capt
 {
 	char				*str;
+	char				*name;
 	int					pos;
 	int					start;
 	int					end;
@@ -169,5 +180,6 @@ int				convert_metachar(t_regex *st, const char *reg);
 void			regex_error_line(t_regex *st, const char *reg, char c);
 t_bool			regex_return(t_regex *st, t_bool ret);
 void			regex_error(t_regex *st);
+void			regex_print(t_regex *st);
 
 #endif

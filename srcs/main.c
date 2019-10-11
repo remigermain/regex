@@ -6,20 +6,20 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/10 17:20:31 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/10/11 19:47:15 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "regex.h"
 
+// "http://code.visualstudio.com/shortcuts/dfvd/yoyoyo.ff.rrr"  "^(<methode>http(?s)?://)?(www\.)?(<link>[\w\.\-]+)+(?<yo>/(<get>[\w-])*)+?(?(<extension>\.[\w]+))+$"
 void	t(char **argv)
 {
 	int ret = 0;
 	t_regex st;
 	ft_printf("[ MATCH ]\n");
-	ft_printf("[ S1  >>%s<< ]\n", argv[1]);
-	ft_printf("[ REG  >>%s<< ]\n", argv[2]);
+	ft_printf("[ S1  >>  %s  << ]\n", argv[1]);
+	ft_printf("[ REG  >>  %s  << ]\n", argv[2]);
 
 	ret = ft_regex_exec(&st, argv[1], argv[2]);
 	if (ret > 0)
@@ -35,13 +35,8 @@ void	t(char **argv)
 		error_line_pos("error parsing", 76, st.pos);
 		error_line_e(st.s1, st.pos);
 	}
-	
-	t_reg_capt *list = st.capt;
-	while (list != NULL)
-	{
-		ft_printf("[ >>%s<<  ][%d][%d][%d]\n", list->str, list->pos, list->start, list->end);
-		list = list->next;
-	}
+	regex_print(&st);
+
 	ft_regex_free(&st);
 
 }

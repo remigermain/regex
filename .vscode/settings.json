@@ -12,6 +12,8 @@
         "unordered_map": "c",
         "vector": "c",
         "hashtable": "c",
-        "regex.h": "c"
+        "regex.h": "c",
+        "typeinfo": "c",
+        "sstream": "c"
     }
 }
