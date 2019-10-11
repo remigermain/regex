@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   regex.h                                          .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: rgermain <rgermain@student.le-101.fr>      +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/06/27 15:47:12 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/10 18:12:58 by rgermain    ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   regex.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/06/27 15:47:12 by rgermain          #+#    #+#             */
+/*   Updated: 2019/10/11 17:57:50 by rgermain         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef REGEX_H
 # define REGEX_H
@@ -76,6 +76,7 @@ typedef struct	s_regex
 	const char	*s1;
 	size_t		match;
 	const char	*last_s1;
+	const char	*befor_do;
 	int			pos;
 	int			nb_capt;
 }				t_regex;
@@ -103,6 +104,8 @@ t_bool			regex_class(t_regex *st, const char *s1, const char *reg);
 **-------------------------------------------------------
 */
 t_bool			regex_enclosed(t_regex *st, const char *s1, const char *reg);
+t_bool			regex_enclose_parse(t_regex *st, t_reg_encl *encl,\
+											const char *s1, const char *reg);
 
 /*
 **-------------------------------------------------------
