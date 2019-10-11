@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   regex_quantifier_get.c                           .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: rgermain <rgermain@student.le-101.fr>      +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/06/27 15:48:43 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/10 18:11:39 by rgermain    ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   regex_quantifier_get.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
+/*   Updated: 2019/10/11 17:33:40 by rgermain         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
+
 
 #include "regex.h"
 
@@ -39,7 +39,7 @@ static int	mini_quantifier(t_reg_quan *quantifier, const char *reg)
 	return (1);
 }
 
-static int	regex_get_quantifier(t_reg_quan *quantifier, const char *reg,
+static int	regex_get_quantifier_set(t_reg_quan *quantifier, const char *reg,
 														int i, t_bool *mod)
 {
 	i += get_quantifier_number(&quantifier->number_1, &quantifier->isset,
@@ -48,11 +48,11 @@ static int	regex_get_quantifier(t_reg_quan *quantifier, const char *reg,
 		quantifier->isset = QUAN_EX;
 	else
 	{
-		mod = (*(reg + i) == ';' ? TRUE : FALSE);
+		*mod = (*(reg + i) == ';' ? TRUE : FALSE);
 		i += get_quantifier_number(&quantifier->number_2, &quantifier->isset,
 													QUAN_MAX, reg + i + 1) + 1;
 	}
-	i++;
+	return (i + 1);
 }
 
 int			regex_get_quantifier(t_reg_quan *quantifier, const char *reg)
@@ -66,7 +66,7 @@ int			regex_get_quantifier(t_reg_quan *quantifier, const char *reg)
 	if (ft_strchr("*?+", *reg))
 		i += mini_quantifier(quantifier, reg);
 	else if (*reg)
-		i = regex_get_quantifier(quantifier, reg, i, &mod);
+		i = regex_get_quantifier_set(quantifier, reg, i, &mod);
 	if (mod == TRUE)
 		quantifier->isset = QUAN_OR;
 	if (*(reg + i) == '?')
