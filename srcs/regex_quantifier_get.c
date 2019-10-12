@@ -42,14 +42,14 @@ static int	regex_get_quantifier_set(t_reg_quan *quantifier, const char *reg,
 														int i, t_bool *mod)
 {
 	i += get_quantifier_number(&quantifier->number_1, &quantifier->isset,
-													QUAN_MIN, reg + i + 1) + 1;
+												QUAN_MIN, reg + i + 1) + 1;
 	if (*(reg + i) == '}')
 		quantifier->isset = QUAN_EX;
 	else
 	{
 		*mod = (*(reg + i) == ';' ? TRUE : FALSE);
 		i += get_quantifier_number(&quantifier->number_2, &quantifier->isset,
-													QUAN_MAX, reg + i + 1) + 1;
+												QUAN_MAX, reg + i + 1) + 1;
 	}
 	return (i + 1);
 }
@@ -68,10 +68,7 @@ int			regex_get_quantifier(t_reg_quan *quantifier, const char *reg)
 		i = regex_get_quantifier_set(quantifier, reg, i, &mod);
 	if (mod == TRUE)
 		quantifier->isset = QUAN_OR;
-	if (*(reg + i) == '?')
-	{
+	if (*(reg + i) == '?' && (++i))
 		quantifier->isset |= QUAN_LAZY;
-		i++;
-	}
 	return (i);
 }

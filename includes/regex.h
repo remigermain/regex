@@ -62,11 +62,11 @@ typedef struct	s_regex_class
 
 typedef struct	s_regex_pr
 {
-	short	str;
-	short	name;
-	short	pos;
-	short	start;
-	short	end;
+	size_t	str;
+	size_t	name;
+	size_t	pos;
+	size_t	start;
+	size_t	end;
 }				t_regex_pr;
 
 typedef struct	s_regex_capt
@@ -115,8 +115,9 @@ t_bool			regex_class(t_regex *st, const char *s1, const char *reg);
 **-------------------------------------------------------
 */
 t_bool			regex_enclosed(t_regex *st, const char *s1, const char *reg);
-t_bool			regex_enclose_parse(t_regex *st, t_reg_encl *encl,\
-											const char *s1, const char *reg);
+t_bool 			regex_enclose_parse(t_regex *st, t_reg_encl *encl,
+							   const char *s1, const char *reg);
+void			regex_put_arg(t_regex *st, const char *base, const char *match, char *name);
 
 /*
 **-------------------------------------------------------
@@ -124,8 +125,9 @@ t_bool			regex_enclose_parse(t_regex *st, t_reg_encl *encl,\
 **-------------------------------------------------------
 */
 t_bool			verif_quantifier(t_reg_quan *st, int i);
+t_bool			verif_quantifier_max(t_reg_quan *quan, int i);
 t_bool			regex_quantifier_do(t_regex *st, t_reg_quan *quantifier,
-											const char *s1, const char *reg);
+							   const char *s1, const char *reg);
 t_bool			regex_quantifier(t_regex *st, const char *s1, const char *reg);
 
 /*

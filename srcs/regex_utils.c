@@ -24,10 +24,10 @@ static void	regex_print_calc(t_regex *st, t_regex_pr *pr)
         else
             pr->name = MAX(pr->name, 6);        
         pr->str = MAX(pr->str, ft_strlen(lst->str));
-        pr->pos = MAX(pr->pos, ft_intlen(lst->pos));
-        pr->start = MAX(pr->start, ft_intlen(lst->start));
-        pr->end = MAX(pr->end, ft_intlen(lst->end));
-        lst = lst->next;
+        pr->pos = MAX(pr->pos, (size_t)ft_intlen(lst->pos));
+		pr->start = MAX(pr->start, (size_t)ft_intlen(lst->start));
+		pr->end = MAX(pr->end, (size_t)ft_intlen(lst->end));
+		lst = lst->next;
     }
 }
 
