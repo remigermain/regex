@@ -2,10 +2,10 @@
 
 
 ## Prototype
-### ft_regex_cmp
+### ft_regex_exec
 > Compare s1 to reg's pattern
 ```
-int	ft_regex_cmp(t_regex *st, const char *s1, const char *reg)
+int	ft_regex_exec(t_regex *st, const char *s1, const char *reg)
 ```
 
 *  return 0 if si not match
@@ -20,12 +20,12 @@ int	ft_regex_cmp(t_regex *st, const char *s1, const char *reg)
 > Compare s1 to reg's pattern and replace all capturing string with rep's string
 
 ```
-char	*ft_regex_replace(const char *s1, const char *reg, char *rep, enum e_regex_replace mod)
+char	*ft_regex_replace(const char *s1, const char *reg, char *pat, enum e_regex_replace mod)
 ```
 *  return NULL ptr if error in allocation memory
 *  s1 is your string
 *  reg is your regex pattern
-*  rep is for replace string
+*  pat is for replace string
 *  enum is for mod 
 
 | mod | Description |
@@ -33,6 +33,14 @@ char	*ft_regex_replace(const char *s1, const char *reg, char *rep, enum e_regex_
 | REG_FIRST| Replace first pattern matching|
 | REG_LAST| Replace last pattern matching|
 |REG_ALL| Replace all pattern matching|
+
+### ft_regex_print
+> For printings results
+
+```
+void    ft_regex_print(t_regex *st)
+```
+* print t_regex struct
 
 ### ft_regex_free
 > You need to be free the structure after matching
