@@ -48,7 +48,7 @@ static void		regex_put_capt(t_regex *st, t_reg_capt *new)
 		st->capt = new;
 }
 
-t_bool			verifi_capt(t_regex *st, int start, int end)
+t_bool			exist_capt(t_regex *st, int start, int end)
 {
 	t_reg_capt	*lst;
 
@@ -67,10 +67,12 @@ static void		regex_put_arg(t_regex *st, const char *base, const char *match, cha
 	t_reg_capt			*list;
 	int					len;
 
+	ft_printf("base = %s\n", base);
+	ft_printf("match = %s\n", match);
 	len = ft_strlen(base);
 	len -= ft_strlen(match);
-	if (len <= 0 || verifi_capt(st, ft_strlen(st->s1) - ft_strlen(base),
-								ft_strlen(st->s1) - ft_strlen(match)))
+	if (len <= 0 || exist_capt(st, ft_strlen(st->s1) - ft_strlen(base),
+							   ft_strlen(st->s1) - ft_strlen(match)))
 		return ;
 	if (!(list = (t_reg_capt *)ft_memalloc(sizeof(t_reg_capt))) ||
 		(!(list->str = ft_strsub(base, 0, len))))
@@ -82,22 +84,35 @@ static void		regex_put_arg(t_regex *st, const char *base, const char *match, cha
 		st->error = ERROR_REGEX;
 	list->start = ft_strlen(st->s1) - ft_strlen(base);
 	list->end = ft_strlen(st->s1) - ft_strlen(match);
-	if (st->capt == NULL)
-		st->capt = list;
-	else
-		regex_put_capt(st, list);
+	regex_put_capt(st, list);
+}
+t_bool		verif_quantifier_max(t_reg_quan *quan, int i)
+{
+	if (quan->isset & QUAN_EX && quan->number_1 >= i)
+		return (FALSE);
+	else if (quan->isset & QUAN_MAX && quan->number_2 >= i)
+		return (FALSE);
+	else if (quan->isset & QUAN_OR && quan->number_1 >= i && quan->number_2 >= i)
+		return (FALSE);
+	else if (quan->isset == 0)
+		return (i >= 1 ? FALSE : TRUE);
+	return (TRUE);
 }
 
 t_bool			regex_enclose_do(t_regex *st, t_reg_encl *encl,\
 											const char *s1, const char *reg)
 {
 	st->befor_do = s1;
-	if ((encl->quan.isset & QUAN_LAZY) && regex_parse(st, s1, reg + encl->len))
+	encl->quan.match++;
+	if (verif_quantifier(&(encl->quan), encl->quan.match) &&
+			(encl->quan.isset & QUAN_LAZY) && regex_parse(st, s1, reg + encl->len))
 		return (TRUE);
-	else if (regex_enclose_parse(st, encl, s1, reg))
+	else if (s1 != encl->mem && verif_quantifier_max(&(encl->quan), encl->quan.match) && regex_enclose_parse(st, encl, s1, reg))
 		return (TRUE);
-	else if (!(encl->quan.isset & QUAN_LAZY) && regex_parse(st, s1, reg + encl->len))
+	else if (verif_quantifier(&(encl->quan), encl->quan.match) &&
+			!(encl->quan.isset & QUAN_LAZY) && regex_parse(st, s1, reg + encl->len))
 		return (TRUE);
+	encl->quan.match--;
 	return (FALSE);
 }
 
@@ -111,16 +126,16 @@ t_bool			regex_enclose_parse(t_regex *st, t_reg_encl *encl,\
 		if (regex_parse(st, s1, reg + encl->i))
 		{
 			s1 = st->last_s1;
-			if (verif_quantifier(&(encl->quan), ++encl->quan.match) &&
-					regex_enclose_do(st, encl, s1, reg))
+			if (regex_enclose_do(st, encl, s1, reg))
 				return (TRUE);
-			encl->quan.match--;
 			s1 = encl->mem;
 		}
 		encl->i += regex_span_or(st, reg + encl->i);
 	}
 	s1 = encl->mem;
 	st->last_s1 = encl->mem_last;
+	if (st->befor_do == NULL)
+		st->befor_do = st->s1;
 	return (verif_quantifier(&(encl->quan), encl->quan.match) &&
 		regex_parse(st, s1, reg + encl->len));
 }
@@ -129,7 +144,9 @@ int				regex_enclose_get_name(t_regex *st, t_reg_encl *encl, const char *reg)
 {
 	int i;
 
-	i = ft_spanchar(reg, ">");
+	i = -1;
+	while (*(reg + i) && *(reg + i) != '>')
+		i++;
 	if (i > 0)
 	{
 		if (!(encl->name = ft_strsub(reg, 0, i)))

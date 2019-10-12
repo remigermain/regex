@@ -24,7 +24,7 @@ t_bool		verif_quantifier(t_reg_quan *quan, int i)
 	else if (quan->isset & QUAN_OR && quan->number_1 != i
 			&& quan->number_2 != i)
 		return (FALSE);
-	else if (quan->isset == 0)
+	else if (quan->isset ==  0)
 		return (i == 1 ? TRUE : FALSE);
 	return (TRUE);
 }

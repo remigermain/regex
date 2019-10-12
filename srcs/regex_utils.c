@@ -12,7 +12,7 @@
 
 #include "regex.h"
 
-void        regex_print_calc(t_regex *st, t_regex_pr *pr)
+static void	regex_print_calc(t_regex *st, t_regex_pr *pr)
 {
     t_reg_capt *lst;
     
@@ -31,7 +31,7 @@ void        regex_print_calc(t_regex *st, t_regex_pr *pr)
     }
 }
 
-void       regex_print(t_regex *st)
+void		ft_regex_print(t_regex *st)
 {
     t_reg_capt  *lst;
     t_regex_pr  pr;

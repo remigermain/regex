@@ -44,13 +44,13 @@ int			regex_is_metatype(char alpha[128], const char *reg)
 	else if (*reg == 'S')
 		regex_is_type_made(alpha, ft_isspace, REG_UNSET);
 	else if (*reg == 'n')
-		alpha[(int)('\n')] = 1;
+		alpha[(int)('\n')] = REG_SET;
 	else if (*reg == 'r')
-		alpha[(int)('\r')] = 1;
+		alpha[(int)('\r')] = REG_SET;
 	else if (*reg == 'e')
-		alpha[(int)('\e')] = 1;
+		alpha[(int)('\e')] = REG_SET;
 	else
-		alpha[(int)(*reg)] = 1;
+		alpha[(int)(*reg)] = REG_SET;
 	return (1);
 }
 

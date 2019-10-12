@@ -43,7 +43,10 @@ t_bool			regex_parse(t_regex *st, const char *s1, const char *reg)
 	if (is_delimiter(st, reg, "|"))
 		return (TRUE);
 	if (is_delimiter(st, reg, ")"))
+	{
+		ft_printf("s1 == %s   %s\n", s1, reg);
 		return (TRUE);
+	}
 	if (is_delimiter(st, reg, "["))
 		return (regex_class(st, s1, ++reg));
 	if (is_delimiter(st, reg, "("))

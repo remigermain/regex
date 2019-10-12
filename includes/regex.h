@@ -180,6 +180,6 @@ int				convert_metachar(t_regex *st, const char *reg);
 void			regex_error_line(t_regex *st, const char *reg, char c);
 t_bool			regex_return(t_regex *st, t_bool ret);
 void			regex_error(t_regex *st);
-void			regex_print(t_regex *st);
+void			ft_regex_print(t_regex *st);
 
 #endif

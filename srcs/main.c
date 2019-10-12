@@ -35,7 +35,7 @@ void	t(char **argv)
 		error_line_pos("error parsing", 76, st.pos);
 		error_line_e(st.s1, st.pos);
 	}
-	regex_print(&st);
+	ft_regex_print(&st);
 
 	ft_regex_free(&st);
 

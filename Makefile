@@ -26,7 +26,7 @@ HEADER = regex.h
 
 LIBFT = libft/libft.a
 
-CC = clang
+CC = gcc
 
 OBJ = $(SRC:.c=.o)
 

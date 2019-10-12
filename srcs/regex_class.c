@@ -23,7 +23,7 @@ static t_bool	regex_class_do(t_regex *st, t_reg_class *class,
 	while (s1[++i])
 	{
 		ret = class->alpha[(int)s1[i]] ? TRUE : FALSE;
-		if ((class->is_not == TRUE) ||
+		if ((ret && class->is_not == TRUE) ||
 			(!ret && class->is_not == FALSE))
 			break ;
 		class->quantifier.match++;
