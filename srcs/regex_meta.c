@@ -38,7 +38,10 @@ int		convert_metachar_len(t_regex *st, const char *reg)
 
 	len = 1;
 	if (is_delimiter(st, reg, "\\"))
+	{
+		reg++;
 		len++;
+	}
 	if (*reg && !is_metachar(st, reg))
 	{
 		if (*reg == '0')

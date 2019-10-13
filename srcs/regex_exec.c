@@ -50,7 +50,7 @@ t_bool			regex_parse(t_regex *st, const char *s1, const char *reg)
 		return (regex_enclosed(st, s1, ++reg));
 	if (is_delimiter(st, reg + 1, QUANTIFIER))
 		return (regex_quantifier(st, s1, reg));
-	if (is_delimiter(st, reg, "$") && *(reg + 1) == '\0')
+	if (is_delimiter(st, reg, REG_END) && *(reg + 1) == '\0')
 	{
 		if (*s1 == '\0' && (++st->match))
 			return (TRUE);
@@ -68,7 +68,7 @@ int				ft_regex_exec(t_regex *st, const char *s1, const char *reg)
 	while (*reg)
 	{
 		st->reg = reg;
-		if (is_delimiter(st, reg, "^"))
+		if (is_delimiter(st, reg, REG_START))
 			regex_parse(st, s1, reg + 1);
 		else
 		{
@@ -78,6 +78,7 @@ int				ft_regex_exec(t_regex *st, const char *s1, const char *reg)
 		}
 		reg += regex_span_or(st, reg);
 	}
-	st->pos = ft_strlen(st->s1) - ft_strlen(st->last_s1);
+	if (st->error)
+		st->error_pos = ft_strlen(st->s1) - ft_strlen(st->last_s1);
 	return (st->error || st->match);
 }

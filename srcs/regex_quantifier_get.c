@@ -62,11 +62,11 @@ int			regex_get_quantifier(t_reg_quan *quan, const char *reg)
 
 	i = 0;
 	ft_bzero(quan, sizeof(*quan));
-	if (ft_strchr("*?+", *reg))
+	if (ft_strchr(REG_QUAN_MINI, *reg))
 		i += quantifier_mini(quan, reg);
 	else if (*reg)
 		i = quantifier_set(quan, reg, i + 1);
-	if (*(reg + i) == '?' && (++i))
+	if (*(reg + i) == REG_LAZY && (++i))
 		quan->isset |= QUAN_LAZY;
 	return (i);
 }

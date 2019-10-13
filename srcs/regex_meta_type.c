@@ -15,7 +15,7 @@
 #define REG_SET 1
 #define REG_UNSET 0
 
-void		regex_is_type_made(char alpha[128], t_bool (*func)(int), int mod)
+static void	regex_is_type_made(char alpha[128], t_bool (*func)(int), int mod)
 {
 	t_bool	ret;
 	int		i;
@@ -24,7 +24,8 @@ void		regex_is_type_made(char alpha[128], t_bool (*func)(int), int mod)
 	while (++i <= 127)
 	{
 		ret = func(i);
-		if ((ret == TRUE && mod == TRUE) || (ret == FALSE && mod == FALSE))
+		if ((ret == TRUE && mod == REG_SET) ||
+			(ret == FALSE && mod == REG_UNSET))
 			alpha[i] = 1;
 	}
 }
@@ -35,7 +36,7 @@ int			regex_is_metatype(char alpha[128], const char *reg)
 		regex_is_type_made(alpha, ft_isword, REG_SET);
 	else if (*reg == 'W')
 		regex_is_type_made(alpha, ft_isword, REG_UNSET);
-	if (*reg == 'd')
+	else if (*reg == 'd')
 		regex_is_type_made(alpha, ft_isdigit, REG_SET);
 	else if (*reg == 'D')
 		regex_is_type_made(alpha, ft_isdigit, REG_UNSET);

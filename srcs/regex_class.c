@@ -49,7 +49,7 @@ static int		regex_class_parse(t_regex *st, t_reg_class *class,
 		{
 			reg += convert_metachar_len(st, reg);
 			class->alpha[i] = 1;
-			if (*reg == '-')
+			if (*reg == REG_CLASS_TO)
 			{
 				while (i <= convert_metachar(st, reg + 1))
 					class->alpha[++i] = 1;
@@ -65,7 +65,7 @@ t_bool			regex_class(t_regex *st, const char *s1, const char *reg)
 	t_reg_class	class;
 
 	ft_bzero(&class, sizeof(t_reg_class));
-	if (is_delimiter(st, reg, "^"))
+	if (is_delimiter(st, reg, REG_CLASS_NOT))
 		class.is_not = TRUE;
 	reg += regex_class_parse(st, &class, reg);
 	if (is_delimiter(st, reg, QUANTIFIER))

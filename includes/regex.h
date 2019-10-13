@@ -17,6 +17,12 @@
 # define QUANTIFIER "{*+?"
 # define ERROR_REGEX -1
 # define REGEX_TYPE "wWbBdDsSAZ"
+# define REG_LAZY '?'
+# define REG_QUAN_MINI "*+?"
+# define REG_CLASS_NOT "^"
+# define REG_CLASS_TO '-'
+# define REG_START "^"
+# define REG_END "$"
 
 enum	e_regex_quan
 {
@@ -42,6 +48,13 @@ typedef struct	s_regex_quantifier
 	int	isset;
 }				t_reg_quan;
 
+typedef struct	s_regex_class
+{
+	t_reg_quan	quantifier;
+	t_bool		is_not;
+	char		alpha[128];
+}				t_reg_class;
+
 typedef struct	s_regex_enclose
 {
 	t_reg_quan	quan;
@@ -54,14 +67,7 @@ typedef struct	s_regex_enclose
 	int			i;
 }				t_reg_encl;
 
-typedef struct	s_regex_class
-{
-	t_reg_quan	quantifier;
-	t_bool		is_not;
-	char		alpha[128];
-}				t_reg_class;
-
-typedef struct	s_regex_pr
+typedef struct	s_regex_print
 {
 	size_t	str;
 	size_t	name;
@@ -89,7 +95,7 @@ typedef struct	s_regex
 	size_t		match;
 	const char	*last_s1;
 	const char	*befor_do;
-	int			pos;
+	int			error_pos;
 	int			nb_capt;
 }				t_regex;
 
@@ -118,7 +124,14 @@ t_bool			regex_class(t_regex *st, const char *s1, const char *reg);
 t_bool			regex_enclosed(t_regex *st, const char *s1, const char *reg);
 t_bool 			regex_enclose_parse(t_regex *st, t_reg_encl *encl,
 							   const char *s1, const char *reg);
-void			regex_put_arg(t_regex *st, const char *base, const char *match, char *name);
+/*
+**-------------------------------------------------------
+**          regex_enclosed_capt.c
+**-------------------------------------------------------
+*/
+void			regex_put_arg(t_regex *st, const char *base, const char *match,
+																	char *name);
+void			ft_regex_free(t_regex *st);
 
 /*
 **-------------------------------------------------------
@@ -127,23 +140,10 @@ void			regex_put_arg(t_regex *st, const char *base, const char *match, char *nam
 */
 t_bool			verif_quantifier(t_reg_quan *st, int i);
 t_bool			verif_quantifier_max(t_reg_quan *quan, int i);
+int				regex_get_quantifier(t_reg_quan *st, const char *reg);
 t_bool			regex_quantifier_do(t_regex *st, t_reg_quan *quantifier,
 							   const char *s1, const char *reg);
 t_bool			regex_quantifier(t_regex *st, const char *s1, const char *reg);
-
-/*
-**-------------------------------------------------------
-**          regex_regex_get_quantifier.c
-**-------------------------------------------------------
-*/
-int				regex_get_quantifier(t_reg_quan *st, const char *reg);
-
-/*
-**-------------------------------------------------------
-**          regex_free.c
-**-------------------------------------------------------
-*/
-void			ft_regex_free(t_regex *st);
 
 /*
 **-------------------------------------------------------
@@ -160,8 +160,6 @@ int				regex_span_class(t_regex *st, const char *reg);
 **          regex_class_methode.c
 **-------------------------------------------------------
 */
-void			regex_is_type_made(char alpha[128], t_bool (*func)(int),
-																int mod);
 int				regex_is_metatype(char alpha[128], const char *reg);
 int				regex_is_type(char alpha[128], const char *reg);
 
@@ -180,9 +178,6 @@ int				convert_metachar(t_regex *st, const char *reg);
 **          utils.c
 **-------------------------------------------------------
 */
-void			regex_error_line(t_regex *st, const char *reg, char c);
-t_bool			regex_return(t_regex *st, t_bool ret);
-void			regex_error(t_regex *st);
 void			ft_regex_print(t_regex *st);
 
 #endif

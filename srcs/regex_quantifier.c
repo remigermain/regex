@@ -20,11 +20,11 @@ t_bool		verif_quantifier_max(t_reg_quan *quan, int i)
 
 	n = (quan->n >= i ? TRUE : FALSE);
 	m = (quan->m >= i ? TRUE : FALSE);
-	if (quan->isset & QUAN_EX && n == TRUE)
+	if ((quan->isset & QUAN_EX) && n == TRUE)
 		return (FALSE);
-	else if (quan->isset & QUAN_MAX && m == TRUE)
+	else if ((quan->isset & QUAN_MAX) && m == TRUE)
 		return (FALSE);
-	else if (quan->isset & QUAN_OR && n == TRUE && m == TRUE)
+	else if ((quan->isset & QUAN_OR) && n == TRUE && m == TRUE)
 		return (FALSE);
 	else if (quan->isset == 0 && i >= 1)
 		return (FALSE);
@@ -33,13 +33,13 @@ t_bool		verif_quantifier_max(t_reg_quan *quan, int i)
 
 t_bool		verif_quantifier(t_reg_quan *quan, int i)
 {
-	if (quan->isset & QUAN_EX && quan->n != i)
+	if ((quan->isset & QUAN_EX) && quan->n != i)
 		return (FALSE);
-	else if (quan->isset & QUAN_MIN && quan->n > i)
+	else if ((quan->isset & QUAN_MIN) && quan->n > i)
 		return (FALSE);
-	else if (quan->isset & QUAN_MAX && quan->m < i)
+	else if ((quan->isset & QUAN_MAX) && quan->m < i)
 		return (FALSE);
-	else if (quan->isset & QUAN_OR && quan->n != i && quan->m != i)
+	else if ((quan->isset & QUAN_OR) && quan->n != i && quan->m != i)
 		return (FALSE);
 	else if (quan->isset == 0 && i != 1)
 		return (FALSE);
