@@ -36,7 +36,7 @@ static t_bool	regex_same_char(t_regex *st, const char *s1, const char *reg)
 t_bool			regex_parse(t_regex *st, const char *s1, const char *reg)
 {
 	st->last_s1 = s1;
-	if (*reg == '\\' && is_metachar(st, reg))
+	if (is_delimiter(st, reg, "\\"))
 		reg++;
 	if (*reg == '\0' && (++st->match))
 		return (TRUE);
@@ -65,16 +65,16 @@ int				ft_regex_exec(t_regex *st, const char *s1, const char *reg)
 
 	ft_bzero(st, sizeof(*st));
 	st->s1 = s1;
-	st->reg = reg;
 	while (*reg)
 	{
+		st->reg = reg;
 		if (is_delimiter(st, reg, "^"))
 			regex_parse(st, s1, reg + 1);
 		else
 		{
 			i = -1;
-			while (*(s1 + ++i))
-				regex_parse(st, s1 + i, reg);
+			while (*(s1 + i))
+				regex_parse(st, s1 + ++i, reg);
 		}
 		reg += regex_span_or(st, reg);
 	}

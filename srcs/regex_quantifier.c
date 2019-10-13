@@ -15,64 +15,67 @@
 
 t_bool		verif_quantifier_max(t_reg_quan *quan, int i)
 {
-	if (quan->isset & QUAN_EX && quan->number_1 >= i)
+	t_bool n;
+	t_bool m;
+
+	n = (quan->n >= i ? TRUE : FALSE);
+	m = (quan->m >= i ? TRUE : FALSE);
+	if (quan->isset & QUAN_EX && n == TRUE)
 		return (FALSE);
-	else if (quan->isset & QUAN_MAX && quan->number_2 >= i)
+	else if (quan->isset & QUAN_MAX && m == TRUE)
 		return (FALSE);
-	else if (quan->isset & QUAN_OR && quan->number_1 >= i
-			&& quan->number_2 >= i)
+	else if (quan->isset & QUAN_OR && n == TRUE && m == TRUE)
 		return (FALSE);
-	else if (quan->isset == 0)
-		return (i >= 1 ? FALSE : TRUE);
+	else if (quan->isset == 0 && i >= 1)
+		return (FALSE);
 	return (TRUE);
 }
 
 t_bool		verif_quantifier(t_reg_quan *quan, int i)
 {
-	if (quan->isset & QUAN_EX && quan->number_1 != i)
+	if (quan->isset & QUAN_EX && quan->n != i)
 		return (FALSE);
-	else if (quan->isset & QUAN_MIN && quan->number_1 > i)
+	else if (quan->isset & QUAN_MIN && quan->n > i)
 		return (FALSE);
-	else if (quan->isset & QUAN_MAX && quan->number_2 < i)
+	else if (quan->isset & QUAN_MAX && quan->m < i)
 		return (FALSE);
-	else if (quan->isset & QUAN_OR && quan->number_1 != i
-			&& quan->number_2 != i)
+	else if (quan->isset & QUAN_OR && quan->n != i && quan->m != i)
 		return (FALSE);
-	else if (quan->isset ==  0)
-		return (i == 1 ? TRUE : FALSE);
+	else if (quan->isset == 0 && i != 1)
+		return (FALSE);
 	return (TRUE);
 }
 
-t_bool		regex_quantifier_do(t_regex *st, t_reg_quan *quantifier,
+t_bool		regex_quantifier_do(t_regex *st, t_reg_quan *quan,
 											const char *s1, const char *reg)
 {
 	int i;
 
 	i = 0;
-	while ((quantifier->isset & QUAN_LAZY) && i <= quantifier->match)
+	while ((quan->isset & QUAN_LAZY) && i <= quan->match)
 	{
-		if (verif_quantifier(quantifier, i))
+		if (verif_quantifier(quan, i))
 		{
 			if (regex_parse(st, s1 + i, reg))
 				return (TRUE);
 		}
 		i++;
 	}
-	while (!(quantifier->isset & QUAN_LAZY) && quantifier->match >= 0)
+	while (!(quan->isset & QUAN_LAZY) && quan->match >= 0)
 	{
-		if (verif_quantifier(quantifier, quantifier->match))
+		if (verif_quantifier(quan, quan->match))
 		{
-			if (regex_parse(st, s1 + quantifier->match, reg))
+			if (regex_parse(st, s1 + quan->match, reg))
 				return (TRUE);
 		}
-		quantifier->match--;
+		quan->match--;
 	}
 	return (FALSE);
 }
 
 t_bool		regex_quantifier(t_regex *st, const char *s1, const char *reg)
 {
-	t_reg_quan	quantifier;
+	t_reg_quan	quan;
 	char		alpha[128];
 
 	ft_bzero(alpha, sizeof(char) * 128);
@@ -80,9 +83,9 @@ t_bool		regex_quantifier(t_regex *st, const char *s1, const char *reg)
 		regex_is_metatype(alpha, reg);
 	else
 		alpha[(int)(*reg)] = 1;
-	reg += regex_get_quantifier(&quantifier, reg + 1) + 1;
-	while (*(s1 + quantifier.match) && (is_delimiter(st, reg, ".") ||
-				alpha[(int)(*(s1 + quantifier.match))] == 1) && *s1 != '\n')
-		quantifier.match++;
-	return (regex_quantifier_do(st, &quantifier, s1, reg));
+	reg += regex_get_quantifier(&quan, reg + 1) + 1;
+	while (*(s1 + quan.match) && (is_delimiter(st, reg, ".") ||
+				alpha[(int)(*(s1 + quan.match))] == 1) && *s1 != '\n')
+		quan.match++;
+	return (regex_quantifier_do(st, &quan, s1, reg));
 }

@@ -24,7 +24,7 @@ void		regex_is_type_made(char alpha[128], t_bool (*func)(int), int mod)
 	while (++i <= 127)
 	{
 		ret = func(i);
-		if ((ret && mod) || (!ret && !mod))
+		if ((ret == TRUE && mod == TRUE) || (ret == FALSE && mod == FALSE))
 			alpha[i] = 1;
 	}
 }

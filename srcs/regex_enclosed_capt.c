@@ -66,7 +66,7 @@ void            regex_put_arg(t_regex *st, const char *base,
                                         const char *match, char *name)
 {
     t_reg_capt *list;
-    int len;
+    int         len;
 
     len = ft_strlen(base);
     len -= ft_strlen(match);

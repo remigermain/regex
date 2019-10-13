@@ -12,23 +12,6 @@
 
 #include "regex.h"
 
-static int	regex_enclose_name(t_regex *st, t_reg_encl *encl, const char *reg)
-{
-	int i;
-
-	i = -1;
-	while (*(reg + i) && *(reg + i) != '>')
-		i++;
-	if (i > 0)
-	{
-		if (!(encl->name = ft_strsub(reg, 0, i)))
-			st->error = ERROR_REGEX;
-	}
-	if (*(reg + i) == '>')
-		i++;
-	return (i);
-}
-
 t_bool		regex_enclose_do(t_regex *st, t_reg_encl *encl,\
 											const char *s1, const char *reg)
 {
@@ -55,16 +38,20 @@ t_bool		regex_enclose_do(t_regex *st, t_reg_encl *encl,\
 t_bool		regex_enclose_parse(t_regex *st, t_reg_encl *encl,\
 											const char *s1, const char *reg)
 {
+	t_bool	ret;
+
 	encl->mem = s1;
 	encl->mem_last = st->last_s1;
 	while (*s1 && *(reg + encl->i) && !is_delimiter(st, reg + encl->i, ")"))
 	{
-		if (regex_parse(st, s1, reg + encl->i))
+		ret = regex_parse(st, s1, reg + encl->i);
+		if ((encl->is_not == TRUE && ret == FALSE) ||
+			(encl->is_not == FALSE && ret == TRUE))
 		{
-			s1 = st->last_s1;
-			if (regex_enclose_do(st, encl, s1, reg))
-				return (TRUE);
-			s1 = encl->mem;
+				s1 = st->last_s1;
+				if (regex_enclose_do(st, encl, s1, reg))
+					return (TRUE);
+				s1 = encl->mem;
 		}
 		encl->i += regex_span_or(st, reg + encl->i);
 	}
@@ -76,6 +63,28 @@ t_bool		regex_enclose_parse(t_regex *st, t_reg_encl *encl,\
 		regex_parse(st, s1, reg + encl->len));
 }
 
+static int	regex_enclosed_flags(t_regex *st, t_reg_encl *encl, const char *reg)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	if (*reg == '?' && (++i))
+		encl->capture = TRUE;
+	if (*(reg + i) == '!' && (++i))
+		encl->is_not = TRUE;
+	if (*(reg + i) == '<' && (++i))
+	{
+		while (*(reg + i + j) && *(reg + i + j) != '>')
+			j++;
+		if (j > 0 && !(encl->name = ft_strsub(reg + i, 0, j)))
+			st->error = ERROR_REGEX;
+		if (*(reg + i + j) == '>')
+			i++;
+	}
+	return (i + j);
+}
 
 t_bool		regex_enclosed(t_regex *st, const char *s1, const char *reg)
 {
@@ -85,18 +94,12 @@ t_bool		regex_enclosed(t_regex *st, const char *s1, const char *reg)
 
 	mem = st->befor_do;
 	ft_bzero(&encl, sizeof(t_reg_encl));
-	if (*reg == '?')
-	{
-		reg++;
-		encl.is_not = TRUE;
-	}
-	if (*reg == '<')
-		reg += regex_enclose_name(st, &encl, reg + 1) + 1;
+	reg += regex_enclosed_flags(st, &encl, reg);
 	encl.len += regex_span_enclose(st, reg);
 	if (is_delimiter(st, reg + encl.len, QUANTIFIER))
 		encl.len += regex_get_quantifier(&(encl.quan), reg + encl.len);
 	ret = regex_enclose_parse(st, &encl, s1, reg);
-	if (ret == TRUE && encl.is_not == FALSE)
+	if (ret == TRUE && encl.capture == TRUE)
 		regex_put_arg(st, s1, st->befor_do, encl.name);
 	st->befor_do = mem;
 	ft_strdel(&(encl.name));

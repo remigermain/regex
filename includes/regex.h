@@ -36,8 +36,8 @@ enum	e_regex_replace
 
 typedef struct	s_regex_quantifier
 {
-	int	number_1;
-	int	number_2;
+	int	n;
+	int	m;
 	int	match;
 	int	isset;
 }				t_reg_quan;
@@ -46,6 +46,7 @@ typedef struct	s_regex_enclose
 {
 	t_reg_quan	quan;
 	t_bool		is_not;
+	t_bool		capture;
 	const char	*mem_last;
 	const char	*mem;
 	char		*name;

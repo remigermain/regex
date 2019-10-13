@@ -23,8 +23,8 @@ static t_bool	regex_class_do(t_regex *st, t_reg_class *class,
 	while (s1[++i])
 	{
 		ret = class->alpha[(int)s1[i]] ? TRUE : FALSE;
-		if ((ret && class->is_not == TRUE) ||
-			(!ret && class->is_not == FALSE))
+		if ((ret == TRUE && class->is_not == TRUE) ||
+			(ret == FALSE && class->is_not == FALSE))
 			break ;
 		class->quantifier.match++;
 	}
@@ -65,7 +65,7 @@ t_bool			regex_class(t_regex *st, const char *s1, const char *reg)
 	t_reg_class	class;
 
 	ft_bzero(&class, sizeof(t_reg_class));
-	if (is_metachar(st, reg) && *reg == '^')
+	if (is_delimiter(st, reg, "^"))
 		class.is_not = TRUE;
 	reg += regex_class_parse(st, &class, reg);
 	if (is_delimiter(st, reg, QUANTIFIER))

@@ -25,7 +25,7 @@ int		regex_span_quantifier(t_regex *st, const char *reg)
 		else
 		{
 			i += ft_spantype(reg + i + 1, ft_isdigit) + 1;
-			if (*(reg + i) == ',')
+			if (ft_strchr(",;", *(reg + i)))
 				i += ft_spantype(reg + i, ft_isdigit) + 1;
 			i++;
 		}

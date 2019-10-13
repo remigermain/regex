@@ -12,7 +12,7 @@
 
 #include "regex.h"
 
-static int	get_quantifier_number(int *nb, int *is, int set, const char *reg)
+static int	quantifier_number(int *nb, int *is, int set, const char *reg)
 {
 	if (*reg)
 	{
@@ -23,52 +23,50 @@ static int	get_quantifier_number(int *nb, int *is, int set, const char *reg)
 	return (0);
 }
 
-static int	mini_quantifier(t_reg_quan *quantifier, const char *reg)
+static int	quantifier_mini(t_reg_quan *quan, const char *reg)
 {
 	if (ft_strchr("*+", *reg))
 	{
-		quantifier->isset |= QUAN_MIN;
-		quantifier->number_1 = (*reg == '*' ? 0 : 1);
+		quan->isset |= QUAN_MIN;
+		quan->n = (*reg == '*' ? 0 : 1);
 	}
 	else
 	{
-		quantifier->isset |= QUAN_MAX;
-		quantifier->number_2 = 1;
+		quan->isset |= QUAN_MAX;
+		quan->m = 1;
 	}
 	return (1);
 }
 
-static int	regex_get_quantifier_set(t_reg_quan *quantifier, const char *reg,
-														int i, t_bool *mod)
+static int	quantifier_set(t_reg_quan *quan, const char *reg, int i)
 {
-	i += get_quantifier_number(&quantifier->number_1, &quantifier->isset,
-												QUAN_MIN, reg + i + 1) + 1;
+	t_bool	mod;
+
+	mod = FALSE;
+	i += quantifier_number(&quan->n, &quan->isset, QUAN_MIN, reg + i);
 	if (*(reg + i) == '}')
-		quantifier->isset = QUAN_EX;
+		quan->isset = QUAN_EX;
 	else
 	{
-		*mod = (*(reg + i) == ';' ? TRUE : FALSE);
-		i += get_quantifier_number(&quantifier->number_2, &quantifier->isset,
-												QUAN_MAX, reg + i + 1) + 1;
+		mod = (*(reg + i++) == ';' ? TRUE : FALSE);
+		i += quantifier_number(&quan->m, &quan->isset, QUAN_MAX, reg + i);
+		if (mod == TRUE)
+			quan->isset = QUAN_OR;
 	}
 	return (i + 1);
 }
 
-int			regex_get_quantifier(t_reg_quan *quantifier, const char *reg)
+int			regex_get_quantifier(t_reg_quan *quan, const char *reg)
 {
-	t_bool	mod;
 	int		i;
 
 	i = 0;
-	mod = FALSE;
-	ft_bzero(quantifier, sizeof(*quantifier));
+	ft_bzero(quan, sizeof(*quan));
 	if (ft_strchr("*?+", *reg))
-		i += mini_quantifier(quantifier, reg);
+		i += quantifier_mini(quan, reg);
 	else if (*reg)
-		i = regex_get_quantifier_set(quantifier, reg, i, &mod);
-	if (mod == TRUE)
-		quantifier->isset = QUAN_OR;
+		i = quantifier_set(quan, reg, i + 1);
 	if (*(reg + i) == '?' && (++i))
-		quantifier->isset |= QUAN_LAZY;
+		quan->isset |= QUAN_LAZY;
 	return (i);
 }

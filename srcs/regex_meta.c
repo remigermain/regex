@@ -37,7 +37,7 @@ int		convert_metachar_len(t_regex *st, const char *reg)
 	int len;
 
 	len = 1;
-	if (*reg == '\\' && is_metachar(st, reg))
+	if (is_delimiter(st, reg, "\\"))
 		len++;
 	if (*reg && !is_metachar(st, reg))
 	{
@@ -56,7 +56,7 @@ int		convert_metachar(t_regex *st, const char *reg)
 {
 	int c;
 
-	if (*reg == '\\' && is_metachar(st, reg))
+	if (is_delimiter(st, reg, "\\"))
 		reg++;
 	c = *reg;
 	if (*reg && !is_metachar(st, reg))
