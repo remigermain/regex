@@ -49,10 +49,42 @@ void	r(char **argv)
 	ft_printf("[AF %s ]\n", ptr);
 }
 
+//int ret = ft_regex_exec(&st, "a{ char* {5,9, *.cor|bonjourfdcdcdc}, char {1,1, a|b|r|4}, int {55,99}, int {99, 554}};;|",
+//						"^(?<flag>\\s*[a-zA-Z0-9]\\s*){1}({(?char\\(*)?|int)(.)*;;\\|)");
+
+
 int main(int argc, char **argv)
 {
+	t_regex st;
+	//"^(?<alone>[a-zA-Z0-9]?[^|])*\\|(?(?\s*(?char\\*?|char|int){1}\s*))*$");
+	//int ret = ft_regex_exec(&st, "dfvdmnvdmdvvd ", "[a-z] ");
+	//int ret = ft_regex_exec(&st, "|a(char*{5515,9,*.cor|bonjourfdcdcdc},char{1,1,a|b|r|4},int{18,12,ddd},int{99,554});CDFV5151fefee;165SDDDsfdvvfdv55|",
+	// "juitpb|a(char*{5,9,*.cor|bonjourfdcdcdc},char{1,1,a|b|r|4},int{55,99},int{99,554});;|r(char*{5,9,*.cor|bonjourfdcdcdc},char{,,a|b|r|*|4},int{55,99},int{99,554});;|",
+	//
+	//  goood
+	//"^(?<alone>[\\p])*\\|((?<flags>[\\p])(\\(((?<type>[a-zA-Z*])+(\\{(?<min>[\\d])*,(?<max>[\\d])*(,(?<pattern>[^}])*)?\\},))*\\))?;(?<set>[\\p])*;(?<unset>[\\p])*\\|)*$");
+
+	int ret = ft_regex_exec(&st, "RaArfGFsTLt|l;;1m|g;l;m|d;a;|1;;l|n;l;m|m;;l1|p;;F|S;;t|U;;uc|u;;Uc|c;;Uu|",
+
+							"^(?<alone>[\\p])*\\|((?<flags>[\\p])(\\(((?<type>[a-zA-Z*])+(\\{(?<min>[\\d])*,(?<max>[\\d])*(,(?<pattern>[^}])*)?\\},))*\\))?;(?<set>[\\p])*;(?<unset>[\\p])*\\|)*$");
+
+	if (ret > 0)
+		ft_printf("\033[38;5;326mTRUE  %d\n" T_WHITE, ret);
+	else if (ret == 0)
+		ft_printf("\033[1;31mFALSE  %d\n" T_WHITE, ret);
+	else
+		ft_printf("\033[1;31mERROR MALLOC %d\n" T_WHITE, ret);
+
+	if (ret == 0)
+	{
+		error_line_pos("error parsing", 76, st.error_pos);
+		error_line_e(st.s1, st.error_pos);
+	}
+	ft_regex_print(&st);
+
+	ft_regex_free(&st);
 	(void)argc;
-	t(argv);
+	//t(argv);
 	//r(argv);
 	return (0);
 }

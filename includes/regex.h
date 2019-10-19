@@ -16,7 +16,7 @@
 # include "libft.h"
 # define QUANTIFIER "{*+?"
 # define ERROR_REGEX -1
-# define REGEX_TYPE "wWbBdDsSAZ"
+# define REGEX_TYPE "wWdDsSpPnret"
 # define REG_LAZY '?'
 # define REG_QUAN_MINI "*+?"
 # define REG_CLASS_NOT "^"
@@ -60,6 +60,7 @@ typedef struct	s_regex_enclose
 	t_reg_quan	quan;
 	t_bool		is_not;
 	t_bool		capture;
+	t_bool		is_encl;
 	const char	*mem_last;
 	const char	*mem;
 	char		*name;
@@ -89,7 +90,8 @@ typedef struct	s_regex_capt
 typedef struct	s_regex
 {
 	t_reg_capt	*capt;
-	t_bool		error;
+	t_bool 		error;
+	t_bool		is_encl;
 	const char	*reg;
 	const char	*s1;
 	size_t		match;
@@ -129,7 +131,7 @@ t_bool 			regex_enclose_parse(t_regex *st, t_reg_encl *encl,
 **          regex_enclosed_capt.c
 **-------------------------------------------------------
 */
-void			regex_put_arg(t_regex *st, const char *base, const char *match,
+void			regex_put_arg(t_regex *st, const char *base, int len,
 																	char *name);
 void			ft_regex_free(t_regex *st);
 

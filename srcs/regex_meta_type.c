@@ -44,6 +44,10 @@ int			regex_is_metatype(char alpha[128], const char *reg)
 		regex_is_type_made(alpha, ft_isspace, REG_SET);
 	else if (*reg == 'S')
 		regex_is_type_made(alpha, ft_isspace, REG_UNSET);
+	else if (*reg == 'p')
+		regex_is_type_made(alpha, ft_isalnum, REG_SET);
+	else if (*reg == 'P')
+		regex_is_type_made(alpha, ft_isalnum, REG_UNSET);
 	else if (*reg == 'n')
 		alpha[(int)('\n')] = REG_SET;
 	else if (*reg == 'r')
@@ -67,6 +71,8 @@ static int	regex_is_type2(char alpha[128], const char *reg, int i)
 		regex_is_type_made(alpha, ft_isxdigit, REG_SET);
 	else if (!ft_strncmp(reg, ":isword:", 8) && (i = 8))
 		regex_is_type_made(alpha, ft_isword, REG_SET);
+	else
+		ft_dprintf(2, "REGEX error regex type %s\n", reg);
 	return (i);
 }
 

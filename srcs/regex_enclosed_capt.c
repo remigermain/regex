@@ -62,26 +62,20 @@ static t_bool   exist_capt(t_regex *st, int start, int end)
     return (FALSE);
 }
 
-void            regex_put_arg(t_regex *st, const char *base,
-                                        const char *match, char *name)
+void            regex_put_arg(t_regex *st, const char *s1, int len, char *name)
 {
     t_reg_capt *list;
-    int         len;
 
-    len = ft_strlen(base);
-    len -= ft_strlen(match);
-    if (len <= 0 || exist_capt(st, ft_strlen(st->s1) - ft_strlen(base),
-                               ft_strlen(st->s1) - ft_strlen(match)))
+    if (len <= 0)
         return;
     if (!(list = (t_reg_capt *)ft_memalloc(sizeof(t_reg_capt))) ||
-        (!(list->str = ft_strsub(base, 0, len))))
+        (!(list->str = ft_strsub(s1, 0, len))))
     {
         st->error = ERROR_REGEX;
         return;
     }
-    if (name && !(list->name = ft_strdup(name)))
-        st->error = ERROR_REGEX;
-    list->start = ft_strlen(st->s1) - ft_strlen(base);
-    list->end = ft_strlen(st->s1) - ft_strlen(match);
+    list->name = name;
+    list->start = ft_strlen(st->s1) - ft_strlen(s1);
+    list->end = ft_strlen(st->s1) - len;
     regex_put_capt(st, list);
 }

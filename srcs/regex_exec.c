@@ -72,13 +72,13 @@ int				ft_regex_exec(t_regex *st, const char *s1, const char *reg)
 			regex_parse(st, s1, reg + 1);
 		else
 		{
-			i = -1;
+			i = 0;
 			while (*(s1 + i))
-				regex_parse(st, s1 + ++i, reg);
+				regex_parse(st, s1 + i++, reg);
 		}
 		reg += regex_span_or(st, reg);
 	}
 	if (st->error)
 		st->error_pos = ft_strlen(st->s1) - ft_strlen(st->last_s1);
-	return (st->error || st->match);
+	return (st->error | st->match);
 }

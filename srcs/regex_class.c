@@ -38,25 +38,37 @@ static int		regex_class_parse(t_regex *st, t_reg_class *class,
 	int			i;
 
 	mem = reg;
-	while (*reg && (!is_metachar(st, reg) || *reg != ']'))
+	while (*reg && !is_delimiter(st, reg, "]"))
 	{
-		i = convert_metachar(st, reg);
-		if (is_metachar(st, reg) && i == '[' && (i = -1))
+		if (is_delimiter(st, reg, "\\"))
+			reg++;
+		i = *reg;
+		if (is_delimiter(st, reg, "[") && (i = -1))
 			reg += regex_is_type(class->alpha, reg + 1) + 2;
-		else if (is_metachar(st, reg) && ft_strchr(REGEX_TYPE, i))
-			reg += regex_is_metatype(class->alpha, reg + 1) + 1;
+		else if (!is_metachar(st, reg) && ft_strchr(REGEX_TYPE, i))
+			reg += regex_is_metatype(class->alpha, reg);
 		else
 		{
-			reg += convert_metachar_len(st, reg);
-			class->alpha[i] = 1;
+			class->alpha[((int)*reg++)] = 1;
 			if (*reg == REG_CLASS_TO)
 			{
-				while (i <= convert_metachar(st, reg + 1))
-					class->alpha[++i] = 1;
-				reg += convert_metachar_len(st, reg + 1) + 1;
+				reg++;
+				while (i <= *reg)
+					class->alpha[i++] = 1;
 			}
 		}
 	}
+	//i = 0;
+	//while (i < 128)
+	//	ft_printf("%d", class->alpha[i++]);
+	//ft_printf("\n");
+	//i = 0;
+	//while (i < 128)
+	//{
+	//	ft_printf("%d", i >= 'a' && i <= 'z' ? 1 : 0);
+	//	i++;
+	//}
+	//ft_printf("\n");
 	return (regex_span_class(st, mem));
 }
 

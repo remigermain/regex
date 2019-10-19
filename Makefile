@@ -45,14 +45,9 @@ CHEADER = $(addprefix $(DHEADER),$(HEADER))
 # 								ALL  SCRS									   #
 # *****************************************************************************#
 
-SRC =	main.c regex_utils.c \
-		regex_exec.c \
-		regex_meta.c regex_meta_type.c \
-		regex_class.c  \
-		regex_quantifier.c regex_quantifier_get.c \
-		regex_enclosed.c regex_enclosed_capt.c \
-		regex_span.c \
-		regex_replace.c \
+SRC =	main.c regex_utils.c regex_exec.c regex_meta.c regex_meta_type.c \
+		regex_class.c regex_quantifier.c regex_quantifier_get.c regex_enclosed.c \
+		regex_enclosed_capt.c regex_span.c regex_replace.c \
 
 COUNT = "1"
 SPACE = "                    "

@@ -25,10 +25,10 @@ t_bool		regex_enclose_do(t_regex *st, t_reg_encl *encl,\
 	if (ret && (encl->quan.isset & QUAN_LAZY) &&
 			regex_parse(st, s1, reg + encl->len))
 		return (TRUE);
-	else if (s1 != encl->mem && ret_max &&
+	if (s1 != encl->mem && ret_max &&
 			regex_enclose_parse(st, encl, s1, reg))
 		return (TRUE);
-	else if (ret && !(encl->quan.isset & QUAN_LAZY) &&
+	if (ret && !(encl->quan.isset & QUAN_LAZY) &&
 			regex_parse(st, s1, reg + encl->len))
 		return (TRUE);
 	encl->quan.match--;
@@ -93,6 +93,8 @@ t_bool		regex_enclosed(t_regex *st, const char *s1, const char *reg)
 	t_bool		ret;
 
 	mem = st->befor_do;
+	encl.is_encl = st->is_encl;
+	st->is_encl = TRUE;
 	ft_bzero(&encl, sizeof(t_reg_encl));
 	reg += regex_enclosed_flags(st, &encl, reg);
 	encl.len += regex_span_enclose(st, reg);
@@ -100,8 +102,10 @@ t_bool		regex_enclosed(t_regex *st, const char *s1, const char *reg)
 		encl.len += regex_get_quantifier(&(encl.quan), reg + encl.len);
 	ret = regex_enclose_parse(st, &encl, s1, reg);
 	if (ret == TRUE && encl.capture == TRUE)
-		regex_put_arg(st, s1, st->befor_do, encl.name);
+		regex_put_arg(st, s1, encl.quan.match, encl.name);
+	else
+		ft_strdel(&(encl.name));
 	st->befor_do = mem;
-	ft_strdel(&(encl.name));
+	st->is_encl = encl.is_encl;
 	return (ret);
 }
