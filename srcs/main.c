@@ -62,11 +62,11 @@ int main(int argc, char **argv)
 	// "juitpb|a(char*{5,9,*.cor|bonjourfdcdcdc},char{1,1,a|b|r|4},int{55,99},int{99,554});;|r(char*{5,9,*.cor|bonjourfdcdcdc},char{,,a|b|r|*|4},int{55,99},int{99,554});;|",
 	//
 	//  goood
-	//"^(?<alone>[\\p])*\\|((?<flags>[\\p])(\\(((?<type>[a-zA-Z*])+(\\{(?<min>[\\d])*,(?<max>[\\d])*(,(?<pattern>[^}])*)?\\},))*\\))?;(?<set>[\\p])*;(?<unset>[\\p])*\\|)*$");
+	//"^(?<alone>[\\p])*\\|((?<flags>[\\p])(\\(((?<type>[a-zA-Z*])+(\\{(?<min>[\\d])*,(?<max>[\\d])*(,(?<pattern>[^}])*)?\\},)?)*\\))?;(?<set>[\\p])*;(?<unset>[\\p])*\\|)*$");
 
-	int ret = ft_regex_exec(&st, "RaArfGFsTLt|l;;1m|g;l;m|d;a;|1;;l|n;l;m|m;;l1|p;;F|S;;t|U;;uc|u;;Uc|c;;Uu|",
+	int ret = ft_regex_exec(&st, "RaArfGFsTLt|lflag(unzipfile{11, 22 ,je sios la}, dffd);;1m|g;l;m|d;a;|1;;l|n;l;m|m;;l1|p;;F|S;;t|U;;uc|u;;Uc|c;;Uu|",
 
-							"^(?<alone>[\\p])*\\|((?<flags>[\\p])(\\(((?<type>[a-zA-Z*])+(\\{(?<min>[\\d])*,(?<max>[\\d])*(,(?<pattern>[^}])*)?\\},))*\\))?;(?<set>[\\p])*;(?<unset>[\\p])*\\|)*$");
+							"^(?<alone>[\\p])*\\|(\\s*(?<flags>[\\p])+\\s*(\\((\\s*(?<type>[a-zA-Z*])+\\s*(\\{\\s*(?<min>[\\d])*\\s*,\\s*(?<max>[\\d])*\\s*(,(?<pattern>[^}])*)?\\}\\s*,\\s*)?)*\\))?\\s*;\\s*(?<set>[\\p])*\\s*;\\s*(?<unset>[\\p])*\\s*\\|)*$");
 
 	if (ret > 0)
 		ft_printf("\033[38;5;326mTRUE  %d\n" T_WHITE, ret);

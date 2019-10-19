@@ -76,6 +76,6 @@ void            regex_put_arg(t_regex *st, const char *s1, int len, char *name)
     }
     list->name = name;
     list->start = ft_strlen(st->s1) - ft_strlen(s1);
-    list->end = ft_strlen(st->s1) - len;
+    list->end = list->start + len;
     regex_put_capt(st, list);
 }
