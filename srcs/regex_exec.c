@@ -53,6 +53,67 @@ t_bool			regex_parse(t_regex *st, const char *s1, const char *reg)
 	return (regex_same_char(st, s1, reg));
 }
 
+/*
+**-------------------------------------------------------
+**
+**		ft_regex by rgermain
+**
+**	-------------
+**		QUANTIFIER
+**	-------------
+**
+**		{n,m} ? * +
+**
+**		{5,9}	match upper than 5, and lower than 9
+**		{0,}	match upper than 0 same as *
+**		{1,}	match upper than 1 same as +
+**		{,1}	match lower than 1 same as ?
+**
+**		?		lazy quantifier
+**		{5,9}?	match upper than 5, and lower than 9
+**
+**	-------------
+**		CLASS	
+**	-------------
+**
+**	[^a-zA-Z\d[:isdigit].\\]fg]
+**		*^				for not matching
+**		*a-z			whole char in a to z
+**		*\d				whole char is digit same as 0-9
+**		[:isdigit:]		whole char is digit same as 0-9
+**		*.				for point char
+**		*fg				match with f or g
+**
+**	-------------
+**		META	
+**	-------------
+**
+**	\d \D \s \S \w \W \n \e \t
+**	{}()[]?*+^$.					metachar need to be esapced
+**
+**	-------------
+**		ENCLOSE
+**	-------------
+**
+**	(?!<name>regex)
+**
+**		*?		for capture en memory
+**		*!		for Not matching
+**		<name>	for named where you capture (do nothing if ? is not set)
+**
+**
+**	-------------
+**		EXEMPLE
+**	-------------
+**
+**	"^(?<alone>[\\p])*\\|(\\s*(?<flags>[\\p])+\\s*(\\((\\s*(?<type>[a-zA-Z*])+
+**	\\s*(\\{\\s*(?<min>[\\d])*\\s*,\\s*(?<max>[\\d])*\\s*(,(?<pattern>[^}])*)?
+**	\\}\\s*,\\s*)?)*\\))?\\s*;\\s*(?<set>[\\p])*\\s*;\\s*(?<unset>[\\p])*
+**	\\s*\\|)*$"
+**
+**-------------------------------------------------------
+*/
+
 int				ft_regex_exec(t_regex *st, const char *s1, const char *reg)
 {
 	int i;
