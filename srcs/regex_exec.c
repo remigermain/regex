@@ -20,15 +20,9 @@ static t_bool	regex_same_char(t_regex *st, const char *s1, const char *reg)
 	if (*s1)
 	{
 		ft_bzero(alpha, sizeof(char) * 128);
-		if (!is_metachar(st, reg))
-			regex_is_metatype(alpha, reg);
-		else
-			alpha[(int)(*reg)] = 1;
+		regex_is_metatype(alpha, reg);
 		if ((is_delimiter(st, reg, ".") || alpha[(int)(*s1)] == 1))
-		{
-			reg += convert_metachar_len(st, reg);
-			return (regex_parse(st, ++s1, reg));
-		}
+			return (regex_parse(st, ++s1, ++reg));
 	}
 	return (FALSE);
 }

@@ -14,61 +14,36 @@
 
 void            ft_regex_free(t_regex *st)
 {
-    t_reg_capt *list;
-    t_reg_capt *tmp;
-
-    list = st->capt;
-    while (list)
-    {
-        tmp = list;
-        list = list->next;
-        ft_memdel((void **)&(tmp->str));
-        if (tmp->name)
-            ft_memdel((void **)&(tmp->name));
-        ft_memdel((void **)&tmp);
-    }
+    //t_reg_capt *list;
+    //t_reg_capt *tmp;
+//
+    //list = st->capt;
+    //while (list)
+    //{
+    //    tmp = list;
+    //    list = list->next;
+    //    ft_memdel((void **)&(tmp->str));
+    //    if (tmp->name)
+    //        ft_memdel((void **)&(tmp->name));
+    //    ft_memdel((void **)&tmp);
+    //}
 }
 
-static void     regex_put_capt(t_regex *st, t_reg_capt *new)
+static void     regex_put_capt(t_regex *st, t_reg_list *lst)
 {
-    t_reg_capt *lst;
-    t_reg_capt *mem;
-
-    lst = st->capt;
-    mem = NULL;
-    while (lst && lst->start < new->start)
-    {
-        mem = lst;
-        lst = lst->next;
-    }
-    new->next = lst;
-    if (mem)
-        mem->next = new;
-    else
-        st->capt = new;
-}
-
-static t_bool   exist_capt(t_regex *st, int start, int end)
-{
-    t_reg_capt *lst;
-
-    lst = st->capt;
-    while (lst)
-    {
-        if (lst->start == start && lst->end == end)
-            return (TRUE);
-        lst = lst->next;
-    }
-    return (FALSE);
+ //   st->inst = ft_realloc(st->inst, st->inst->children + 1);
+ ft_printf("[ %s ]", lst->name);
+ ft_printf("[ %s ]", lst->str);
+ ft_printf("[  %d  ]", lst->pos);
+ ft_printf("[  %d  ]", lst->start);
+ ft_printf("[  %d  ]\n", lst->end);
 }
 
 void            regex_put_arg(t_regex *st, const char *s1, int len, char *name)
 {
-    t_reg_capt *list;
+    t_reg_list *list;
 
-    if (len <= 0)
-        return;
-    if (!(list = (t_reg_capt *)ft_memalloc(sizeof(t_reg_capt))) ||
+    if (!(list = (t_reg_list *)ft_memalloc(sizeof(t_reg_list))) ||
         (!(list->str = ft_strsub(s1, 0, len))))
     {
         st->error = ERROR_REGEX;

@@ -88,7 +88,7 @@ static int	regex_enclosed_flags(t_regex *st, t_reg_encl *encl, const char *reg)
 
 t_bool		regex_enclosed(t_regex *st, const char *s1, const char *reg)
 {
-	t_reg_encl	encl;
+	t_reg_encl 	encl;
 	const char	*mem;
 	t_bool		ret;
 
@@ -100,12 +100,17 @@ t_bool		regex_enclosed(t_regex *st, const char *s1, const char *reg)
 	encl.len += regex_span_enclose(st, reg);
 	if (is_delimiter(st, reg + encl.len, QUANTIFIER))
 		encl.len += regex_get_quantifier(&(encl.quan), reg + encl.len);
+	st->level++;
 	ret = regex_enclose_parse(st, &encl, s1, reg);
-	if (ret == TRUE && encl.capture == TRUE)
+	if (ret == TRUE && encl.capture == TRUE && encl.quan.match)
+	{
+		ft_printf("%*@", st->level - 1, "char", ' ');
 		regex_put_arg(st, s1, encl.quan.match, encl.name);
+	}
 	else
 		ft_strdel(&(encl.name));
 	st->befor_do = mem;
 	st->is_encl = encl.is_encl;
+	st->level--;
 	return (ret);
 }

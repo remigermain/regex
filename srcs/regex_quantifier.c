@@ -79,10 +79,7 @@ t_bool		regex_quantifier(t_regex *st, const char *s1, const char *reg)
 	char		alpha[128];
 
 	ft_bzero(alpha, sizeof(char) * 128);
-	if (!is_metachar(st, reg))
-		regex_is_metatype(alpha, reg);
-	else
-		alpha[(int)(*reg)] = 1;
+	regex_is_metatype(alpha, reg);
 	reg += regex_get_quantifier(&quan, reg + 1) + 1;
 	while (*(s1 + quan.match) && (is_delimiter(st, reg, ".") ||
 				alpha[(int)(*(s1 + quan.match))] == 1) && *s1 != '\n')

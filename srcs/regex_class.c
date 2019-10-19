@@ -58,17 +58,6 @@ static int		regex_class_parse(t_regex *st, t_reg_class *class,
 			}
 		}
 	}
-	//i = 0;
-	//while (i < 128)
-	//	ft_printf("%d", class->alpha[i++]);
-	//ft_printf("\n");
-	//i = 0;
-	//while (i < 128)
-	//{
-	//	ft_printf("%d", i >= 'a' && i <= 'z' ? 1 : 0);
-	//	i++;
-	//}
-	//ft_printf("\n");
 	return (regex_span_class(st, mem));
 }
 

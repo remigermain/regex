@@ -77,19 +77,22 @@ typedef struct	s_regex_print
 	size_t	end;
 }				t_regex_pr;
 
-typedef struct	s_regex_capt
+typedef struct	s_regex_list
 {
 	char				*str;
 	char				*name;
 	int					pos;
 	int					start;
 	int					end;
-	struct s_regex_capt	*next;
-}				t_reg_capt;
+	size_t				children;
+	struct s_regex_list **tab;
+}				t_reg_list;
 
 typedef struct	s_regex
 {
-	t_reg_capt	*capt;
+	t_reg_list **capt;
+	t_reg_list *inst;
+	int			level;
 	t_bool 		error;
 	t_bool		is_encl;
 	const char	*reg;
@@ -172,8 +175,6 @@ int				regex_is_type(char alpha[128], const char *reg);
 */
 t_bool			is_metachar(t_regex *st, const char *reg);
 t_bool			is_delimiter(t_regex *st, const char *reg, char *delimiter);
-int				convert_metachar_len(t_regex *st, const char *reg);
-int				convert_metachar(t_regex *st, const char *reg);
 
 /*
 **-------------------------------------------------------

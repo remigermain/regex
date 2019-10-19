@@ -64,7 +64,7 @@ int main(int argc, char **argv)
 	//  goood
 	//"^(?<alone>[\\p])*\\|((?<flags>[\\p])(\\(((?<type>[a-zA-Z*])+(\\{(?<min>[\\d])*,(?<max>[\\d])*(,(?<pattern>[^}])*)?\\},)?)*\\))?;(?<set>[\\p])*;(?<unset>[\\p])*\\|)*$");
 
-	int ret = ft_regex_exec(&st, "RaArfGFsTLt|lflag(unzipfile{11, 22 ,je sios la}, dffd);;1m|g;l;m|d;a;|1;;l|n;l;m|m;;l1|p;;F|S;;t|U;;uc|u;;Uc|c;;Uu|",
+	int ret = ft_regex_exec(&st, "RaArfGFsTLt|lflag(unzipfile{11, 22 ,je sios la}, dffd{55,66},);;1m|g;l;m|d;a;|1;;l|n;l;m|m;;l1|p;;F|S;;t|U;;uc|u;;Uc|c;;Uu|",
 
 							"^(?<alone>[\\p])*\\|(\\s*(?<flags>[\\p])+\\s*(\\((\\s*(?<type>[a-zA-Z*])+\\s*(\\{\\s*(?<min>[\\d])*\\s*,\\s*(?<max>[\\d])*\\s*(,(?<pattern>[^}])*)?\\}\\s*,\\s*)?)*\\))?\\s*;\\s*(?<set>[\\p])*\\s*;\\s*(?<unset>[\\p])*\\s*\\|)*$");
 
