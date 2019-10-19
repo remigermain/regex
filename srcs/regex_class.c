@@ -23,8 +23,7 @@ static t_bool	regex_class_do(t_regex *st, t_reg_class *class,
 	while (s1[++i])
 	{
 		ret = class->alpha[(int)s1[i]] ? TRUE : FALSE;
-		if ((ret == TRUE && class->is_not == TRUE) ||
-			(ret == FALSE && class->is_not == FALSE))
+		if (ret == class->is_not)
 			break ;
 		class->quantifier.match++;
 	}
@@ -50,12 +49,9 @@ static int		regex_class_parse(t_regex *st, t_reg_class *class,
 		else
 		{
 			class->alpha[((int)*reg++)] = 1;
-			if (*reg == REG_CLASS_TO)
-			{
-				reg++;
+			if (*reg == REG_CLASS_TO && (++reg))
 				while (i <= *reg)
 					class->alpha[i++] = 1;
-			}
 		}
 	}
 	return (regex_span_class(st, mem));

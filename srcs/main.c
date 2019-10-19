@@ -32,8 +32,8 @@ void	t(char **argv)
 
 	if (ret == 0)
 	{
-		error_line_pos("error parsing", 76, st.error_pos);
-		error_line_e(st.s1, st.error_pos);
+		//error_line_pos("error parsing", 76, st.error_pos);
+		//error_line_e(st.s1, st.error_pos);
 	}
 	ft_regex_print(&st);
 
@@ -77,8 +77,8 @@ int main(int argc, char **argv)
 
 	if (ret == 0)
 	{
-		error_line_pos("error parsing", 76, st.error_pos);
-		error_line_e(st.s1, st.error_pos);
+		//error_line_pos("error parsing", 76, st.error_pos);
+		//error_line_e(st.s1, st.error_pos);
 	}
 	ft_regex_print(&st);
 

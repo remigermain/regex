@@ -133,7 +133,5 @@ int				ft_regex_exec(t_regex *st, const char *s1, const char *reg)
 		}
 		reg += regex_span_or(st, reg);
 	}
-	if (st->error)
-		st->error_pos = ft_strlen(st->s1) - ft_strlen(st->last_s1);
 	return (st->error | st->match);
 }

@@ -101,10 +101,10 @@ re: print_name
 
 info: print_name
 	@printf $(SPACE)"total functions : ${ESC}[1;34m"
-	@ls -1 $(CSRC) | wc -l
+	@echo "$(shell cat $(CSRC) $(CHEADER) | sed 's/^[a-z*_]\+[[:blank:]]\+[*a-z_]\+(\(.\)*);/REMIREMIREMI/g' | grep REMIREMIREMI | wc -l)"
 	@printf "${ESC}[0m\n";
 	@printf $(SPACE)"total lines : ${ESC}[1;34m"
-	@echo "$(shell cat $(CSRC) | sed '/^\*\*.*/d' | sed '/^\/\*.*/d' | sed '/^\*\/.*/d' | sed '/^[[:blank:]]*\/\/.*/d' | grep . | wc -l)"
+	@echo "$(shell cat $(CSRC) $(CHEADER) | sed '/^\*\*.*/d' | sed '/^\/\*.*/d' | sed '/^\*\/.*/d' | sed '/^[[:blank:]]*\/\/.*/d' | grep . | wc -l)"
 	@printf "${ESC}[0m\n";
 	@printf $(SPACE)"total commit : ${ESC}[1;34m"	
 	@git rev-list --all --count

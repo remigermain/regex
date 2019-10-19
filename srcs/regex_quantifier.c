@@ -13,24 +13,6 @@
 
 #include "regex.h"
 
-t_bool		verif_quantifier_max(t_reg_quan *quan, int i)
-{
-	t_bool n;
-	t_bool m;
-
-	n = (quan->n >= i ? TRUE : FALSE);
-	m = (quan->m >= i ? TRUE : FALSE);
-	if ((quan->isset & QUAN_EX) && n == TRUE)
-		return (FALSE);
-	else if ((quan->isset & QUAN_MAX) && m == TRUE)
-		return (FALSE);
-	else if ((quan->isset & QUAN_OR) && n == TRUE && m == TRUE)
-		return (FALSE);
-	else if (quan->isset == 0 && i >= 1)
-		return (FALSE);
-	return (TRUE);
-}
-
 t_bool		verif_quantifier(t_reg_quan *quan, int i)
 {
 	if ((quan->isset & QUAN_EX) && quan->n != i)
@@ -54,20 +36,15 @@ t_bool		regex_quantifier_do(t_regex *st, t_reg_quan *quan,
 	i = 0;
 	while ((quan->isset & QUAN_LAZY) && i <= quan->match)
 	{
-		if (verif_quantifier(quan, i))
-		{
-			if (regex_parse(st, s1 + i, reg))
-				return (TRUE);
-		}
+		if (verif_quantifier(quan, i) && regex_parse(st, s1 + i, reg))
+			return (TRUE);
 		i++;
 	}
 	while (!(quan->isset & QUAN_LAZY) && quan->match >= 0)
 	{
-		if (verif_quantifier(quan, quan->match))
-		{
-			if (regex_parse(st, s1 + quan->match, reg))
-				return (TRUE);
-		}
+		if (verif_quantifier(quan, quan->match) &&
+			regex_parse(st, s1 + quan->match, reg))
+			return (TRUE);
 		quan->match--;
 	}
 	return (FALSE);

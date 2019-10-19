@@ -23,6 +23,9 @@
 # define REG_CLASS_TO '-'
 # define REG_START "^"
 # define REG_END "$"
+# define LAZY_QUAN(encl) (encl->quan.isset & QUAN_LAZY ? TRUE : FALSE)
+# define UPPER(c) (ft_isuppercase(c))
+# define LOWER(c) (ft_isuppercase(c))
 
 enum	e_regex_quan
 {
@@ -61,8 +64,6 @@ typedef struct	s_regex_enclose
 	t_bool		is_not;
 	t_bool		capture;
 	t_bool		is_encl;
-	const char	*mem_last;
-	const char	*mem;
 	char		*name;
 	int			len;
 	int			i;
@@ -94,13 +95,10 @@ typedef struct	s_regex
 	t_reg_list *inst;
 	int			level;
 	t_bool 		error;
-	t_bool		is_encl;
 	const char	*reg;
 	const char	*s1;
 	size_t		match;
 	const char	*last_s1;
-	const char	*befor_do;
-	int			error_pos;
 	int			nb_capt;
 }				t_regex;
 
@@ -144,7 +142,6 @@ void			ft_regex_free(t_regex *st);
 **-------------------------------------------------------
 */
 t_bool			verif_quantifier(t_reg_quan *st, int i);
-t_bool			verif_quantifier_max(t_reg_quan *quan, int i);
 int				regex_get_quantifier(t_reg_quan *st, const char *reg);
 t_bool			regex_quantifier_do(t_regex *st, t_reg_quan *quantifier,
 							   const char *s1, const char *reg);

@@ -43,6 +43,7 @@ void            regex_put_arg(t_regex *st, const char *s1, int len, char *name)
 {
     t_reg_list *list;
 
+    ft_printf("%*@", st->level - 1, "char", ' ');
     if (!(list = (t_reg_list *)ft_memalloc(sizeof(t_reg_list))) ||
         (!(list->str = ft_strsub(s1, 0, len))))
     {
