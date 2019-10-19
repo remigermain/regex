@@ -104,7 +104,7 @@ info: print_name
 	@ls -1 $(CSRC) | wc -l
 	@printf "${ESC}[0m\n";
 	@printf $(SPACE)"total lines : ${ESC}[1;34m"
-	@echo "$(shell cat $(CSRC) | wc -l) - (16 * $(shell ls -1 $(CSRC) | wc -l))" | bc
+	@echo "$(shell cat $(CSRC) | sed '/^\*\*.*/d' | sed '/^\/\*.*/d' | sed '/^\*\/.*/d' | sed '/^[[:blank:]]*\/\/.*/d' | grep . | wc -l)"
 	@printf "${ESC}[0m\n";
 	@printf $(SPACE)"total commit : ${ESC}[1;34m"	
 	@git rev-list --all --count

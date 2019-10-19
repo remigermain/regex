@@ -95,6 +95,7 @@ t_bool			regex_parse(t_regex *st, const char *s1, const char *reg)
 **		ENCLOSE
 **	-------------
 **
+**
 **	(?!<name>regex)
 **
 **		*?		for capture en memory
@@ -113,7 +114,6 @@ t_bool			regex_parse(t_regex *st, const char *s1, const char *reg)
 **
 **-------------------------------------------------------
 */
-
 int				ft_regex_exec(t_regex *st, const char *s1, const char *reg)
 {
 	int i;
