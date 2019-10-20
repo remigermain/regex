@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 
 #include "regex.h"
-			//if (LAZY_QUAN(encl) && ret &&
-			//			regex_parse(st, st->last_s1, reg + encl->len))
-			//	return (TRUE);
 
 t_bool		regex_enclose_parse(t_regex *st, t_reg_encl *encl,\
 											const char *s1, const char *reg)
@@ -22,18 +19,21 @@ t_bool		regex_enclose_parse(t_regex *st, t_reg_encl *encl,\
 
 	while (*(reg + encl->i) && !is_delimiter(st, reg + encl->i, ")"))
 	{
-		ft_printf("[%d]___%s___\n", st->level, reg + encl->i);
 		ret = regex_parse(st, s1, reg + encl->i);
 		if (encl->is_not != ret)
 		{
 			ret = verif_quantifier(&(encl->quan), encl->quan.match);
-			encl->quan.match++;
-			if (regex_enclose_parse(st, encl, st->last_s1, reg))
+			if (LAZY_QUAN(encl) && ret &&
+				regex_parse(st, st->last_s1, reg + encl->len))
 				return (TRUE);
+			encl->quan.match++;
+			if (s1 != st->last_s1 && 
+					regex_enclose_parse(st, encl, st->last_s1, reg))
+				return (TRUE);
+			encl->quan.match--;
 			if (!LAZY_QUAN(encl) && ret && 
 							regex_parse(st, st->last_s1, reg + encl->len))
 				return (TRUE);
-			encl->quan.match--;
 		}
 		encl->i += regex_span_or(st, reg + encl->i);
 	}
@@ -70,7 +70,6 @@ t_bool		regex_enclosed(t_regex *st, const char *s1, const char *reg)
 {
 	t_reg_encl 	encl;
 	t_bool		ret;
-	const char *s2;
 
 	ft_bzero(&encl, sizeof(t_reg_encl));
 	reg += regex_enclosed_flags(st, &encl, reg);
