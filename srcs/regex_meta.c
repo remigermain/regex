@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "regex.h"
 
 t_bool	is_metachar(t_regex *st, const char *reg)

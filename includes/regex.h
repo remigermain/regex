@@ -17,12 +17,6 @@
 # define QUANTIFIER "{*+?"
 # define ERROR_REGEX -1
 # define REGEX_TYPE "wWdDsSpPnret"
-# define REG_LAZY '?'
-# define REG_QUAN_MINI "*+?"
-# define REG_CLASS_NOT "^"
-# define REG_CLASS_TO '-'
-# define REG_START "^"
-# define REG_END "$"
 # define LAZY_QUAN(encl) (encl->quan.isset & QUAN_LAZY ? TRUE : FALSE)
 # define UPPER(c) (ft_isuppercase(c))
 # define LOWER(c) (ft_isuppercase(c))
