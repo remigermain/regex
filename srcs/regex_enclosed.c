@@ -21,8 +21,8 @@
 **-------------------------------------------------------
 */
 
-t_bool		regex_enclose_capt(t_regex *st, t_reg_encl *encl,\
-											const char *s1, const char *reg)
+static t_bool	regex_enclose_capt(t_regex *st, t_reg_encl *encl,
+																const char *s1)
 {
 	int	len;
 
@@ -56,20 +56,20 @@ t_bool		regex_enclose_parse(t_regex *st, t_reg_encl *encl,\
 			encl->ret_max = verif_quantifier_max(&(encl->quan), encl->quan.match);
 			if (LAZY_QUAN(encl) && encl->ret &&
 				regex_parse(st, st->last_s1, reg + encl->len))
-				return (regex_enclose_capt(st, encl, s1, reg));
+				return (regex_enclose_capt(st, encl, s1));
 			if (s1 != st->last_s1 && encl->ret_max &&
 				regex_enclose_parse(st, encl, st->last_s1, reg))
-				return (regex_enclose_capt(st, encl, s1, reg));
+				return (regex_enclose_capt(st, encl, s1));
 			if (!LAZY_QUAN(encl) && encl->ret &&
 				regex_parse(st, st->last_s1, reg + encl->len))
-				return (regex_enclose_capt(st, encl, s1, reg));
+				return (regex_enclose_capt(st, encl, s1));
 			encl->quan.match--;
 		}
 		encl->i += regex_span_or(st, reg + encl->i);
 	}
 	encl->ret = verif_quantifier(&(encl->quan), encl->quan.match);
 	if (encl->ret && regex_parse(st, s1, reg + encl->len))
-		return (regex_enclose_capt(st, encl, s1, reg));
+		return (regex_enclose_capt(st, encl, s1));
 	return (FALSE);
 }
 

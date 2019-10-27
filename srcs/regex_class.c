@@ -49,7 +49,7 @@ static int		regex_class_parse(t_regex *st, t_reg_class *class,
 		if (is_delimiter(st, reg, "[") && (i = -1))
 			reg += regex_is_type(class->alpha, reg + 1) + 2;
 		else if (!is_metachar(st, reg) && ft_strchr(REGEX_TYPE, i))
-			reg += regex_is_metatype(class->alpha, reg);
+			reg += regex_is_metatype(st, class->alpha, reg);
 		else
 		{
 			class->alpha[((int)*reg++)] = 1;

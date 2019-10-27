@@ -42,9 +42,9 @@ static t_bool	regex_same_char(t_regex *st, const char *s1, const char *reg)
 	if (*s1)
 	{
 		ft_bzero(alpha, sizeof(char) * 128);
-		regex_is_metatype(alpha, reg);
+		regex_is_metatype(st, alpha, reg);
 		if (REGEX_DEBUG)
-			regex_alpha_debug("regex_enclosed", alpha);
+			regex_alpha_debug("regex_same_char", alpha);
 		if ((is_delimiter(st, reg, ".") || alpha[(int)(*s1)] == 1))
 			return (regex_parse(st, ++s1, ++reg));
 	}

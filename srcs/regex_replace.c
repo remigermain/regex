@@ -51,9 +51,9 @@ static void regex_replace_str(t_regex *st, char *ptr, const char *rep,
 	int			i;
 
 	list = st->capt;
-	len = -1;
+	len = 0;
 	i = 0;
-	while (list && (++len))
+	while (list)
 	{
 		ft_strncat(ptr, st->s1 + i, list->start - i);
 		if (regex_replace_check(list, len, mod))
@@ -62,6 +62,7 @@ static void regex_replace_str(t_regex *st, char *ptr, const char *rep,
 			ft_strncat(ptr, st->s1 + list->start, list->end - list->start);
 		i = list->end;
 		list = list->next;
+		len++;
 	}
 	ft_strcat(ptr, st->s1 + i);
 }
@@ -74,13 +75,14 @@ char			*ft_regex_replace(const char *s1, const char *reg,
 	int			len;
 
 	ptr = NULL;
-	if (ft_regex_exec(&st, s1, reg))
+	if (ft_regex_exec(&st, s1, reg) > 0)
 	{
 		len = regex_replace_len(&st, s1, rep, mod);
 		if (!(ptr = (char*)ft_memalloc(sizeof(char) * (len + 1))))
 			return (NULL);
 		regex_replace_str(&st, ptr, rep, mod);
 	}
+	ft_regex_print(&st);
 	ft_regex_free(&st);
 	return (ptr);
 }

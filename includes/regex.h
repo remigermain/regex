@@ -42,8 +42,8 @@ enum	e_regex_replace
 
 typedef struct	s_regex_quantifier
 {
-	int	n;
 	int	m;
+	int	n;
 	int	match;
 	int	isset;
 }				t_reg_quan;
@@ -160,7 +160,7 @@ int				regex_span_class(t_regex *st, const char *reg);
 **          regex_class_methode.c
 **-------------------------------------------------------
 */
-int				regex_is_metatype(char alpha[128], const char *reg);
+int				regex_is_metatype(t_regex *st, char alph[128], const char *reg);
 int				regex_is_type(char alpha[128], const char *reg);
 
 /*

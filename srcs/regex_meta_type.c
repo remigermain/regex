@@ -50,21 +50,24 @@ static void	regex_is_type_made(char alpha[128], t_bool (*func)(int), int mod)
 **-------------------------------------------------------
 */
 
-int			regex_is_metatype(char alpha[128], const char *reg)
+int			regex_is_metatype(t_regex *st, char alpha[128], const char *reg)
 {
-	if (*reg == 'w' || *reg == 'W')
+	t_bool	is_meta;
+
+	is_meta = is_metachar(st, reg) ? FALSE : TRUE;
+	if (is_meta && (*reg == 'w' || *reg == 'W'))
 		regex_is_type_made(alpha, ft_isword, UPPER(*reg) ? UNSET : SET);
-	else if (*reg == 'd' || *reg == 'D')
+	else if (is_meta && (*reg == 'd' || *reg == 'D'))
 		regex_is_type_made(alpha, ft_isdigit, UPPER(*reg) ? UNSET : SET);
-	else if (*reg == 's' || *reg == 'S')
+	else if (is_meta && (*reg == 's' || *reg == 'S'))
 		regex_is_type_made(alpha, ft_isspace, UPPER(*reg) ? UNSET : SET);
-	else if (*reg == 'p' || *reg == 'P')
+	else if (is_meta && (*reg == 'p' || *reg == 'P'))
 		regex_is_type_made(alpha, ft_isalnum, UPPER(*reg) ? UNSET : SET);
-	else if (*reg == 'n')
+	else if (is_meta && *reg == 'n')
 		alpha[(int)('\n')] = SET;
-	else if (*reg == 'r')
+	else if (is_meta && *reg == 'r')
 		alpha[(int)('\r')] = SET;
-	else if (*reg == 'e')
+	else if (is_meta && *reg == 'e')
 		alpha[(int)('\e')] = SET;
 	else
 		alpha[(int)(*reg)] = SET;
