@@ -64,8 +64,8 @@ int main(int argc, char **argv)
 	//"^(?<alone>[\\p])*\\|((?<flags>[\\p])(\\(((?<type>[a-zA-Z*])+(\\{(?<min>[\\d])*,(?<max>[\\d])*(,(?<pattern>[^}])*)?\\},)?)*\\))?;(?<set>[\\p])*;(?<unset>[\\p])*\\|)*$");
 
 	int ret = ft_regex_exec(&st,
-							"ju;it;weeror_wetrzpb|yoyoyoyo(char*{5,9},char{1,1,\"^ddfd^f$\"},int{55},int{99,},);;|werror-wetra(char*,int{1,9},char*{,,\"ceci est un patterne\"},);sddd;ttt|werror-wetra;sddd;ttt|a(char*{5,9},char{1,1,\"^ddfd^f$\"},int{,55},int{99,},);;|size_t(char*,int,char*,);sddd;ttt|werror-wetra;sddd;ttt|",
-							"^((?<alone>[\\w\\-]*);?)*\\|((?<flags>[\\w\\-]+)(\\(((?<type>[a-zA-Z*_]+)((\\{((?<min>[\\d]*),(?<max>[\\d]*)(,\"(?<pattern>[^\"]+)\")?|(?<ex>[\\d]*))\\})?,)?)*\\))?;(?<set>[\\p]*);(?<unset>[\\p]*)\\|)*$");
+							" ju  ,  it,  weeror_wetrzpb,|     yoyoyoyo  (  char*  {  5  ,  9  } , char{1,1,\"^ddfd^f$\"},int{55},int{99,},);error, error, extra, opop, tt,;unset1 , unet2, unset3, unset4,;|werror-wetra(char*,int{1,9},char*{,,\"ceci est un patterne\"},);sddd,;ttt,;|werror-wetra;sddd,;ttt,;|a(char*{5,9},char{1,1,\"^ddfd^f$\"},int{,55},int{99,},);,;,;|size_t(char*,int,char*,);sddd,;ttt,;|werror-wetra;dd,;;|",
+							"^(\\s*(?<alone>[\\w\\-]*)\\s*,)*\\s*\\|(\\s*(?<flags>[\\w\\-]+)\\s*(\\(\\s*((?<type>[a-zA-Z*_]+)\\s*((\\{\\s*((?<min>[\\d]*)\\s*,\\s*(?<max>[\\d]*)\\s*(\\s*,\\s*\"(?<pattern>[^\"]+)\"\\s*)?|\\s*(?<ex>[\\d]*)\\s*)\\s*\\})?\\s*,\\s*)?)*\\s*\\))?\\s*;\\s*((?<set>[\\w\\-]*)\\s*,\\s*)*\\s*;\\s*((?<unset>[\\w\\-]*)\\s*,\\s*)*\\s*;\\s*\\|)*$");
 
 	//"^(\\{(((?<min>\\d+)?,(?<max>\\d+)?|(?<ex>\\d+)))?\\})$");
 	//"^[a-z]*\\s*(\\{((?<ex>\\d)+|((?<min>\\d)*,(?<max>\\d)*))\\})?$");
@@ -80,8 +80,9 @@ int main(int argc, char **argv)
 
 	if (ret == 0)
 	{
-		//error_line_pos("error parsing", 76, st.error_pos);
-		//error_line_e(st.s1, st.error_pos);
+		ft_printf("lalal %d   %s\n", st.error_pos, st.s1);
+		error_line_pos("error parsing", 76, st.error_pos);
+		error_line_e(st.s1, st.error_pos);
 	}
 	ft_regex_print(&st);
 

@@ -20,6 +20,9 @@
 # define LAZY_QUAN(encl) (encl->quan.isset & QUAN_LAZY ? TRUE : FALSE)
 # define UPPER(c) (ft_isuppercase(c))
 # define LOWER(c) (ft_isuppercase(c))
+# ifndef REGEX_DEBUG
+# 	define REGEX_DEBUG FALSE
+# endif
 
 enum	e_regex_quan
 {
@@ -90,15 +93,18 @@ typedef struct	s_regex_list
 
 typedef struct	s_regex
 {
-	t_reg_list **capt;
-	t_reg_list *inst;
-	int			level;
-	t_bool 		error;
-	const char	*reg;
+	t_reg_list	**capt;
+	t_reg_list	*inst;
+	const char 	*last_error;
+	const char	*last_s1;
+	const char 	*reg;
 	const char	*s1;
 	size_t		match;
-	const char	*last_s1;
-	int			nb_capt;
+	size_t		len_s1;
+	size_t		level;
+	size_t		nb_capt;
+	size_t		error_pos;
+	t_bool 		error;
 }				t_regex;
 
 /*
@@ -107,8 +113,8 @@ typedef struct	s_regex
 **-------------------------------------------------------
 */
 int				ft_regex_exec(t_regex *reg, const char *s1, const char *regex);
-char			*ft_regex_replace(const char *s1, const char *reg, char *src,
-													enum e_regex_replace mod);
+char			*ft_regex_replace(const char *s1, const char *reg,
+									const char *src, enum e_regex_replace mod);
 t_bool			regex_parse(t_regex *st, const char *s1, const char *reg);
 
 /*
@@ -123,17 +129,9 @@ t_bool			regex_class(t_regex *st, const char *s1, const char *reg);
 **          regex_enclosed.c
 **-------------------------------------------------------
 */
-t_bool			regex_enclosed(t_regex *st, const char *s1, const char *reg);
 t_bool 			regex_enclose_parse(t_regex *st, t_reg_encl *encl,
 							   const char *s1, const char *reg);
-/*
-**-------------------------------------------------------
-**          regex_enclosed_capt.c
-**-------------------------------------------------------
-*/
-void			regex_put_arg(t_regex *st, const char *base, int len,
-																	char *name);
-void			ft_regex_free(t_regex *st);
+t_bool			regex_enclosed(t_regex *st, const char *s1, const char *reg);
 
 /*
 **-------------------------------------------------------
@@ -153,8 +151,8 @@ t_bool			regex_quantifier(t_regex *st, const char *s1, const char *reg);
 **-------------------------------------------------------
 */
 int				regex_span_quantifier(t_regex *st, const char *reg);
-int				regex_span_or(t_regex *st, const char *reg);
 int				regex_span_enclose(t_regex *st, const char *reg);
+int				regex_span_or(t_regex *st, const char *reg);
 int				regex_span_class(t_regex *st, const char *reg);
 
 /*
@@ -179,5 +177,9 @@ t_bool			is_delimiter(t_regex *st, const char *reg, char *delimiter);
 **-------------------------------------------------------
 */
 void			ft_regex_print(t_regex *st);
+void			regex_alpha_debug(char *func, char alpha[128]);
+void			regex_put_arg(t_regex *st, const char *base, int len,
+																	char *name);
+void			ft_regex_free(t_regex *st);
 
 #endif

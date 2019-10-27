@@ -37,10 +37,14 @@ static t_bool	regex_same_char(t_regex *st, const char *s1, const char *reg)
 {
 	char	alpha[128];
 
+	if (REGEX_DEBUG)
+		ft_dprintf(2, "[regex_same_char]\n[s1][%s]\n[reg][%s]\n", s1, reg);
 	if (*s1)
 	{
 		ft_bzero(alpha, sizeof(char) * 128);
 		regex_is_metatype(alpha, reg);
+		if (REGEX_DEBUG)
+			regex_alpha_debug("regex_enclosed", alpha);
 		if ((is_delimiter(st, reg, ".") || alpha[(int)(*s1)] == 1))
 			return (regex_parse(st, ++s1, ++reg));
 	}
@@ -56,6 +60,10 @@ static t_bool	regex_same_char(t_regex *st, const char *s1, const char *reg)
 
 t_bool			regex_parse(t_regex *st, const char *s1, const char *reg)
 {
+	if (REGEX_DEBUG)
+		ft_dprintf(2, "[regex_parse]\n[s1][%s]\n[reg][%s]\n", s1, reg);
+	if (s1 > st->last_error)
+		st->last_error = s1;
 	st->last_s1 = s1;
 	if (is_delimiter(st, reg, "\\"))
 		reg++;
@@ -145,10 +153,11 @@ int				ft_regex_exec(t_regex *st, const char *s1, const char *reg)
 {
 	int i;
 
+	if (REGEX_DEBUG)
+		ft_dprintf(2, "[DEBUG]\n[s1][%s]\n[reg][%s]\n", s1, reg);
 	ft_bzero(st, sizeof(*st));
 	st->s1 = s1;
-	//if (DEBUG_REGEX)
-		ft_dprintf(2, "[DEBUG]\n[s1][%s]\n[reg][%s]\n", s1, reg);
+	st->len_s1 = ft_strlen(s1);
 	while (*reg)
 	{
 		st->reg = reg;
@@ -162,5 +171,7 @@ int				ft_regex_exec(t_regex *st, const char *s1, const char *reg)
 		}
 		reg += regex_span_or(st, reg);
 	}
+	if (st->last_error)
+		st->error_pos =  st->len_s1 - ft_strlen(st->last_error);
 	return (st->error | st->match);
 }

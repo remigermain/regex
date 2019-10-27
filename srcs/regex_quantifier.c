@@ -122,19 +122,19 @@ t_bool		regex_quantifier_do(t_regex *st, t_reg_quan *quan,
 t_bool		regex_quantifier(t_regex *st, const char *s1, const char *reg)
 {
 	t_reg_quan	quan;
-	const char	*mem;
 	char		alpha[128];
+	t_bool		is_any;
 
+	if (REGEX_DEBUG)
+	{
+		ft_dprintf(2, "[regex_enclosed]\n[s1][%s]\n[reg][%s]\n", s1, reg);
+		regex_alpha_debug("regex_enclosed", alpha);
+	}
 	ft_bzero(alpha, sizeof(char) * 128);
 	regex_is_metatype(alpha, reg);
-	mem = reg;
-	ft_printf("lalal\n");
+	is_any = is_delimiter(st, reg, ".") ? TRUE : FALSE;
 	reg += regex_get_quantifier(&quan, reg + 1) + 1;
-	while (*(s1 + quan.match) && (is_delimiter(st, mem, ".") ||
-				alpha[(int)(*(s1 + quan.match))] == 1) && *s1 != '\n')
-	{
-		ft_printf("lalal\n");
+	while (*(s1 + quan.match) && (is_any || alpha[(int)(*(s1 + quan.match))]))
 		quan.match++;
-	}
 	return (regex_quantifier_do(st, &quan, s1, reg));
 }

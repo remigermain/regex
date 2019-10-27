@@ -83,6 +83,8 @@ t_bool			regex_class(t_regex *st, const char *s1, const char *reg)
 	int			i;
 
 	i = -1;
+	if (REGEX_DEBUG)
+		ft_dprintf(2, "[regex_class]\n[s1][%s]\n[reg][%s]\n", s1, reg);
 	ft_bzero(&class, sizeof(t_reg_class));
 	if (is_delimiter(st, reg, "^"))
 	{
@@ -90,6 +92,8 @@ t_bool			regex_class(t_regex *st, const char *s1, const char *reg)
 		class.is_not = TRUE;
 	}
 	reg += regex_class_parse(st, &class, reg);
+	if (REGEX_DEBUG)
+		regex_alpha_debug("regex_class", class.alpha);
 	if (is_delimiter(st, reg, QUANTIFIER))
 		reg += regex_get_quantifier(&(class.quantifier), reg);
 	while (s1[++i] && class.alpha[(int)s1[i]] != class.is_not)

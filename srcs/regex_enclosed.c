@@ -31,13 +31,15 @@ t_bool		regex_enclose_capt(t_regex *st, t_reg_encl *encl,\
 		len = ft_strlen(s1) - ft_strlen(encl->mem);
 		if (len)
 			regex_put_arg(st, s1, len, encl->name);
+		else if (encl->name)
+			ft_strdel(&(encl->name));
 	}
 	return (TRUE);
 }
 
 /*
 **-------------------------------------------------------
-**         	parse l'enclose
+**         	parse l'enclose   en beta
 **-------------------------------------------------------
 */
 
@@ -123,6 +125,8 @@ t_bool		regex_enclosed(t_regex *st, const char *s1, const char *reg)
 	t_reg_encl 	encl;
 	t_bool		ret;
 
+	if (REGEX_DEBUG)
+		ft_dprintf(2, "[regex_enclosed]\n[s1][%s]\n[reg][%s]\n", s1, reg);
 	ft_bzero(&encl, sizeof(t_reg_encl));
 	reg += regex_enclosed_flags(st, &encl, reg);
 	encl.len += regex_span_enclose(st, reg);
@@ -131,7 +135,7 @@ t_bool		regex_enclosed(t_regex *st, const char *s1, const char *reg)
 	if (encl.capture)
 		st->level++;
 	ret = regex_enclose_parse(st, &encl, s1, reg);
-	if (!(ret && encl.capture && encl.quan.match))
+	if (ret == FALSE && encl.name)
 		ft_strdel(&(encl.name));
 	if (encl.capture)
 		st->level--;

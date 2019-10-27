@@ -68,42 +68,55 @@ void		ft_regex_print(t_regex *st)
     }
 }
 
+void	regex_alpha_debug(char *func, char alpha[128])
+{
+	int i;
+
+	i = -1;
+	ft_dprintf(2, "[%s]", func);
+	while (++i < 128)
+		ft_dprintf(2, "%d", alpha[i]);
+	ft_dprintf(2, "\n");
+}
+
 void     ft_regex_free(t_regex *st)
 {
-    //t_reg_capt *list;
-    //t_reg_capt *tmp;
-    //
-    //list = st->capt;
-    //while (list)
-    //{
-    //    tmp = list;
-    //    list = list->next;
-    //    ft_memdel((void **)&(tmp->str));
-    //    if (tmp->name)
-    //        ft_memdel((void **)&(tmp->name));
-    //    ft_memdel((void **)&tmp);
-    //}
+    t_reg_list *tmp;
+    t_reg_list *list;
+    
+    list = st->capt;
+    while (list)
+    {
+        tmp = list;
+        list = list->next;
+        ft_memdel((void **)&(tmp->str));
+        if (tmp->name)
+            ft_memdel((void **)&(tmp->name));
+        ft_memdel((void **)&tmp);
+    }
 }
 
 void    regex_put_arg(t_regex *st, const char *s1, int len, char *name)
 {
-    t_reg_list *list;
     t_reg_list **head;
+    t_reg_list *list;
 
     if (!(list = (t_reg_list *)ft_memalloc(sizeof(t_reg_list))) ||
         (!(list->str = ft_strsub(s1, 0, len))))
     {
         st->error = ERROR_REGEX;
+        if (list)
+            ft_memdel((void**)&list);
         return;
     }
     list->name = name;
-    list->start = ft_strlen(st->s1) - ft_strlen(s1);
+    list->start = st->len_s1 - ft_strlen(s1);
     list->end = list->start + len;
     list->level = st->level;
     list->pos = st->nb_capt++;
     head = &(st->capt);
     while (*head && (*head)->start <= list->start)
         head = &(*head)->next;
-    list->next = (*head);
+    list->next = *head;
     *head = list;
 }
