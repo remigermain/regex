@@ -13,6 +13,26 @@
 
 #include "regex.h"
 
+/*
+**-------------------------------------------------------
+**		le alpha[128] represente un chaine de 1 et de 0
+**		le 1 represente le character set
+**		ex :	bonjour
+**		u = 117 en valeur ascii
+**		alpha[117] vaudra 1 tendis que alpha[110] vaudre 0
+**
+**		il fonctionnera aussi avec les metachar \d \w \D \W ...
+**		ex :	bonjour\d
+**		\d = tout les digits donc de 0 a 9
+**		apha[48] a alpha[57] vaudra 1 
+**		car 0 = 48 et 9 = 57 , on va set tout les char de 0 a 9
+**
+**		le character doit etre egale a s1 ou que le character
+**		de reg soit un delimiteur . car le . match
+**		avec n'importe quoi
+**-------------------------------------------------------
+*/
+
 static t_bool	regex_same_char(t_regex *st, const char *s1, const char *reg)
 {
 	char	alpha[128];
@@ -26,6 +46,13 @@ static t_bool	regex_same_char(t_regex *st, const char *s1, const char *reg)
 	}
 	return (FALSE);
 }
+
+/*
+**-------------------------------------------------------
+**		function principal qui apelle toutes les functions
+**		en rapport avec le delimiter
+**-------------------------------------------------------
+*/
 
 t_bool			regex_parse(t_regex *st, const char *s1, const char *reg)
 {
@@ -120,6 +147,8 @@ int				ft_regex_exec(t_regex *st, const char *s1, const char *reg)
 
 	ft_bzero(st, sizeof(*st));
 	st->s1 = s1;
+	//if (DEBUG_REGEX)
+		ft_dprintf(2, "[DEBUG]\n[s1][%s]\n[reg][%s]\n", s1, reg);
 	while (*reg)
 	{
 		st->reg = reg;

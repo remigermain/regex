@@ -15,19 +15,40 @@
 #define SET TRUE
 #define UNSET FALSE
 
+/*
+**-------------------------------------------------------
+**		met 1 si la function retourne le meme resulta que mode
+**		mod set = TRUE
+**		mod unset = FALSE
+**		cela sert pour les meta \d ou \D
+**		\d doit etre que des digits 0-9
+**		\D doit etre tout sauf des digits 0-9
+**		si ft_isdigit nous retourne TRUE et que le mod et SET
+**		alors on met 1
+**		si ft_isdigit nous retourne FALSE et que le mod et UNSET
+**		alors on met 1
+**-------------------------------------------------------
+*/
+
 static void	regex_is_type_made(char alpha[128], t_bool (*func)(int), int mod)
 {
-	t_bool	ret;
 	int		i;
 
 	i = -1;
 	while (++i <= 127)
 	{
-		ret = func(i);
-		if (ret == mod)
+		if (mod == func(i))
 			alpha[i] = 1;
 	}
 }
+
+/*
+**-------------------------------------------------------
+**		perl type regex , qui pass en parametre de regex_is_type
+**		la fonction en rapoort avec la string
+**		ou set la possition ascci dans alpha
+**-------------------------------------------------------
+*/
 
 int			regex_is_metatype(char alpha[128], const char *reg)
 {
@@ -66,6 +87,13 @@ static int	regex_is_type2(char alpha[128], const char *reg, int i)
 		ft_dprintf(2, "REGEX error regex type %s\n", reg);
 	return (i);
 }
+
+/*
+**-------------------------------------------------------
+**		posix type regex , qui pass en parametre de regex_is_type
+**		la fonction en rapoort avec la string
+**-------------------------------------------------------
+*/
 
 int			regex_is_type(char alpha[128], const char *reg)
 {

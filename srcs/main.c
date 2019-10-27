@@ -58,18 +58,18 @@ int main(int argc, char **argv)
 	t_regex st;
 	//"^(?<alone>[a-zA-Z0-9]?[^|])*\\|(?(?\s*(?char\\*?|char|int){1}\s*))*$");
 	//int ret = ft_regex_exec(&st, "dfvdmnvdmdvvd ", "[a-z] ");
-	//int ret = ft_regex_exec(&st, "|a(char*{5515,9,*.cor|bonjourfdcdcdc},char{1,1,a|b|r|4},int{18,12,ddd},int{99,554});CDFV5151fefee;165SDDDsfdvvfdv55|",
-	// "juitpb|a(char*{5,9,*.cor|bonjourfdcdcdc},char{1,1,a|b|r|4},int{55,99},int{99,554});;|r(char*{5,9,*.cor|bonjourfdcdcdc},char{,,a|b|r|*|4},int{55,99},int{99,554});;|",
+	//int ret = ft_regex_exec(&st, 
 	//
 	//  goood
 	//"^(?<alone>[\\p])*\\|((?<flags>[\\p])(\\(((?<type>[a-zA-Z*])+(\\{(?<min>[\\d])*,(?<max>[\\d])*(,(?<pattern>[^}])*)?\\},)?)*\\))?;(?<set>[\\p])*;(?<unset>[\\p])*\\|)*$");
 
-	int ret = ft_regex_exec(&st, "{444,555}",
+	int ret = ft_regex_exec(&st,
+							"ju;it;weeror_wetrzpb|yoyoyoyo(char*{5,9},char{1,1,\"^ddfd^f$\"},int{55},int{99,},);;|werror-wetra(char*,int{1,9},char*{,,\"ceci est un patterne\"},);sddd;ttt|werror-wetra;sddd;ttt|a(char*{5,9},char{1,1,\"^ddfd^f$\"},int{,55},int{99,},);;|size_t(char*,int,char*,);sddd;ttt|werror-wetra;sddd;ttt|",
+							"^((?<alone>[\\w\\-]*);?)*\\|((?<flags>[\\w\\-]+)(\\(((?<type>[a-zA-Z*_]+)((\\{((?<min>[\\d]*),(?<max>[\\d]*)(,\"(?<pattern>[^\"]+)\")?|(?<ex>[\\d]*))\\})?,)?)*\\))?;(?<set>[\\p]*);(?<unset>[\\p]*)\\|)*$");
 
-							"^(\\{((?<ex>\\d)+|((?<min>\\d)*,(?<max>\\d)*))?\\})$");
-							//"^[a-z]*\\s*(\\{((?<ex>\\d)+|((?<min>\\d)*,(?<max>\\d)*))\\})?$");
-							//"^[a-z]*\\s*(\\{(?<ex>\\d)+\\})?$");
-	//"^(?<alone>[\\p])*\\|((?<flags>[\\p])+(\\(((?<type>[a-zA-Z*])+((\\{((?<ex>[\\d])*|(?<min>[\\d])*,(?<max>[\\d])*(,(?<pattern>[^}])*)?)\\})?,)?)*\\))?;(?<set>[\\p])*;(?<unset>[\\p])*\\|)*$");
+	//"^(\\{(((?<min>\\d+)?,(?<max>\\d+)?|(?<ex>\\d+)))?\\})$");
+	//"^[a-z]*\\s*(\\{((?<ex>\\d)+|((?<min>\\d)*,(?<max>\\d)*))\\})?$");
+	//"^[a-z]*\\s*(\\{(?<ex>\\d)+\\})?$");
 
 	if (ret > 0)
 		ft_printf("\033[38;5;326mTRUE  %d\n" T_WHITE, ret);

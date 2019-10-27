@@ -55,9 +55,12 @@ typedef struct	s_regex_class
 typedef struct	s_regex_enclose
 {
 	t_reg_quan	quan;
+	t_bool 		ret_max;
+	t_bool 		ret;
 	t_bool		is_not;
 	t_bool		capture;
 	t_bool		is_encl;
+	const char	*mem;
 	char		*name;
 	int			len;
 	int			i;
@@ -66,7 +69,8 @@ typedef struct	s_regex_enclose
 typedef struct	s_regex_print
 {
 	size_t	str;
-	size_t	name;
+	size_t 	name;
+	size_t	level;
 	size_t	pos;
 	size_t	start;
 	size_t	end;
@@ -77,10 +81,11 @@ typedef struct	s_regex_list
 	char				*str;
 	char				*name;
 	int					pos;
+	int					level;
 	int					start;
 	int					end;
 	size_t				children;
-	struct s_regex_list **tab;
+	struct s_regex_list *next;
 }				t_reg_list;
 
 typedef struct	s_regex
@@ -136,7 +141,8 @@ void			ft_regex_free(t_regex *st);
 **-------------------------------------------------------
 */
 t_bool			verif_quantifier(t_reg_quan *st, int i);
-int				regex_get_quantifier(t_reg_quan *st, const char *reg);
+t_bool 			verif_quantifier_max(t_reg_quan *quan, int i);
+int 			regex_get_quantifier(t_reg_quan *st, const char *reg);
 t_bool			regex_quantifier_do(t_regex *st, t_reg_quan *quantifier,
 							   const char *s1, const char *reg);
 t_bool			regex_quantifier(t_regex *st, const char *s1, const char *reg);
